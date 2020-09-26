@@ -5,3 +5,4 @@ dist
 .yarnrc
 e2e-realtesting
 .eslintcache
+coverage

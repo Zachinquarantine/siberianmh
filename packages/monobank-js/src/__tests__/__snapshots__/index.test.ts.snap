@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`monobank getCurrency() 1`] = `
+Array [
+  Object {
+    "currencyCodeA": 840,
+    "currencyCodeB": 980,
+    "date": 1601068206,
+    "rateBuy": 28.12,
+    "rateSell": 28.4083,
+  },
+  Object {
+    "currencyCodeA": 978,
+    "currencyCodeB": 980,
+    "date": 1601068206,
+    "rateBuy": 32.65,
+    "rateSell": 33.1104,
+  },
+]
+`;
