@@ -9,7 +9,8 @@ on:
         required: true
       package:
         description:
-          'Package name to publish (just name, final construct is `packages/*`)'
+          'Package name to publish (just name, final construct is
+          `packages/{name}`)'
         required: true
 
 jobs:
@@ -37,7 +38,7 @@ jobs:
           yarn config set version-git-tag false
           yarn publish --new-version ${{ github.event.inputs.version }}
 
-          git status
+          git add .
           git commit -m "build: release ${{ github.event.inputs.package }}/${{ github.event.inputs.version }}"
           git push
         env:
