@@ -1,0 +1,18 @@
+{
+  "name": "monobank-js",
+  "version": "0.0.1",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "directory": "packages/monobank-js",
+    "url": "https://github.com/siberianmh/siberianmh"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "axios": "^0.20.0"
+  }
+}
