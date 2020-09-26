@@ -37,7 +37,8 @@ jobs:
           yarn config set version-git-tag false
           yarn publish --new-version ${{ github.event.inputs.version }}
 
-          git pull --rebase
+          git status
+          git commit -m "build: release ${{ github.event.inputs.package }}/${{ github.event.inputs.version }}"
           git push
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
