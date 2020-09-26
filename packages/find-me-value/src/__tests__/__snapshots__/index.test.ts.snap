@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`findMeValue() return null, if nothing finded 1`] = `null`;
+
+exports[`findMeValue() throw error 1`] = `"Expected a string"`;
+
+exports[`findMeValue() works 1`] = `" v1.0.0"`;

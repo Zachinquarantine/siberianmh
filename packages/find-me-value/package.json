@@ -1,0 +1,37 @@
+{
+  "name": "find-me-value",
+  "version": "0.0.0",
+  "description": "Find a value in a string by a key",
+  "license": "MIT",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "repository": {
+    "directory": "packages/find-me-value",
+    "url": "https://github.com/siberianmh/siberianmh"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "build": "tsc",
+    "prepublishOnly": "yarn build"
+  },
+  "keywords": [
+    "find",
+    "string",
+    "value",
+    "text",
+    "finder"
+  ],
+  "jest": {
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ]
+  }
+}
