@@ -1,0 +1,17 @@
+{
+  "name": "willql",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "yarn build"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/mysql": "^2.15.15",
+    "@types/node": "^14.11.2"
+  }
+}
