@@ -1,0 +1,36 @@
+name: Do Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The new version for package'
+        required: true
+      package:
+        description:
+          'Package name to publish (just name, final construct is `packages/*`)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+      - name: Install dependencies
+        run: yarn
+      - name: Run release
+        run: |
+          git config user.email "55543306+pacificocean-bot@users.noreply.github.com"
+          git config user.name "Pacific Ocean Bot"
+
+          cd packages/${{ github.event.inputs.package }}
+          echo "Publishing package ${{ github.eventinputs.package }}/${{ github.event.inputs.version }}"
+
+          git pull --rebase
+          git push
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
