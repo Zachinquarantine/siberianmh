@@ -10,12 +10,18 @@
     "name": "Siberian Media Holding, Inc."
   },
   "scripts": {
-    "lint": "yarn lint:prettier",
-    "lint:fix": "yarn lint:prettier --write",
-    "lint:prettier": "prettier --check \"./**/*.{ts,tsx,js,yaml,yml}\""
+    "lint": "yarn lint:prettier && yarn lint:src",
+    "lint:fix": "yarn lint:prettier --write && yarn lint:src --fix",
+    "lint:prettier": "prettier --check \"./**/*.{ts,tsx,js,yaml,yml}\"",
+    "lint:src": "eslint --cache \"./**/*.{j,t}s{,x}\""
   },
   "devDependencies": {
     "@types/node": "^14.11.2",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.9.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.1.2",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
