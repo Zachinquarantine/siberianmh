@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'The new version for package'
+        description:
+          'The new version for package (should be semver valid, like 0.0.0)'
         required: true
       package:
         description:
@@ -27,8 +28,14 @@ jobs:
           git config user.email "55543306+pacificocean-bot@users.noreply.github.com"
           git config user.name "Pacific Ocean Bot"
 
+          echo "Building package ${{ github.event.inputs.package }}/${{ github.event.inputs.version }}"
           cd packages/${{ github.event.inputs.package }}
-          echo "Publishing package ${{ github.eventinputs.package }}/${{ github.event.inputs.version }}"
+          yarn build
+
+          echo "Publishing package ${{ github.event.inputs.package }}/${{ github.event.inputs.version }}"
+          echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+          yarn config set version-git-tag false
+          yarn publish --new-version ${{ github.event.inputs.version }}
 
           git pull --rebase
           git push
