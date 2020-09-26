@@ -87,13 +87,15 @@ async function download(
   downloadDirectory: string | null,
 ): Promise<Array<IResponse>> {
   // Prepend `v` to 1.2.3
-  if (version.match(/^\d+\.\d+\.\d+$/)) version = `v${version}`
+  if (version.match(/^\d+\.\d+\.\d+$/)) {
+    version = `v${version}`
+  }
 
   const tarballUrl = `https://github.com/${owner}/${repository}/archive/${version}.tar.gz`
   let outputDir: string = ''
   const dlDir = downloadDirectory ?? (await import('os')).tmpdir()
 
-  return new Promise(async (resolve, _reject) => {
+  return new Promise(async (resolve) => {
     await got
       .stream(tarballUrl)
       .pipe(require('gunzip-maybe')())
@@ -117,8 +119,8 @@ async function download(
 }
 
 async function readFromDisk(directory: string): Promise<Array<IResponse>> {
-  return new Promise((resolve, _reject) => {
-    let docs: Array<IResponse> = []
+  return new Promise((resolve) => {
+    const docs: Array<IResponse> = []
     dir.promiseFiles(directory).then((files) => {
       files.forEach(async (file) => {
         const content = fs.readFileSync(file, 'utf-8')
