@@ -1,4 +1,3 @@
-import * as path from 'path'
 import { roggy } from '../src'
 
 describe('electron documentation', () => {

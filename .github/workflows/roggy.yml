@@ -1,4 +1,4 @@
-name: PackagesNPM/Roggy
+name: NPM Packages - roggy
 
 on:
   push:
