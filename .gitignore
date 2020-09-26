@@ -1,8 +1,11 @@
+# JS
 node_modules
-*.log
+coverage
 dist
 .npmrc
 .yarnrc
 e2e-realtesting
 .eslintcache
-coverage
+
+# Global
+*.log
