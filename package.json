@@ -1,0 +1,12 @@
+{
+  "name": "siberianmh",
+  "workspaces": [
+    "packages/*"
+  ],
+  "private": true,
+  "repository": "https://github.com/siberianmh/siberianmh.git",
+  "author": {
+    "email": "siberianmh@gmail.com",
+    "name": "Siberian Media Holding, Inc."
+  }
+}
