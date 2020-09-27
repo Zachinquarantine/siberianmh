@@ -10,7 +10,10 @@
     "test": "jest --coverage",
     "prepublishOnly": "yarn build"
   },
-  "repository": "https://github.com/HashimotoYT/roggy",
+  "repository": {
+    "url": "https://github.com/siberianmh/siberianmh",
+    "directory": "packages/roggy"
+  },
   "keywords": [
     "api",
     "documentation",
