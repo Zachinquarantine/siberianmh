@@ -1,0 +1,43 @@
+{
+  "name": "subrepos",
+  "description": "The package manager for subrepositories (submodules).",
+  "version": "0.0.3",
+  "main": "./dist/src/index.js",
+  "bin": "./bin/index.js",
+  "repository": {
+    "directory": "packages/subrepos",
+    "url": "https://github.com/siberianmh/siberianmh"
+  },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "keywords": [
+    "submodules",
+    "package manager",
+    "subrepositories"
+  ],
+  "scripts": {
+    "build": "yarn tsc",
+    "watch": "yarn tsc --watch",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "byline": "^5.0.0",
+    "cli-table3": "^0.6.0",
+    "dugite": "^1.88.7",
+    "fs-extra": "^9.0.1",
+    "js-yaml": "^3.14.0",
+    "progress": "^2.0.3",
+    "yargs": "^16.0.3"
+  },
+  "devDependencies": {
+    "@types/byline": "^4.2.32",
+    "@types/fs-extra": "^9.0.1",
+    "@types/js-yaml": "^3.12.5",
+    "@types/progress": "^2.0.3",
+    "@types/yargs": "^15.0.7"
+  }
+}
