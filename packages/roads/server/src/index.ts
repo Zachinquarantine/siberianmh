@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
 import 'reflect-metadata'
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
@@ -21,7 +24,7 @@ connectTypeorm().then(async () => {
   if (process.env.NODE_ENV === 'development') {
     const SmeeClient = await import('smee-client')
     const smee = new SmeeClient({
-      source: 'https://smee.io/qB8a2qPBGgIG6SvI',
+      source: `https://smee.io/${process.env.SMEE_CHANNEL}`,
       target: `http://localhost:${port}/gh/handle-event`,
       logger: console,
     })
