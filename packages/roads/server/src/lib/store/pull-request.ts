@@ -99,6 +99,49 @@ export class PullRequestStore {
     return dbPr
   }
 
-  // TODO: Create this please.
-  public async mergeSecondQueue() {}
+  public async mergeSecondQueue() {
+    const prs = await DBPullRequest.find({
+      where: { state: 'open' },
+    })
+
+    for (const pr of prs) {
+      const firstLabel = await this.github.getBasedStatus(
+        pr.owner,
+        pr.repository,
+        pr.pr_number,
+      )
+      const secondLabel = await this.github.getSecondLabel(
+        pr.owner,
+        pr.repository,
+        pr.pr_number,
+      )
+
+      if (firstLabel && secondLabel) {
+        await this.github.removeFirstLabel(
+          pr.owner,
+          pr.repository,
+          pr.pr_number,
+        )
+
+        await this.github
+          .mergePullRequest(
+            pr.owner,
+            pr.repository,
+            pr.pr_number,
+            pr.branch,
+            pr.merge_method,
+          )
+          .then(() => {
+            DBPullRequest.update(
+              {
+                owner: pr.owner,
+                repository: pr.repository,
+                pr_number: pr.pr_number,
+              },
+              { state: 'closed' },
+            )
+          })
+      }
+    }
+  }
 }

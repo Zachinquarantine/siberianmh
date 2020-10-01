@@ -1,6 +1,6 @@
 import { Octokit } from '@octokit/rest'
 import { labels } from '../constants'
-import { IGetPullRequest } from '../types'
+import { $TSFixMe, IGetPullRequest } from '../types'
 
 export class GitHubProvider {
   public octokit: Octokit
@@ -63,5 +63,57 @@ export class GitHubProvider {
       issue_number: pr_number,
       labels: [this.firstBasedLabel],
     })
+  }
+
+  public async getSecondLabel(owner: string, repo: string, pr_number: number) {
+    const { data: labels } = await this.octokit.issues.listLabelsOnIssue({
+      owner,
+      repo,
+      issue_number: pr_number,
+    })
+
+    for (const label of labels) {
+      if (label.name === this.secondBasedLabel) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  public async removeFirstLabel(
+    owner: string,
+    repo: string,
+    pr_number: number,
+  ) {
+    return await this.octokit.issues.removeLabel({
+      owner,
+      repo,
+      issue_number: pr_number,
+      name: this.firstBasedLabel,
+    })
+  }
+
+  public async mergePullRequest(
+    owner: string,
+    repo: string,
+    pr_number: number,
+    branch?: string,
+    merge_method?: string,
+  ) {
+    await this.octokit.pulls.merge({
+      owner,
+      repo,
+      pull_number: pr_number,
+      merge_method: merge_method as $TSFixMe,
+    })
+
+    if (branch) {
+      await this.octokit.git.deleteRef({
+        owner,
+        repo,
+        ref: `heads/${branch}`,
+      })
+    }
   }
 }
