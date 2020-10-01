@@ -1,7 +1,8 @@
 {
   "name": "siberianmh",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/roads/*"
   ],
   "private": true,
   "repository": "https://github.com/siberianmh/siberianmh.git",

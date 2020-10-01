@@ -1,0 +1,55 @@
+import * as express from 'express'
+import { PullRequestStore } from './pull-request'
+import { GitHubProvider } from '../providers'
+import { labels } from '../constants'
+
+export class RepositoryStore {
+  private github: GitHubProvider
+  private pullRequest: PullRequestStore
+
+  public constructor() {
+    this.github = new GitHubProvider()
+    this.pullRequest = new PullRequestStore()
+  }
+
+  public async handleWebhook(req: express.Request) {
+    const { body } = req
+
+    console.log(body)
+
+    // Pull Request Opened
+    if (body.action === 'opened' && body.pull_request) {
+      const { repository } = body
+
+      await this.pullRequest.addPullRequest({
+        owner: repository.owner.login,
+        repository: repository.name,
+        pr_number: body.number,
+        merge_method: 'merge',
+        provider: 'github',
+      })
+    }
+
+    // Pull Request labeled
+    if (body.action === 'labeled' && body.pull_request) {
+      // Labeled by CQ+1
+      if (body.label.name === labels.cqPlusOne) {
+        const { repository } = body
+
+        await this.pullRequest.addPullRequest({
+          owner: repository.owner.login,
+          repository: repository.name,
+          pr_number: body.number,
+          merge_method: 'merge',
+          provider: 'github',
+        })
+      }
+
+      // Labeled by CQ+2
+      if (body.label.name === labels.cqPlusTwo) {
+        // TODO: Maybe should merge only the updated pull request
+        await this.pullRequest.mergeSecondQueue()
+      }
+    }
+  }
+}
