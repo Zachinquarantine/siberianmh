@@ -2,5 +2,8 @@
   "name": "arcadia",
   "private": true,
   "version": "0.0.0",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start:server": "cd server && yarn start"
+  }
 }
