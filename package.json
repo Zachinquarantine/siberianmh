@@ -2,6 +2,7 @@
   "name": "siberianmh",
   "workspaces": [
     "packages/*",
+    "packages/arcadia/*",
     "packages/roads/*"
   ],
   "private": true,
