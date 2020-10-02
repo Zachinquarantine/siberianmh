@@ -4,6 +4,12 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start:server": "cd server && yarn start"
+    "start:server": "cd server && yarn start",
+    "gql:gen-types": "graphql-codegen --config codegen.yml"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.17.10",
+    "@graphql-codegen/typescript": "^1.17.10",
+    "@graphql-codegen/typescript-resolvers": "^1.17.10"
   }
 }
