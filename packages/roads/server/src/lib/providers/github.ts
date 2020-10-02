@@ -1,6 +1,6 @@
 import { Octokit } from '@octokit/rest'
 import { labels } from '../constants'
-import { $TSFixMe, IGetPullRequest } from '../types'
+import { IGetPullRequest, MergeMethods } from '../types'
 
 export class GitHubProvider {
   public octokit: Octokit
@@ -99,13 +99,13 @@ export class GitHubProvider {
     repo: string,
     pr_number: number,
     branch?: string,
-    merge_method?: string,
+    merge_method?: MergeMethods,
   ) {
     await this.octokit.pulls.merge({
       owner,
       repo,
       pull_number: pr_number,
-      merge_method: merge_method as $TSFixMe,
+      merge_method,
     })
 
     if (branch) {

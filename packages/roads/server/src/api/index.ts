@@ -11,6 +11,6 @@ router.get('/', (req, res) => {
   })
 })
 
-router.get('/gh/handle-event', handleWebhook)
+router.post('/gh/handle-event', handleWebhook)
 
 export const apiRoutes = router

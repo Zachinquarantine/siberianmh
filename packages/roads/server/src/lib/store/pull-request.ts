@@ -144,4 +144,32 @@ export class PullRequestStore {
       }
     }
   }
+
+  public async checkPullRequests() {
+    const prs = await DBPullRequest.find({ where: { state: 'open' } })
+
+    for (const pr of prs) {
+      const { data: ghPr } = await this.github.getPull({
+        owner: pr.owner,
+        repo: pr.repository,
+        pull_request: pr.pr_number,
+      })
+
+      const secondLabel = await this.github.getSecondLabel(
+        pr.owner,
+        pr.repository,
+        pr.pr_number,
+      )
+      if (!secondLabel) {
+        await this.github.setBasedStatus(pr.owner, pr.repository, pr.pr_number)
+      }
+
+      await DBPullRequest.update(
+        {
+          id: pr.id,
+        },
+        { mergeable: ghPr.mergeable },
+      )
+    }
+  }
 }
