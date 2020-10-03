@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'development') {
+  require('dotenv').config()
+}
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import { ApolloServer } from 'apollo-server-express'
