@@ -1,0 +1,3 @@
+export const SESSION_SECRET =
+  '8790d4f955454a7e44f784e1aa1added233a679cfc0f8897166b236571bd356b' ||
+  process.env.SESSION_SECRET
