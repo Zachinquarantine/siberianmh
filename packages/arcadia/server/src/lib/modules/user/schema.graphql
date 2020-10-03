@@ -1,0 +1,17 @@
+type User {
+  id: Int!
+  username: String!
+  email: String!
+  avatar_url: String!
+  site_admin: Boolean!
+}
+
+type Query {
+  # It's you
+  viewer: User!
+  user(login: String!): User!
+}
+
+type Mutation {
+  register(username: String!, email: String!, password: String!): User!
+}

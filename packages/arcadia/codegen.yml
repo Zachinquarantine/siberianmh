@@ -1,0 +1,13 @@
+overwrite: true
+schema: 'server/src/lib/modules/*/schema.graphql'
+documents: null
+generates:
+  server/src/lib/generated/graphql.ts:
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+    plugins:
+      - 'typescript'
+      - 'typescript-resolvers'
+    config:
+      typesPrefix: I

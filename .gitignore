@@ -10,3 +10,4 @@ e2e-realtesting
 # Global
 *.log
 .env
+.DS_Store
