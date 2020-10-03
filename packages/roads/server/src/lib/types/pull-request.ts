@@ -1,10 +1,11 @@
 export type MergeMethods = 'merge' | 'squash' | 'rebase'
+export type Provider = 'github' | 'gitlab'
 
 export interface IAddPullRequest {
-  owner: string
+  readonly owner: string
   readonly repository: string
   readonly pr_number: number
-  provider: 'github' | 'gitlab'
-  project_id?: number
-  merge_method: MergeMethods
+  readonly provider: Provider
+  readonly project_id?: number
+  readonly merge_method: MergeMethods
 }
