@@ -5,8 +5,13 @@ const store = new UserStore()
 
 export const resolvers: IResolvers = {
   Query: {
-    viewer: () => {
-      return store.getViewer()
+    viewer: (_, __, { req }) => {
+      return store.getViewer(req)
+    },
+  },
+  Mutation: {
+    register: async (_, args) => {
+      return store.register(args)
     },
   },
 }
