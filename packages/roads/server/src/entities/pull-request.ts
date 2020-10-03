@@ -1,5 +1,5 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from 'typeorm'
-import { MergeMethods } from '../lib/types'
+import { MergeMethods, Provider } from '../lib/types'
 
 @Entity('pull_request')
 export class PullRequest extends BaseEntity {
@@ -31,5 +31,5 @@ export class PullRequest extends BaseEntity {
   merge_method: MergeMethods
 
   @Column('varchar', { nullable: false })
-  provider: string
+  provider: Provider
 }

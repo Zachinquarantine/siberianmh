@@ -1,14 +1,11 @@
 import * as express from 'express'
 import { PullRequestStore } from './pull-request'
-import { GitHubProvider } from '../providers'
 import { labels } from '../constants'
 
 export class RepositoryStore {
-  private github: GitHubProvider
   private pullRequest: PullRequestStore
 
   public constructor() {
-    this.github = new GitHubProvider()
     this.pullRequest = new PullRequestStore()
   }
 
@@ -28,6 +25,11 @@ export class RepositoryStore {
         merge_method: 'merge',
         provider: 'github',
       })
+    }
+
+    // Pull Request Synchronized
+    if (body.action === 'synchronize' && body.pull_request) {
+      // TODO: Run the check squite for verifying ability to merge
     }
 
     // Pull Request labeled
