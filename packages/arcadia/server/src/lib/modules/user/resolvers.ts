@@ -13,5 +13,8 @@ export const resolvers: IResolvers = {
     register: async (_, args) => {
       return store.register(args)
     },
+    login: async (_, args, { req }) => {
+      return store.login(args, req)
+    },
   },
 }

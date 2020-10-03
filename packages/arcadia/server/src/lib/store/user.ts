@@ -1,6 +1,10 @@
 import * as express from 'express'
 import { User } from '../../entities/user'
-import { IUser, IMutationRegisterArgs } from '../generated/graphql'
+import {
+  IUser,
+  IMutationRegisterArgs,
+  IMutationLoginArgs,
+} from '../generated/graphql'
 import { ServerError } from '../graphql-error'
 
 export class UserStore {
@@ -37,6 +41,22 @@ export class UserStore {
 
     await user.save()
 
+    return user
+  }
+
+  public async login(
+    args: IMutationLoginArgs,
+    req: express.Request,
+  ): Promise<IUser> {
+    const user = await User.findOne({ where: { email: args.email } })
+
+    if (!user) {
+      throw new ServerError('Unable to find user')
+    }
+
+    // TODO: validate password
+
+    req.session!.userId = user.id
     return user
   }
   //#endregion

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { GraphQLResolveInfo } from 'graphql'
 import { IContext } from '../types/gql-context'
 export type Maybe<T> = T | null
