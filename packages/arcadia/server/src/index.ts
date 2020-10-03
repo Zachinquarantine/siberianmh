@@ -2,6 +2,7 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import { ApolloServer } from 'apollo-server-express'
 
+import { connectTypeorm } from './lib/connect-typeorm'
 import { genSchema } from './lib/gen-schema'
 
 const app = express()
@@ -20,6 +21,8 @@ app.use(bodyParser.json())
 
 server.applyMiddleware({ app, path: '/graphql' })
 
-app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`)
+connectTypeorm().then(() => {
+  app.listen(port, () => {
+    console.log(`Server started at http://localhost:${port}`)
+  })
 })

@@ -1,0 +1,17 @@
+type Article {
+  id: Int!
+  title: String!
+  body: String!
+  body_html: String!
+  author: User
+  created_at: String!
+}
+
+type Query {
+  allArticles(first: Int!): [Article!]!
+  getArticle(articleId: Int!): Article
+}
+
+type Mutation {
+  createArticle(title: String!, text: String!): Article!
+}
