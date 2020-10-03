@@ -50,12 +50,12 @@ export class PullRequestStore {
       pull_request: opts.pr_number,
     })
 
-    await this.github.createStatus(
-      opts.owner,
-      opts.repository,
-      'pending',
-      pr.head.sha,
-    )
+    await this.github.createStatus({
+      owner: opts.owner,
+      repo: opts.repository,
+      state: 'pending',
+      sha: pr.head.sha,
+    })
 
     if (pr.state !== 'open') {
       // TODO: return a error
@@ -76,21 +76,21 @@ export class PullRequestStore {
     await dbPr.save()
 
     if (!this.getMergeability(opts)) {
-      await this.github.createStatus(
-        opts.owner,
-        opts.repository,
-        'failure',
-        pr.head.sha,
-        'Pull Request is not mergeable',
-      )
+      await this.github.createStatus({
+        owner: opts.owner,
+        repo: opts.repository,
+        state: 'failure',
+        sha: pr.head.sha,
+        description: 'Pull Request is not mergeable',
+      })
     } else {
-      await this.github.createStatus(
-        opts.owner,
-        opts.repository,
-        'success',
-        pr.head.sha,
-        'All checks successfully passed',
-      )
+      await this.github.createStatus({
+        owner: opts.owner,
+        repo: opts.repository,
+        state: 'success',
+        sha: pr.head.sha,
+        description: 'All checks successfully passed',
+      })
     }
 
     await this.github.setBasedStatus(

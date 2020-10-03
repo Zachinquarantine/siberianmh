@@ -1,6 +1,6 @@
 import { Octokit } from '@octokit/rest'
 import { labels } from '../constants'
-import { IGetPullRequest, MergeMethods } from '../types'
+import { ICreateStatusOptions, IGetPullRequest, MergeMethods } from '../types'
 
 export class GitHubProvider {
   public octokit: Octokit
@@ -21,19 +21,13 @@ export class GitHubProvider {
     })
   }
 
-  public async createStatus(
-    owner: string,
-    repo: string,
-    state: 'error' | 'failure' | 'pending' | 'success',
-    sha: string,
-    description?: string,
-  ) {
+  public async createStatus(opts: ICreateStatusOptions) {
     return this.octokit.repos.createCommitStatus({
-      owner,
-      repo,
-      sha,
-      state,
-      description,
+      owner: opts.owner,
+      repo: opts.repo,
+      sha: opts.sha,
+      state: opts.state,
+      description: opts.description,
       context: 'roads/commit-queue',
     })
   }
