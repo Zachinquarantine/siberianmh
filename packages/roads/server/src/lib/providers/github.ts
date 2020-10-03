@@ -26,12 +26,14 @@ export class GitHubProvider {
     repo: string,
     state: 'error' | 'failure' | 'pending' | 'success',
     sha: string,
+    description?: string,
   ) {
     return this.octokit.repos.createCommitStatus({
       owner,
       repo,
       sha,
       state,
+      description,
       context: 'roads/commit-queue',
     })
   }

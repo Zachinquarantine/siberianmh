@@ -1,6 +1,7 @@
 import { PullRequest as DBPullRequest } from '../../entities/pull-request'
 import { GitHubProvider } from '../providers'
-import { IAddPullRequest } from '../types'
+import { timer } from '../timer'
+import { IAddPullRequest, Mergeability } from '../types'
 
 export class PullRequestStore {
   private github: GitHubProvider
@@ -74,12 +75,13 @@ export class PullRequestStore {
 
     await dbPr.save()
 
-    if (!pr.mergeable) {
+    if (!this.getMergeability(opts)) {
       await this.github.createStatus(
         opts.owner,
         opts.repository,
         'failure',
         pr.head.sha,
+        'Pull Request is not mergeable',
       )
     } else {
       await this.github.createStatus(
@@ -87,6 +89,7 @@ export class PullRequestStore {
         opts.repository,
         'success',
         pr.head.sha,
+        'All checks successfully passed',
       )
     }
 
@@ -97,6 +100,41 @@ export class PullRequestStore {
     )
 
     return dbPr
+  }
+
+  private checkMergeability = async (pr: IAddPullRequest) => {
+    const {
+      data: { mergeable },
+    } = await this.github.getPull({
+      owner: pr.owner,
+      repo: pr.repository,
+      pull_request: pr.pr_number,
+    })
+
+    if (mergeable === true) {
+      return Mergeability.MERGEABLE
+    } else if (mergeable === false) {
+      return Mergeability.UNMERGEABLE
+    } else {
+      return Mergeability.UNKNOWN
+    }
+  }
+
+  private getMergeability = async (pr: IAddPullRequest): Promise<boolean> => {
+    let isMergeable = Mergeability.UNKNOWN
+    let retriesLeft = 3
+
+    while (isMergeable !== Mergeability.MERGEABLE && retriesLeft > 0) {
+      isMergeable = await this.checkMergeability(pr)
+
+      if (isMergeable !== Mergeability.MERGEABLE) {
+        // wait some time before we check again
+        await timer(5_000)
+        retriesLeft--
+      }
+    }
+
+    return isMergeable === Mergeability.MERGEABLE
   }
 
   public async mergeSecondQueue() {

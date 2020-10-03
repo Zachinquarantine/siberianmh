@@ -5,7 +5,13 @@ export interface IAddPullRequest {
   readonly owner: string
   readonly repository: string
   readonly pr_number: number
-  readonly provider: Provider
+  provider: Provider
   readonly project_id?: number
   readonly merge_method: MergeMethods
+}
+
+export enum Mergeability {
+  MERGEABLE,
+  UNMERGEABLE,
+  UNKNOWN,
 }
