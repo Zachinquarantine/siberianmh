@@ -1,13 +1,14 @@
 overwrite: true
 schema: 'server/src/lib/modules/*/schema.graphql'
 documents: null
+hooks:
+  afterOneFileWrite:
+    - prettier --write
 generates:
   server/src/lib/generated/graphql.ts:
-    hooks:
-      afterOneFileWrite:
-        - prettier --write
     plugins:
       - 'typescript'
       - 'typescript-resolvers'
     config:
+      contextType: ../types/gql-context#IContext
       typesPrefix: I

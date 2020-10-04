@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import { GraphQLResolveInfo } from 'graphql'
+import { IContext } from '../types/gql-context'
 export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
@@ -51,12 +52,18 @@ export type IQueryUserArgs = {
 export type IMutation = {
   __typename?: 'Mutation'
   createArticle: IArticle
+  login: IUser
   register: IUser
 }
 
 export type IMutationCreateArticleArgs = {
   title: Scalars['String']
   text: Scalars['String']
+}
+
+export type IMutationLoginArgs = {
+  email: Scalars['String']
+  password: Scalars['String']
 }
 
 export type IMutationRegisterArgs = {
@@ -73,6 +80,9 @@ export type IUser = {
   avatar_url: Scalars['String']
   site_admin: Scalars['Boolean']
 }
+
+export type WithIndex<TObject> = TObject & Record<string, any>
+export type ResolversObject<TObject> = WithIndex<TObject>
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
 
@@ -189,7 +199,7 @@ export type DirectiveResolverFn<
 ) => TResult | Promise<TResult>
 
 /** Mapping between all available schema types and the resolvers types */
-export type IResolversTypes = {
+export type IResolversTypes = ResolversObject<{
   Article: ResolverTypeWrapper<IArticle>
   Int: ResolverTypeWrapper<Scalars['Int']>
   String: ResolverTypeWrapper<Scalars['String']>
@@ -197,10 +207,10 @@ export type IResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>
   User: ResolverTypeWrapper<IUser>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
-}
+}>
 
 /** Mapping between all available schema types and the resolvers parents */
-export type IResolversParentTypes = {
+export type IResolversParentTypes = ResolversObject<{
   Article: IArticle
   Int: Scalars['Int']
   String: Scalars['String']
@@ -208,12 +218,12 @@ export type IResolversParentTypes = {
   Mutation: {}
   User: IUser
   Boolean: Scalars['Boolean']
-}
+}>
 
 export type IArticleResolvers<
-  ContextType = any,
+  ContextType = IContext,
   ParentType extends IResolversParentTypes['Article'] = IResolversParentTypes['Article']
-> = {
+> = ResolversObject<{
   id?: Resolver<IResolversTypes['Int'], ParentType, ContextType>
   title?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   body?: Resolver<IResolversTypes['String'], ParentType, ContextType>
@@ -221,12 +231,12 @@ export type IArticleResolvers<
   author?: Resolver<Maybe<IResolversTypes['User']>, ParentType, ContextType>
   created_at?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}
+}>
 
 export type IQueryResolvers<
-  ContextType = any,
+  ContextType = IContext,
   ParentType extends IResolversParentTypes['Query'] = IResolversParentTypes['Query']
-> = {
+> = ResolversObject<{
   allArticles?: Resolver<
     Array<IResolversTypes['Article']>,
     ParentType,
@@ -246,17 +256,23 @@ export type IQueryResolvers<
     RequireFields<IQueryUserArgs, 'login'>
   >
   viewer?: Resolver<IResolversTypes['User'], ParentType, ContextType>
-}
+}>
 
 export type IMutationResolvers<
-  ContextType = any,
+  ContextType = IContext,
   ParentType extends IResolversParentTypes['Mutation'] = IResolversParentTypes['Mutation']
-> = {
+> = ResolversObject<{
   createArticle?: Resolver<
     IResolversTypes['Article'],
     ParentType,
     ContextType,
     RequireFields<IMutationCreateArticleArgs, 'title' | 'text'>
+  >
+  login?: Resolver<
+    IResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<IMutationLoginArgs, 'email' | 'password'>
   >
   register?: Resolver<
     IResolversTypes['User'],
@@ -264,23 +280,23 @@ export type IMutationResolvers<
     ContextType,
     RequireFields<IMutationRegisterArgs, 'username' | 'email' | 'password'>
   >
-}
+}>
 
 export type IUserResolvers<
-  ContextType = any,
+  ContextType = IContext,
   ParentType extends IResolversParentTypes['User'] = IResolversParentTypes['User']
-> = {
+> = ResolversObject<{
   id?: Resolver<IResolversTypes['Int'], ParentType, ContextType>
   username?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   email?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   avatar_url?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   site_admin?: Resolver<IResolversTypes['Boolean'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}
+}>
 
-export type IResolvers<ContextType = any> = {
+export type IResolvers<ContextType = IContext> = ResolversObject<{
   Article?: IArticleResolvers<ContextType>
   Query?: IQueryResolvers<ContextType>
   Mutation?: IMutationResolvers<ContextType>
   User?: IUserResolvers<ContextType>
-}
+}>

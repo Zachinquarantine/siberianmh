@@ -13,7 +13,7 @@ import { SESSION_SECRET } from './lib/constants'
 import { redis } from './lib/redis'
 
 const app = express()
-const RedisStore = connectRedis(session as any)
+const RedisStore = connectRedis(session)
 const port = 5000
 
 const server = new ApolloServer({
@@ -32,9 +32,10 @@ app.use(
   session({
     store: new RedisStore({
       client: redis,
+      disableTouch: true,
     }),
     name: 'arcadia_session',
-    secret: SESSION_SECRET,
+    secret: SESSION_SECRET as string,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -45,7 +46,7 @@ app.use(
   }),
 )
 
-server.applyMiddleware({ app, path: '/graphql' })
+server.applyMiddleware({ app, path: '/graphql', cors: false })
 
 connectTypeorm().then(() => {
   app.listen(port, () => {
