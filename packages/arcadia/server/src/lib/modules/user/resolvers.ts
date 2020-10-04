@@ -10,8 +10,8 @@ export const resolvers: IResolvers = {
     },
   },
   Mutation: {
-    register: async (_, args) => {
-      return store.register(args)
+    register: async (_, args, { req }) => {
+      return store.register(args, req)
     },
     login: async (_, args, { req }) => {
       return store.login(args, req)
