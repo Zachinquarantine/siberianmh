@@ -83,6 +83,11 @@ async function main() {
     return process.exit(0)
   }
 
+  // GitLab
+  if (process.env.GITLAB_CI) {
+    console.log('GitLab CI currently is not supported.')
+  }
+
   console.log('Unable to idenfity the CI provider.')
   return process.exit(1)
 }
