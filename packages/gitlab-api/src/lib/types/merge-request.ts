@@ -5,6 +5,13 @@ export interface IGetMergeRequestOptions {
   readonly merge_request_iid: number
 }
 
+export interface IUpdateMergeRequestOptions {
+  readonly project_id: number
+  readonly merge_request_iid: number
+
+  add_labels: string
+}
+
 export interface IGitLabUser {
   readonly id: number
   readonly name: string

@@ -1,6 +1,12 @@
 import axios, { AxiosResponse, Method as AxiosMethod } from 'axios'
 import { IOptions } from './types'
 
+export interface IRequestOptions<T = any> {
+  readonly url: string
+  method?: AxiosMethod
+  readonly data?: T
+}
+
 export class Base {
   private hostname: string = 'https://gitlab.com'
   private token: string | null = null
@@ -28,25 +34,19 @@ export class Base {
   }
 
   protected async request<T = unknown, U = any>(
-    request: string,
-    data?: T,
-  ): Promise<AxiosResponse<U>>
-  protected async request<T = unknown, U = any>(
-    request: string,
-    method: AxiosMethod,
-    data?: T,
+    request: IRequestOptions<T>,
   ): Promise<AxiosResponse<U>> {
-    if (!method) {
-      method = 'GET'
+    if (!request.method) {
+      request.method = 'GET'
     }
 
-    const url = `${this.hostname}/api/v4/${request}`
+    const url = `${this.hostname}/api/v4/${request.url}`
 
     const result = await axios(url, {
-      method,
+      method: request.method,
       responseType: 'json',
       headers: this.generateHeaders(),
-      data,
+      data: request.method,
     })
 
     return result
