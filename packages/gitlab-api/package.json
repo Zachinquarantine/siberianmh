@@ -1,0 +1,22 @@
+{
+  "name": "@siberianmh/gitlab-api",
+  "description": "A minimal GitLab API wrapper",
+  "version": "0.0.0",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "directory": "packages/gitlab-api",
+    "url": "https://github.com/siberianmh/siberianmh"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "yarn build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "axios": "^0.20.0"
+  }
+}
