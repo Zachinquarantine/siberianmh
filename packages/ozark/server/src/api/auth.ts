@@ -11,7 +11,7 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
       callbackURL:
         process.env.NODE_ENV === 'development'
-          ? 'http://localhost:5000/auth/github/callback'
+          ? 'http://localhost:5000/api/auth/github/callback'
           : '',
       scope: ['user', 'repo'],
     },

@@ -3,14 +3,14 @@ import { Octokit, RestEndpointMethodTypes } from '@octokit/rest'
 import { IUser } from '@ozark/types'
 
 export const getMe = (req: express.Request, res: express.Response) => {
-  if (req.user) {
+  if (!req.user) {
     return res.json({
       message: 'Not authenticated',
       status: 403,
     })
   }
 
-  const user = (req.user as unknown) as IUser
+  const user = req.user as IUser
 
   return res.json(user.user)
 }
