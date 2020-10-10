@@ -1,5 +1,8 @@
 # GitLab API
 
+> 🚦 This project implements API endpoints what are we would to use itself, if
+> you need other API endpoints, feel free to contribute or open issue
+
 ## Installing
 
 ```sh
@@ -9,9 +12,6 @@ npm install @siberianmh/gitlab-api
 ```
 
 ## Usage
-
-> 🚦 This project implements API endpoints what are we would to use itself, if
-> you need other API endpoints, feel free to contribute or open issue
 
 ```ts
 import { GitLab } from '@siberianmh/gitlab-api'
