@@ -3,6 +3,7 @@
   "workspaces": [
     "packages/*",
     "packages/arcadia/*",
+    "packages/ozark/*",
     "packages/roads/*"
   ],
   "private": true,
