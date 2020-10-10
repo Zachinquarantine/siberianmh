@@ -7,7 +7,7 @@ export interface ICreateJobStatus {
   readonly name: string
   readonly sha: string
   readonly branch: string
-  readonly result: string
+  readonly result: IResult
   readonly html_url?: string
   readonly repository: number
 }
