@@ -8,7 +8,6 @@ import * as passport from 'passport'
 import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 import * as redis from 'redis'
-import * as cors from 'cors'
 
 import { ciJobsQueue, notificationsQueue } from './lib/queue'
 import { createTypeormConnection } from './lib/connect-typeorm'
@@ -38,13 +37,11 @@ app.use(
     resave: false,
     saveUninitialized: true,
     name: 'ozark.session',
-  }),
-)
-
-app.use(
-  cors({
-    credentials: true,
-    origin: 'http://localhost:3000',
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production' ? true : false,
+      maxAge: 1000 * 60 * 60 * 24 * 9999,
+    },
   }),
 )
 

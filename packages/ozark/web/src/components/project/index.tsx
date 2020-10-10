@@ -115,7 +115,11 @@ export class ProjectPage extends React.Component<
                     </Text>
                     {getIconForResult(status.result)}
                     <Text ml={2}>
-                      <a href={status.html_url} target="_blank">
+                      <a
+                        href={status.html_url}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
                         {status.html_url}
                       </a>{' '}
                       - {status.sha}
