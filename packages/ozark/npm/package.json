@@ -1,0 +1,18 @@
+{
+  "name": "@ozark/handler",
+  "description": "The handler module for Ozark service",
+  "version": "0.0.4",
+  "main": "src/index.js",
+  "license": "MIT",
+  "bin": "./src/index.js",
+  "repository": {
+    "directory": "packages/ozark/npm",
+    "url": "https://github.com/siberianmh/siberianmh"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "axios": "^0.20.0"
+  }
+}
