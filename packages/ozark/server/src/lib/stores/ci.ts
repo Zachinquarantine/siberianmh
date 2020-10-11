@@ -5,7 +5,6 @@ import { ciJobsQueue, notificationsQueue } from '../queue'
 import { Octokit, RestEndpointMethodTypes } from '@octokit/rest'
 import { IJob, ICreateJobStatus, IUser } from '@ozark/types'
 import { v4 } from 'uuid'
-import { paginateRest } from '@octokit/plugin-paginate-rest'
 import { waiter } from '../waiter'
 import { RepoJobs, RepoJobsRuns } from '../../entities/status'
 import axios from 'axios'
@@ -365,8 +364,7 @@ ${checkForFail.map((check) => `- ${check.html_url}`).join('\n')}
 
   public async getAllRepositories(req: express.Request) {
     const user = req.user as IUser
-    const customOctokit = Octokit.plugin(paginateRest)
-    const github = new customOctokit({ auth: user.accessToken })
+    const github = new Octokit({ auth: user.accessToken })
 
     const allRepos: RestEndpointMethodTypes['repos']['listForAuthenticatedUser']['response']['data'] = await github.paginate(
       'GET /user/repos',

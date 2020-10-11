@@ -7,7 +7,6 @@
     "start": "cross-env NODE_ENV=development nodemon ./src/index.ts"
   },
   "dependencies": {
-    "@octokit/plugin-paginate-rest": "^2.4.0",
     "@octokit/rest": "^18.0.6",
     "body-parser": "^1.19.0",
     "bull": "^3.14.0",
