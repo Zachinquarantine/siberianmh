@@ -9,6 +9,8 @@ import { paginateRest } from '@octokit/plugin-paginate-rest'
 import { waiter } from '../waiter'
 import { RepoJobs, RepoJobsRuns } from '../../entities/status'
 import axios from 'axios'
+import * as url from 'url'
+import { allowedHosts } from '../allowed-hosts'
 import { User } from '../../entities/user'
 
 export class CIStore {
@@ -144,6 +146,11 @@ export class CIStore {
 You can check the logs for that buils by the links below:
 ${checkForFail.map((check) => `- ${check.html_url}`).join('\n')}
 `
+
+      const host = url.parse(repository.webhook_url).host
+      if (!allowedHosts.includes(host!)) {
+        return
+      }
 
       // Slack
       if (repository.webhook_url.startsWith('https://hooks.slack.com')) {

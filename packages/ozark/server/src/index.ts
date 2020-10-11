@@ -7,6 +7,7 @@ import * as bodyParser from 'body-parser'
 import * as passport from 'passport'
 import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
+import * as csrf from 'csurf'
 import * as redis from 'redis'
 
 import { ciJobsQueue, notificationsQueue } from './lib/queue'
@@ -46,6 +47,7 @@ app.use(
 )
 
 app.use(passport.initialize(), passport.session())
+app.use(csrf({ cookie: true }))
 
 app.use('/api', apiRoutes)
 
