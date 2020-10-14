@@ -10,7 +10,7 @@ export class GitLab extends Base {
   public constructor(opts?: IOptions) {
     super(opts)
 
-    this.commits = new CommitsResource()
-    this.mergeRequest = new MergeRequest()
+    this.commits = new CommitsResource(opts)
+    this.mergeRequest = new MergeRequest(opts)
   }
 }
