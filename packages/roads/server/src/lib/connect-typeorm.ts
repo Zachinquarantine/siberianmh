@@ -1,9 +1,10 @@
 import { createConnection } from 'typeorm'
+import { PullRequest } from '../entities/pull-request'
+import { User } from '../entities/user'
 
 export const connectTypeorm = () => {
-  return process.env.NODE_ENV === 'production'
-    ? createConnection()
-    : createConnection({
+  return process.env.NODE_ENV === 'development'
+    ? createConnection({
         type: 'mysql',
         host: 'localhost',
         port: 3306,
@@ -21,5 +22,17 @@ export const connectTypeorm = () => {
           migrationsDir: 'src/migration',
           subscribersDir: 'src/subscriber',
         },
+      })
+    : createConnection({
+        type: 'mysql',
+        host: process.env.MYSQL_HOST || 'localhost',
+        port: 3306,
+        username: process.env.MYSQL_USERNAME || 'root',
+        password: process.env.MYSQL_PASSWORD || 'root',
+        database: process.env.MYSQL_DB || 'siberianmh_roads',
+        synchronize: true,
+        logging: true,
+        entities: [PullRequest, User],
+        charset: 'utf8mb4_unicode_ci',
       })
 }

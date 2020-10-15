@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "target": "es2019",
-    "module": "commonjs"
+    "module": "commonjs",
+    // We really don't want this
+    "skipLibCheck": true
   },
   "exclude": ["node_modules", "**/builld/**/*", "**/dist/**/*"]
 }

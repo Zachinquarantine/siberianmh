@@ -9,6 +9,8 @@ RUN yarn --frozen-lockfile
 
 COPY ./packages/roads/server/ ./packages/roads/server/
 
+RUN yarn workspace @roads/server build
+
 EXPOSE 5000
 
-CMD [ "yarn", "ts-node ./packages/roads/server/index.ts" ]
+CMD [ "node", "packages/roads/server/dist/index.js" ]
