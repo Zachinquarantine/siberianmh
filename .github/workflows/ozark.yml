@@ -3,8 +3,14 @@ name: Ozark
 on:
   push:
     branches: [master]
+    paths:
+      - 'packages/ozark/**'
+      - 'services/docker/ozark/**'
   pull_request:
     branches: [master]
+    paths:
+      - 'packages/ozark/**'
+      - 'services/docker/ozark/**'
 
 jobs:
   build-web:

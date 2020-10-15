@@ -3,8 +3,12 @@ name: NPM Packages - roggy
 on:
   push:
     branches: [master]
+    paths:
+      - 'packages/roggy/**'
   pull_request:
     branches: [master]
+    paths:
+      - 'packages/roggy/**'
 
 jobs:
   build:

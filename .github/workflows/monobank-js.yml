@@ -3,8 +3,12 @@ name: NPM Packages - monobank-js
 on:
   push:
     branches: [master]
+    paths:
+      - 'packages/monobank-js/**'
   pull_request:
     branches: [master]
+    paths:
+      - 'packages/monobank-js/**'
 
 jobs:
   build:

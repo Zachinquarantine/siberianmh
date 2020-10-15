@@ -3,8 +3,14 @@ name: Roads
 on:
   push:
     branches: [master]
+    paths:
+      - 'packages/roads/**'
+      - 'services/docker/roads/**'
   pull_request:
     branches: [master]
+    paths:
+      - 'packages/roads/**'
+      - 'services/docker/roads/**'
 
 jobs:
   docker-build:
