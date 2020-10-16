@@ -1,9 +1,8 @@
 import { createConnection } from 'typeorm'
 
 export async function createTypeormConnection() {
-  return process.env.NODE_ENV === 'production'
-    ? createConnection()
-    : createConnection({
+  return process.env.NODE_ENV === 'development'
+    ? createConnection({
         type: 'mysql',
         host: 'localhost',
         port: 3306,
@@ -22,4 +21,5 @@ export async function createTypeormConnection() {
           subscribersDir: 'src/subscriber',
         },
       })
+    : createConnection()
 }

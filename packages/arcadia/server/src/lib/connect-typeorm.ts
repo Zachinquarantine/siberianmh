@@ -1,9 +1,8 @@
 import { createConnection } from 'typeorm'
 
 export const connectTypeorm = () => {
-  return process.env.NODE_ENV === 'production'
-    ? createConnection()
-    : createConnection({
+  return process.env.NODE_ENV === 'development'
+    ? createConnection({
         type: 'mysql',
         host: 'localhost',
         port: 3306,
@@ -22,4 +21,5 @@ export const connectTypeorm = () => {
           subscribersDir: 'src/subscriber',
         },
       })
+    : createConnection()
 }
