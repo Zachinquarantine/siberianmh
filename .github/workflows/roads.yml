@@ -1,5 +1,8 @@
 name: Roads
 
+# TODO:
+#   - Push the version tag on workflow_dispatch event?
+
 on:
   push:
     branches: [master]
@@ -24,5 +27,16 @@ jobs:
           node-version: 14
       - name: Build Docker Image
         run: |
-          docker info
-          docker build --pull -f "services/docker/roads/Dockerfile" -t siberianmh/siberianmh/roads:latest .
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
+          docker pull ghcr.io/siberianmh/roads:latest || true
+          docker build --pull -f "services/docker/roads/Dockerfile" -t ghcr.io/siberianmh/roads:latest --cache-from ghcr.io/siberianmh/roads:latest .
+      # We always publish unstable builds under :latest tag
+      - name: Publish Latest Docker Image
+        if: ${{ github.ref == 'ref/head/master'}}
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
+          docker pull ghcr.io/siberianmh/roads:latest
+          docker build --pull -f "services/docker/roads/Dockerfile" -t ghcr.io/siberianmh/roads:latest --cache-from ghcr.io/siberianmh/roads:latest .
+          docker push ghcr.io/siberianmh/roads:latest
+        env:
+          CR_PAT: ${{ secrets.CR_PAT }}
