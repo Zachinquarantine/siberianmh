@@ -1,0 +1,28 @@
+name: Scheduled Jobs
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  gen-dependabot-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Generate Dependabot Config
+        run: |
+          git config user.email "55543306+pacificocean-bot@users.noreply.github.com"
+          git config user.name "Pacific Ocean Bot"
+
+          yarn install
+          yarn workspace @sib-tools/gen-dependabot-yml run
+
+          git add .
+          git commit -am "build: regenerate .github/dependabot.yml"
+          git push -u origin master
