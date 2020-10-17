@@ -1,7 +1,11 @@
 import { PullRequest as DBPullRequest } from '../../entities/pull-request'
 import { GitHubProvider } from '../providers'
 import { timer } from '../timer'
-import { IAddPullRequest, Mergeability } from '../types'
+import {
+  IAddPullRequest,
+  ISyncronizePullRequestOptions,
+  Mergeability,
+} from '../types'
 
 export class PullRequestStore {
   private github: GitHubProvider
@@ -83,6 +87,9 @@ export class PullRequestStore {
         sha: pr.head.sha,
         description: 'Pull Request is not mergeable',
       })
+
+      dbPr.mergeable = false
+      await dbPr.save()
     } else {
       await this.github.createStatus({
         owner: opts.owner,
@@ -91,6 +98,9 @@ export class PullRequestStore {
         sha: pr.head.sha,
         description: 'All checks successfully passed',
       })
+
+      dbPr.mergeable = true
+      await dbPr.save()
     }
 
     await this.github.setBasedStatus(
@@ -102,7 +112,81 @@ export class PullRequestStore {
     return dbPr
   }
 
-  private checkMergeability = async (pr: IAddPullRequest) => {
+  public async syncronizePullRequest(opts: ISyncronizePullRequestOptions) {
+    if (opts.provider === 'github') {
+      this.syncGHPullRequest(opts)
+    } else if (opts.provider === 'gitlab') {
+      // TODO: Add support for GitLab
+      return
+    }
+
+    return
+  }
+
+  private syncGHPullRequest = async (opts: ISyncronizePullRequestOptions) => {
+    const { data: pr } = await this.github.getPull({
+      owner: opts.owner,
+      repo: opts.repository,
+      pull_request: opts.pr_number,
+    })
+
+    const dbPr = await DBPullRequest.findOne({
+      where: {
+        owner: opts.owner,
+        repository: opts.repository,
+        pr_number: opts.pr_number,
+      },
+    })
+
+    if (pr.state !== 'open') {
+      // TODO: return a error
+      return false
+    }
+
+    if (!dbPr) {
+      // TODO: return a error
+      return false
+    }
+
+    await this.github.createStatus({
+      owner: opts.owner,
+      repo: opts.repository,
+      state: 'pending',
+      sha: pr.head.sha,
+    })
+
+    if (!this.getMergeability(opts)) {
+      await this.github.createStatus({
+        owner: opts.owner,
+        repo: opts.repository,
+        state: 'failure',
+        sha: pr.head.sha,
+        description: 'Pull Request is not mergeable',
+      })
+
+      dbPr.mergeable = false
+      await dbPr.save()
+    } else {
+      await this.github.createStatus({
+        owner: opts.owner,
+        repo: opts.repository,
+        state: 'success',
+        sha: pr.head.sha,
+        description: 'All checks successfully passed',
+      })
+
+      dbPr.mergeable = true
+      await dbPr.save()
+    }
+
+    return
+  }
+
+  private checkMergeability = async (pr: {
+    owner: string
+    repository: string
+    pr_number: number
+  }) => {
     const {
       data: { mergeable },
     } = await this.github.getPull({
@@ -120,7 +204,11 @@ export class PullRequestStore {
     }
   }
 
-  private getMergeability = async (pr: IAddPullRequest): Promise<boolean> => {
+  private getMergeability = async (pr: {
+    owner: string
+    repository: string
+    pr_number: number
+  }): Promise<boolean> => {
     let isMergeable = Mergeability.UNKNOWN
     let retriesLeft = 3
 
