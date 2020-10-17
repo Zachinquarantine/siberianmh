@@ -4,7 +4,8 @@
     "packages/*",
     "packages/arcadia/*",
     "packages/ozark/*",
-    "packages/roads/*"
+    "packages/roads/*",
+    "tools/*"
   ],
   "private": true,
   "repository": "https://github.com/siberianmh/siberianmh.git",
