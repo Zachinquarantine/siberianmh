@@ -1,22 +1,17 @@
-name: Roads
-
-# TODO:
-#   - Push the version tag on workflow_dispatch event?
+name: Uwulectron
 
 on:
   push:
     branches: [master]
     paths:
-      - 'packages/roads/**'
-      - 'services/docker/roads/**'
+      - 'packages/uwulectron-discord-bot/**'
   pull_request:
     branches: [master]
     paths:
-      - 'packages/roads/**'
-      - 'services/docker/roads/**'
+      - 'packages/uwulectron-discord-bot/**'
 
 jobs:
-  build-server:
+  compile:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +24,7 @@ jobs:
         run: yarn install --ignore-engines
       - name: Compile server
         run: |
-          cd packages/roads/server
+          cd packages/uwulectron-discord-bot
           yarn build
 
   docker-build:
@@ -44,15 +39,9 @@ jobs:
       - name: Build Docker Image
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
-          docker pull ghcr.io/siberianmh/roads:latest || true
-          docker build --pull -f "services/docker/roads/Dockerfile" -t ghcr.io/siberianmh/roads:latest --cache-from ghcr.io/siberianmh/roads:latest .
-      # We always publish unstable builds under :latest tag
+          docker pull ghcr.io/siberianmh/uwulectron:latest || true
+          docker build --pull -f "services/docker/uwulectron/Dockerfile" -t ghcr.io/siberianmh/uwulectron:latest --cache-from ghcr.io/siberianmh/uwulectron:latest .
       - name: Publish Latest Docker Image
         if: github['ref'] == 'refs/heads/master'
         run: |
-          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
-          docker pull ghcr.io/siberianmh/roads:latest || true
-          docker build --pull -f "services/docker/roads/Dockerfile" -t ghcr.io/siberianmh/roads:latest --cache-from ghcr.io/siberianmh/roads:latest .
           docker push ghcr.io/siberianmh/roads:latest
-        env:
-          CR_PAT: ${{ secrets.CR_PAT }}

@@ -1,0 +1,25 @@
+{
+  "name": "@siberianmh/uwulectron",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon ./src/index.ts",
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "cookiecord": "^0.4.17",
+    "discord.js": "^12.3.1",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.28"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.10",
+    "@types/ws": "^7.2.7",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "ts-node": "^9.0.0"
+  }
+}

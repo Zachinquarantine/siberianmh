@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 14
       - name: Install dependencies
-        run: yarn
+        run: yarn install --ignore-engines
       - name: Run release
         run: |
           git config user.email "55543306+pacificocean-bot@users.noreply.github.com"
