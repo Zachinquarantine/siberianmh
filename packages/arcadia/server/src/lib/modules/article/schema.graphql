@@ -4,14 +4,15 @@ type Article {
   body: String!
   body_html: String!
   author: User
-  created_at: String!
+  created_at: Date!
 }
 
 type Query {
   allArticles(first: Int!): [Article!]!
-  getArticle(articleId: Int!): Article
+  getArticle(articleId: Int, articleName: String): Article
 }
 
 type Mutation {
   createArticle(title: String!, text: String!): Article!
+  deleteArticle(id: Int!): Boolean!
 }

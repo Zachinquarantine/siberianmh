@@ -31,7 +31,7 @@ export class Article extends BaseEntity {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  author: User | number
+  author: User
 
   @CreateDateColumn()
   created_at: Date

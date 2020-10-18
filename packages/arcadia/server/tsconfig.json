@@ -3,13 +3,13 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "allowJs": true,
+    "outDir": "./dist",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "sourceMap": true,
-    "noEmit": true,
     "skipLibCheck": true
   },
   "include": ["src/**/*.ts"],

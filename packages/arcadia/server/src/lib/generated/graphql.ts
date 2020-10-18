@@ -1,6 +1,8 @@
-/* eslint-disable */
-
-import { GraphQLResolveInfo } from 'graphql'
+import {
+  GraphQLResolveInfo,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig,
+} from 'graphql'
 import { IContext } from '../types/gql-context'
 export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -17,6 +19,7 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
+  Date: any
 }
 
 export type IArticle = {
@@ -26,7 +29,7 @@ export type IArticle = {
   body: Scalars['String']
   body_html: Scalars['String']
   author?: Maybe<IUser>
-  created_at: Scalars['String']
+  created_at: Scalars['Date']
 }
 
 export type IQuery = {
@@ -42,7 +45,8 @@ export type IQueryAllArticlesArgs = {
 }
 
 export type IQueryGetArticleArgs = {
-  articleId: Scalars['Int']
+  articleId?: Maybe<Scalars['Int']>
+  articleName?: Maybe<Scalars['String']>
 }
 
 export type IQueryUserArgs = {
@@ -52,6 +56,7 @@ export type IQueryUserArgs = {
 export type IMutation = {
   __typename?: 'Mutation'
   createArticle: IArticle
+  deleteArticle: Scalars['Boolean']
   login: IUser
   register: IUser
 }
@@ -59,6 +64,10 @@ export type IMutation = {
 export type IMutationCreateArticleArgs = {
   title: Scalars['String']
   text: Scalars['String']
+}
+
+export type IMutationDeleteArticleArgs = {
+  id: Scalars['Int']
 }
 
 export type IMutationLoginArgs = {
@@ -80,9 +89,6 @@ export type IUser = {
   avatar_url: Scalars['String']
   site_admin: Scalars['Boolean']
 }
-
-export type WithIndex<TObject> = TObject & Record<string, any>
-export type ResolversObject<TObject> = WithIndex<TObject>
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
 
@@ -199,44 +205,46 @@ export type DirectiveResolverFn<
 ) => TResult | Promise<TResult>
 
 /** Mapping between all available schema types and the resolvers types */
-export type IResolversTypes = ResolversObject<{
+export type IResolversTypes = {
   Article: ResolverTypeWrapper<IArticle>
   Int: ResolverTypeWrapper<Scalars['Int']>
   String: ResolverTypeWrapper<Scalars['String']>
   Query: ResolverTypeWrapper<{}>
   Mutation: ResolverTypeWrapper<{}>
-  User: ResolverTypeWrapper<IUser>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
-}>
+  Date: ResolverTypeWrapper<Scalars['Date']>
+  User: ResolverTypeWrapper<IUser>
+}
 
 /** Mapping between all available schema types and the resolvers parents */
-export type IResolversParentTypes = ResolversObject<{
+export type IResolversParentTypes = {
   Article: IArticle
   Int: Scalars['Int']
   String: Scalars['String']
   Query: {}
   Mutation: {}
-  User: IUser
   Boolean: Scalars['Boolean']
-}>
+  Date: Scalars['Date']
+  User: IUser
+}
 
 export type IArticleResolvers<
   ContextType = IContext,
   ParentType extends IResolversParentTypes['Article'] = IResolversParentTypes['Article']
-> = ResolversObject<{
+> = {
   id?: Resolver<IResolversTypes['Int'], ParentType, ContextType>
   title?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   body?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   body_html?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   author?: Resolver<Maybe<IResolversTypes['User']>, ParentType, ContextType>
-  created_at?: Resolver<IResolversTypes['String'], ParentType, ContextType>
+  created_at?: Resolver<IResolversTypes['Date'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
+}
 
 export type IQueryResolvers<
   ContextType = IContext,
   ParentType extends IResolversParentTypes['Query'] = IResolversParentTypes['Query']
-> = ResolversObject<{
+> = {
   allArticles?: Resolver<
     Array<IResolversTypes['Article']>,
     ParentType,
@@ -247,7 +255,7 @@ export type IQueryResolvers<
     Maybe<IResolversTypes['Article']>,
     ParentType,
     ContextType,
-    RequireFields<IQueryGetArticleArgs, 'articleId'>
+    RequireFields<IQueryGetArticleArgs, never>
   >
   user?: Resolver<
     IResolversTypes['User'],
@@ -256,17 +264,23 @@ export type IQueryResolvers<
     RequireFields<IQueryUserArgs, 'login'>
   >
   viewer?: Resolver<IResolversTypes['User'], ParentType, ContextType>
-}>
+}
 
 export type IMutationResolvers<
   ContextType = IContext,
   ParentType extends IResolversParentTypes['Mutation'] = IResolversParentTypes['Mutation']
-> = ResolversObject<{
+> = {
   createArticle?: Resolver<
     IResolversTypes['Article'],
     ParentType,
     ContextType,
     RequireFields<IMutationCreateArticleArgs, 'title' | 'text'>
+  >
+  deleteArticle?: Resolver<
+    IResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<IMutationDeleteArticleArgs, 'id'>
   >
   login?: Resolver<
     IResolversTypes['User'],
@@ -280,23 +294,29 @@ export type IMutationResolvers<
     ContextType,
     RequireFields<IMutationRegisterArgs, 'username' | 'email' | 'password'>
   >
-}>
+}
+
+export interface IDateScalarConfig
+  extends GraphQLScalarTypeConfig<IResolversTypes['Date'], any> {
+  name: 'Date'
+}
 
 export type IUserResolvers<
   ContextType = IContext,
   ParentType extends IResolversParentTypes['User'] = IResolversParentTypes['User']
-> = ResolversObject<{
+> = {
   id?: Resolver<IResolversTypes['Int'], ParentType, ContextType>
   username?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   email?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   avatar_url?: Resolver<IResolversTypes['String'], ParentType, ContextType>
   site_admin?: Resolver<IResolversTypes['Boolean'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
+}
 
-export type IResolvers<ContextType = IContext> = ResolversObject<{
+export type IResolvers<ContextType = IContext> = {
   Article?: IArticleResolvers<ContextType>
   Query?: IQueryResolvers<ContextType>
   Mutation?: IMutationResolvers<ContextType>
+  Date?: GraphQLScalarType
   User?: IUserResolvers<ContextType>
-}>
+}

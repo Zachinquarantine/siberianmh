@@ -24,7 +24,6 @@ export class UserStore {
   //#endregion
 
   //#region Public API Mutations
-  // TODO: Hash the password
   public async register(
     args: IMutationRegisterArgs,
     req: express.Request,
@@ -68,6 +67,18 @@ export class UserStore {
     }
 
     req.session!.userId = user.id
+    return user
+  }
+  //#endregion
+
+  //#region Internal API
+  public async getUser(id: number) {
+    const user = await User.findOne({ where: { id: id } })
+
+    if (!user) {
+      return false
+    }
+
     return user
   }
   //#endregion
