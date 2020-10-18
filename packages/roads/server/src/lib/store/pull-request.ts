@@ -298,4 +298,11 @@ export class PullRequestStore {
       )
     }
   }
+
+  //#region API Requests
+  public getAllPullRequests = async () => {
+    const prs = await DBPullRequest.find()
+    return prs
+  }
+  //#endregion
 }

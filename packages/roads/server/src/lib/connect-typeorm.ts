@@ -1,6 +1,6 @@
 import { createConnection } from 'typeorm'
+import { ACL } from '../entities/acl'
 import { PullRequest } from '../entities/pull-request'
-import { User } from '../entities/user'
 
 export const connectTypeorm = () => {
   return process.env.NODE_ENV === 'development'
@@ -32,7 +32,7 @@ export const connectTypeorm = () => {
         database: process.env.MYSQL_DB || 'siberianmh_roads',
         synchronize: true,
         logging: true,
-        entities: [PullRequest, User],
+        entities: [ACL, PullRequest],
         charset: 'utf8mb4_unicode_ci',
       })
 }

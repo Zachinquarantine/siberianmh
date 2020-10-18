@@ -7,16 +7,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-@Entity('user')
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
+@Entity('acl')
+export class ACL extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
   id: number
 
   @Column('varchar')
-  username: string
-
-  @Column('varchar')
-  avatar_url: string
+  token: string
 
   @CreateDateColumn()
   created_at: Date
