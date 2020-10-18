@@ -9,6 +9,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],
+  ignorePatterns: ['**/generated/*.ts', '**/generated/*.js'],
   rules: {
     // TypeScript
     '@typescript-eslint/naming-convention': [
