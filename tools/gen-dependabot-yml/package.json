@@ -1,0 +1,14 @@
+{
+  "name": "@sib-tools/gen-dependabot-yml",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "run": "ts-node ./src/index.ts"
+  },
+  "dependencies": {
+    "@sib-tools/utils": "^0.0.0",
+    "js-yaml": "^3.14.0"
+  }
+}

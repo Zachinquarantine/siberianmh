@@ -29,6 +29,14 @@ export class RepositoryStore {
 
     // Pull Request Synchronized
     if (body.action === 'synchronize' && body.pull_request) {
+      const { repository } = body
+
+      await this.pullRequest.syncronizePullRequest({
+        owner: repository.owner.login,
+        repository: repository.name,
+        pr_number: body.number,
+        provider: 'github',
+      })
       // TODO: Run the check squite for verifying ability to merge
     }
 
