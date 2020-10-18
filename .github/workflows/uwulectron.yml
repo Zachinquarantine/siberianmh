@@ -44,4 +44,4 @@ jobs:
       - name: Publish Latest Docker Image
         if: github['ref'] == 'refs/heads/master'
         run: |
-          docker push ghcr.io/siberianmh/roads:latest
+          docker push ghcr.io/siberianmh/uwulectron:latest
