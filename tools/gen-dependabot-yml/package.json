@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "run": "ts-node ./src/index.ts"
+    "main": "ts-node ./src/index.ts"
   },
   "dependencies": {
     "@sib-tools/utils": "^0.0.0",

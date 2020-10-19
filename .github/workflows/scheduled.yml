@@ -21,7 +21,7 @@ jobs:
           git config user.name "Pacific Ocean Bot"
 
           yarn install
-          yarn workspace @sib-tools/gen-dependabot-yml run
+          yarn workspace @sib-tools/gen-dependabot-yml run main
 
           git add .
           git commit -am "build: regenerate .github/dependabot.yml"
