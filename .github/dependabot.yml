@@ -13,6 +13,12 @@ updates:
       time: '03:00'
     open-pull-requests-limit: 999
   - package-ecosystem: docker
+    directory: /services/docker/arcadia
+    schedule:
+      interval: daily
+      time: '03:00'
+    open-pull-requests-limit: 999
+  - package-ecosystem: docker
     directory: /services/docker/ozark
     schedule:
       interval: daily
@@ -20,6 +26,12 @@ updates:
     open-pull-requests-limit: 999
   - package-ecosystem: docker
     directory: /services/docker/roads
+    schedule:
+      interval: daily
+      time: '03:00'
+    open-pull-requests-limit: 999
+  - package-ecosystem: docker
+    directory: /services/docker/uwulectron
     schedule:
       interval: daily
       time: '03:00'
