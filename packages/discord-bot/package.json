@@ -1,0 +1,18 @@
+{
+  "name": "@siberianmh/discord-bot",
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ./src/index.ts"
+  },
+  "dependencies": {
+    "@octokit/core": "^3.1.2",
+    "cookiecord": "^0.4.17",
+    "discord.js": "^12.3.1",
+    "semver": "^7.3.2"
+  },
+  "devDependencies": {
+    "@types/semver": "^7.3.4"
+  }
+}
