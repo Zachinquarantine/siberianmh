@@ -23,6 +23,11 @@ jobs:
           yarn install
           yarn workspace @sib-tools/gen-dependabot-yml run main
 
+          if [ "$(git status --porcelain)" = "" ]; then
+            echo "no new content found; goodbye!"
+            exit
+          fi
+
           git add .
           git commit -am "build: regenerate .github/dependabot.yml"
           git push -u origin master
