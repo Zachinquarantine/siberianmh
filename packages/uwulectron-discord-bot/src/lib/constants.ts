@@ -1,8 +1,8 @@
 export const ELECTRON_BLUE = '#358397'
 
-const __dev__ = process.env.NODE_ENV === 'development'
+const dev = process.env.NODE_ENV === 'development'
 
-// DevGround it's just a test playground
+// DevGround is just test playground
 const devGround = {
   categories: {
     ask: '762718419254116352',
@@ -12,7 +12,7 @@ const devGround = {
   askHelpChannelId: '762719468736217168',
 }
 
-// Electron
+// Electron, the production
 const electron = {
   categories: {
     ask: '745038318479081483',
@@ -22,12 +22,13 @@ const electron = {
   askHelpChannelId: '748284419525312553',
 }
 
-export const categories = __dev__ ? devGround.categories : electron.categories
-export const askHelpChannelId = __dev__
+export const categories = dev ? devGround.categories : electron.categories
+export const askHelpChannelId = dev
   ? devGround.askHelpChannelId
   : electron.askHelpChannelId
 
 export const dormantChannelTimeout = 28_800
 export const dormantChannelLoop = 10000
 export const token = process.env.DISCORD_TOKEN
+export const sha = process.env.__SHA__ || 'development'
 export const port = process.env.PORT || 1337
