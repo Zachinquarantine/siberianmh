@@ -70,6 +70,15 @@ export class HelpChanModule extends Module {
             )
           : '**No Channels in Ongoing Category**',
       )
+      .addField(
+        'Locked Channels',
+        this.busyChannels.size >= 1
+          ? Array.from(this.busyChannels).map(
+              (channel) =>
+                `<#${channel}> is locked please use !helpchan unlock #channel-name`,
+            )
+          : 'No channels is locked',
+      )
       .setFooter(
         this.client.user?.username,
         this.client.user?.displayAvatarURL(),
@@ -267,6 +276,17 @@ export class HelpChanModule extends Module {
 
     this.busyChannels.delete(claimedChannel.id)
     await msg.channel.send(`👌 successfully claimed ${claimedChannel}`)
+  }
+
+  @command({
+    inhibitors: [isTrustedMember],
+  })
+  async removelock(msg: Message) {
+    if (this.busyChannels.has(msg.channel.id)) {
+      this.busyChannels.delete(msg.channel.id)
+      return await msg.channel.send(':ok_hand:')
+    }
+    return await msg.channel.send('Channel is not locked')
   }
   //#endregion
 

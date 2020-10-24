@@ -1,6 +1,6 @@
 export const ELECTRON_BLUE = '#358397'
 
-const dev = process.env.NODE_ENV === 'development'
+const __dev__ = process.env.NODE_ENV === 'development'
 
 // DevGround is just test playground
 const devGround = {
@@ -20,12 +20,18 @@ const electron = {
     dormant: '763429965726351392',
   },
   askHelpChannelId: '748284419525312553',
+  roles: {
+    admin: '745038904532402237',
+    maintainer: '745039155498582067',
+    member: '745066812424585409',
+  },
 }
 
-export const categories = dev ? devGround.categories : electron.categories
-export const askHelpChannelId = dev
+export const categories = __dev__ ? devGround.categories : electron.categories
+export const askHelpChannelId = __dev__
   ? devGround.askHelpChannelId
   : electron.askHelpChannelId
+export const trustedRoleId = __dev__ ? '' : electron.roles.maintainer
 
 export const dormantChannelTimeout = 28_800
 export const dormantChannelLoop = 10000
