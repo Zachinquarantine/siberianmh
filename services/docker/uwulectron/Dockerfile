@@ -1,6 +1,6 @@
 ARG COMMIT_SHA
 FROM node:14
-LABEL commit ${COMMIT_SHA}
+LABEL commit-git ${COMMIT_SHA}
 
 WORKDIR /usr/src/app
 
