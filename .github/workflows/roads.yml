@@ -45,12 +45,13 @@ jobs:
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
           docker pull ghcr.io/siberianmh/roads:latest || true
-          docker build --pull -f "services/docker/roads/Dockerfile" -t ghcr.io/siberianmh/roads:latest --cache-from ghcr.io/siberianmh/roads:latest .
+          docker build --pull
+            -f "services/docker/roads/Dockerfile" --build-arg GIT_COMMIT=${GITHUB_SHA}
+            -t ghcr.io/siberianmh/roads:latest --cache-from ghcr.io/siberianmh/roads:latest .
       # We always publish unstable builds under :latest tag
       - name: Publish Latest Docker Image
         if: github['ref'] == 'refs/heads/master'
         run: |
-          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
           docker push ghcr.io/siberianmh/roads:latest
         env:
           CR_PAT: ${{ secrets.CR_PAT }}
