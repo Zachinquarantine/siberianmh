@@ -30,5 +30,5 @@ export const askHelpChannelId = dev
 export const dormantChannelTimeout = 28_800
 export const dormantChannelLoop = 10000
 export const token = process.env.DISCORD_TOKEN
-export const sha = process.env.COMMIT_SHA || 'development'
+export const sha = process.env.COMMIT_SHA || 'master'
 export const port = process.env.PORT || 1337

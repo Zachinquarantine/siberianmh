@@ -35,10 +35,10 @@ export class AdminModule extends Module {
         msg.guild?.iconURL({ dynamic: true }) || undefined,
       )
       .setColor(ELECTRON_BLUE)
-      .setTitle('Nothing to see here')
+      .setTitle('Something about me and my status')
       .addField(
         'Git Commit',
-        `\`https://github.com/siberianmh/siberianmh/commit/${sha}\``,
+        `[${sha}](https://github.com/siberianmh/siberianmh/commit/${sha})`,
       )
 
     return msg.channel.send({ embed: messageEmbed })
