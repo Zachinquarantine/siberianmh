@@ -1,5 +1,6 @@
-ARG COMMIT_SHA
 FROM node:14
+
+ARG COMMIT_SHA
 LABEL commit ${COMMIT_SHA}
 
 WORKDIR /usr/src/app

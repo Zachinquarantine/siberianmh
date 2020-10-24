@@ -36,7 +36,10 @@ export class AdminModule extends Module {
       )
       .setColor(ELECTRON_BLUE)
       .setTitle('Nothing to see here')
-      .addField('Git Commit', `\`${sha}\``)
+      .addField(
+        'Git Commit',
+        `\`https://github.com/siberianmh/siberianmh/commit/${sha}\``,
+      )
 
     return msg.channel.send({ embed: messageEmbed })
   }
