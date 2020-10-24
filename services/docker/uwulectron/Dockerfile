@@ -1,10 +1,10 @@
-ARG COMMIT
+ARG COMMIT_SHA
 FROM node:14
-LABEL commit=$COMMIT
+LABEL commit ${COMMIT_SHA}
 
 WORKDIR /usr/src/app
 
-ENV COMMIT_SHA=$COMMIT
+ENV COMMIT_SHA ${COMMIT_SHA}
 
 COPY package.json yarn.lock tsconfig.json ./
 COPY ./packages/uwulectron-discord-bot/package.json ./packages/uwulectron-discord-bot/
