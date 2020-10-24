@@ -8,6 +8,7 @@ export const defaultData = {
         interval: 'daily',
         time: '03:00',
       },
+      milestone: 1,
       'open-pull-requests-limit': 999,
     },
     {
@@ -17,6 +18,7 @@ export const defaultData = {
         interval: 'daily',
         time: '03:00',
       },
+      milestone: 1,
       'open-pull-requests-limit': 999,
     },
   ],

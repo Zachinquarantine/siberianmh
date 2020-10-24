@@ -16,6 +16,7 @@ async function main() {
         interval: 'daily',
         time: '03:00',
       },
+      milestone: 1,
       'open-pull-requests-limit': 999,
     }
 
