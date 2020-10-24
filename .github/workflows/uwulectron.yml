@@ -5,10 +5,12 @@ on:
     branches: [master]
     paths:
       - 'packages/uwulectron-discord-bot/**'
+      - 'services/uwulectron/**'
   pull_request:
     branches: [master]
     paths:
       - 'packages/uwulectron-discord-bot/**'
+      - 'services/uwulectron/**'
 
 jobs:
   compile:
