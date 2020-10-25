@@ -3,6 +3,7 @@ import { GitHubProvider } from '../providers'
 import { timer } from '../timer'
 import {
   IAddPullRequest,
+  IClosePullRequest,
   ISyncronizePullRequestOptions,
   Mergeability,
 } from '../types'
@@ -45,6 +46,28 @@ export class PullRequestStore {
     }
 
     return false
+  }
+
+  public async closePullRequest(opts: IClosePullRequest) {
+    const dbPullRequest = await DBPullRequest.findOne({
+      where: {
+        owner: opts.owner,
+        repository: opts.repository,
+        pr_number: opts.pr_number,
+        provider: opts.provider,
+      },
+    })
+
+    if (!dbPullRequest) {
+      // TODO: maybe need to do something
+      return
+    }
+
+    if (opts.provider === 'github') {
+      return this.closeGHPullRequest(opts)
+    }
+
+    return
   }
 
   public async addGitHubPullRequest(opts: IAddPullRequest) {
@@ -110,6 +133,37 @@ export class PullRequestStore {
     )
 
     return dbPr
+  }
+
+  public async closeGHPullRequest(opts: IClosePullRequest) {
+    try {
+      await this.github.removeFirstLabel(
+        opts.owner,
+        opts.repository,
+        opts.pr_number,
+      )
+    } catch {
+      // Just ignore
+    }
+
+    try {
+      await this.github.removeSecondLabel(
+        opts.owner,
+        opts.repository,
+        opts.pr_number,
+      )
+    } catch {
+      // Also ignore, everything can be
+    }
+
+    await DBPullRequest.delete({
+      owner: opts.owner,
+      repository: opts.repository,
+      pr_number: opts.pr_number,
+      provider: opts.provider,
+    })
+
+    return
   }
 
   public async syncronizePullRequest(opts: ISyncronizePullRequestOptions) {

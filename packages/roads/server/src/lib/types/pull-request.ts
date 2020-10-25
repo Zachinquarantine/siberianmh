@@ -10,6 +10,13 @@ export interface IAddPullRequest {
   readonly merge_method: MergeMethods
 }
 
+export interface IClosePullRequest {
+  readonly owner: string
+  readonly repository: string
+  readonly pr_number: number
+  readonly provider: Provider
+}
+
 export interface ISyncronizePullRequestOptions {
   readonly owner: string
   readonly repository: string

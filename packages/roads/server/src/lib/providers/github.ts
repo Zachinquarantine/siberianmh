@@ -90,6 +90,19 @@ export class GitHubProvider {
     })
   }
 
+  public async removeSecondLabel(
+    owner: string,
+    repo: string,
+    pr_number: number,
+  ) {
+    return await this.octokit.issues.removeLabel({
+      owner,
+      repo,
+      issue_number: pr_number,
+      name: this.secondBasedLabel,
+    })
+  }
+
   public async mergePullRequest(
     owner: string,
     repo: string,

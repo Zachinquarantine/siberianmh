@@ -37,7 +37,6 @@ export class RepositoryStore {
         pr_number: body.number,
         provider: 'github',
       })
-      // TODO: Run the check squite for verifying ability to merge
     }
 
     // Pull Request labeled
@@ -60,6 +59,18 @@ export class RepositoryStore {
         // TODO: Maybe should merge only the updated pull request
         await this.pullRequest.mergeSecondQueue()
       }
+    }
+
+    // Pull Request Closed
+    if (body.action === 'closed' && body.pull_request) {
+      const { repository } = body
+
+      await this.pullRequest.closePullRequest({
+        owner: repository.owner.login,
+        repository: repository.name,
+        pr_number: body.number,
+        provider: 'github',
+      })
     }
   }
 }
