@@ -18,7 +18,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "graphql": "^15.3.0",
-    "ioredis": "^4.17.3",
+    "ioredis": "^4.19.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.28"
   },
