@@ -1,6 +1,7 @@
 import { createConnection } from 'typeorm'
 import { Autorole } from '../entities/autorole'
 import { HelpUser } from '../entities/help-user'
+import { Uwubox } from '../entities/uwubox'
 
 export const connectTypeorm = () => {
   return process.env.NODE_ENV === 'development'
@@ -33,7 +34,7 @@ export const connectTypeorm = () => {
         // It's bad but we don't have here any strong data in db
         synchronize: true,
         logging: true,
-        entities: [Autorole, HelpUser],
+        entities: [Autorole, HelpUser, Uwubox],
         charset: 'utf8mb4_unicode_ci',
       })
 }
