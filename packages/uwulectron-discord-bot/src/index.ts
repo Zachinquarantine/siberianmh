@@ -11,6 +11,7 @@ import {
   FiddleModule,
   HelpChanModule,
   HelpMessageModule,
+  UwuboxModule,
 } from './modules'
 import { connectTypeorm } from './lib/connect-typeorm'
 import { token, port } from './lib/constants'
@@ -27,6 +28,7 @@ for (const mod of [
   EtcModule,
   HelpChanModule,
   HelpMessageModule,
+  UwuboxModule,
 ]) {
   client.registerModule(mod)
 }

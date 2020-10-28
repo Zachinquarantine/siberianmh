@@ -3,7 +3,7 @@ export const ELECTRON_BLUE = '#358397'
 const __dev__ = process.env.NODE_ENV === 'development'
 
 // DevGround is just test playground
-const devGround = {
+export const devGround = {
   categories: {
     ask: '762718419254116352',
     ongoing: '762718460265889792',
@@ -24,6 +24,10 @@ const electron = {
     admin: '745038904532402237',
     maintainer: '745039155498582067',
     member: '745066812424585409',
+  },
+  channels: {
+    adminBotInteractions: '771069886696914994',
+    botInteractions: '746446369845280929',
   },
 }
 
