@@ -46,7 +46,7 @@ export class HelpChanModule extends Module {
 
   private HELP_CHANNEL_STATUS_EMBED = (
     msg: Message,
-    availableChannels: Collection<string, GuildChannel>,
+    availableChannels: Collection<string, GuildChannel> | undefined,
     ongoingChannels: HelpUser[],
   ) =>
     new MessageEmbed()
@@ -57,7 +57,7 @@ export class HelpChanModule extends Module {
       .setTitle('Help Channels Status')
       .addField(
         'Available',
-        availableChannels.size >= 1
+        availableChannels && availableChannels.size >= 1
           ? availableChannels.map((channel) => `<#${channel.id}>`)
           : '**All channels is on Ongoing state**',
       )
@@ -185,7 +185,7 @@ export class HelpChanModule extends Module {
         const ongoing = await HelpUser.find()
 
         return msg.channel.send({
-          embed: this.HELP_CHANNEL_STATUS_EMBED(msg, available!, ongoing!),
+          embed: this.HELP_CHANNEL_STATUS_EMBED(msg, available, ongoing),
         })
       }
 
