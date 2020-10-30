@@ -41,13 +41,24 @@ export class HelpChanModule extends Module {
         `will be yours until it has been inactive for ${
           dormantChannelTimeout / 60 / 60
         } hours or is closed ` +
-        'manually with `!close`. When that happens, it will be set to **available** and moved into the **Help: Available** category.\n\n',
+        'manually with `!close`. When that happens, it will be set to **dormant** and moved into the **Help: Dormant** category.\n\n',
+    )
+
+  private DORMANT_EMBED = new MessageEmbed()
+    .setColor(ELECTRON_BLUE)
+    .setDescription(
+      'This help channel has been marked as **dormant**, and has been moved into the **Help: Dormant** category at the ' +
+        'bottom of the channel list. It is no longer possible to send messages in this channel until it becomes available again.\n\n' +
+        'if You question does not answered yet, you can claim a new help channel from the **Help: Available** category' +
+        ' by simply asking your question again. Consider rephrasing the question to maximize your chance of getting ' +
+        ' a good answer.',
     )
 
   private HELP_CHANNEL_STATUS_EMBED = (
     msg: Message,
     availableChannels: Collection<string, GuildChannel> | undefined,
     ongoingChannels: HelpUser[],
+    dormantChannels: Collection<string, GuildChannel> | undefined,
   ) =>
     new MessageEmbed()
       .setAuthor(
@@ -69,6 +80,12 @@ export class HelpChanModule extends Module {
                 `<#${channel.channelId}> - Owner <@${channel.userId}>`,
             )
           : '**No Channels in Ongoing Category**',
+      )
+      .addField(
+        'Dormant',
+        dormantChannels && dormantChannels.size >= 1
+          ? dormantChannels.map((channel) => `<#${channel.id}>`)
+          : '**All channels is on Available state**',
       )
       .addField(
         'Locked Channels',
@@ -116,6 +133,7 @@ export class HelpChanModule extends Module {
     await msg.pin()
     await this.addCooldown(msg.member, msg.channel)
     await this.moveChannel(msg.channel, categories.ongoing)
+    await this.ensureAskChannels(msg.guild)
 
     this.busyChannels.delete(msg.channel.id)
   }
@@ -184,8 +202,17 @@ export class HelpChanModule extends Module {
 
         const ongoing = await HelpUser.find()
 
+        const dormant = msg.guild?.channels.cache
+          .filter((channel) => channel.parentID === categories.dormant)
+          .filter((channel) => channel.name.startsWith(this.CHANNEL_PREFIX))
+
         return msg.channel.send({
-          embed: this.HELP_CHANNEL_STATUS_EMBED(msg, available, ongoing),
+          embed: this.HELP_CHANNEL_STATUS_EMBED(
+            msg,
+            available,
+            ongoing,
+            dormant,
+          ),
         })
       }
 
@@ -317,9 +344,11 @@ export class HelpChanModule extends Module {
 
     await HelpUser.delete({ channelId: channel.id })
 
-    await this.moveChannel(channel, categories.ask)
-    await channel.send({ embed: this.AVAILABLE_EMBED })
+    await this.moveChannel(channel, categories.dormant)
 
+    await channel.send({ embed: this.DORMANT_EMBED })
+
+    await this.ensureAskChannels(channel.guild)
     this.busyChannels.delete(channel.id)
   }
 
@@ -337,6 +366,54 @@ export class HelpChanModule extends Module {
     await chan.send({ embed: this.AVAILABLE_EMBED })
 
     return chan
+  }
+
+  private async ensureAskChannels(guild: Guild): Promise<void | Message> {
+    const askChannels = guild.channels.cache
+      .filter((channel) => channel.parentID === categories.ask)
+      .filter((channel) => channel.name.startsWith(this.CHANNEL_PREFIX))
+
+    if (askChannels.size >= 2) {
+      return
+    }
+
+    const dormantChannels = guild.channels.cache.filter(
+      (channel) => channel.parentID === categories.dormant,
+    )
+
+    if (dormantChannels.size < 1) {
+      // Just ignore the case where we don't have dormant
+      return
+    }
+
+    const dormant = guild.channels.cache.find(
+      (x) => x.parentID === categories.dormant,
+    ) as TextChannel
+
+    if (dormant) {
+      await this.moveChannel(dormant, categories.ask)
+
+      let lastMessage = dormant.messages.cache
+        .array()
+        .reverse()
+        .find((m) => m.author.id === this.client.user?.id)
+
+      if (!lastMessage) {
+        lastMessage = (await dormant.messages.fetch({ limit: 5 }))
+          .array()
+          .find((m) => m.author.id === this.client.user?.id)
+      }
+
+      if (lastMessage) {
+        // If there is a last message (the dormant message) by the bot, just edit it
+        return await lastMessage.edit({ embed: this.AVAILABLE_EMBED })
+      } else {
+        // Otherwise, just send a new message
+        return await dormant.send({ embed: this.AVAILABLE_EMBED })
+      }
+    }
+
+    return await this.ensureAskChannels(guild)
   }
 
   private async checkDormantPossibilities() {

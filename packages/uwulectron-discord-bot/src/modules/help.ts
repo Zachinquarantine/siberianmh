@@ -32,6 +32,7 @@ export class HelpMessageModule extends Module {
         .setDescription(
           `Hello <@${msg.author.id}>! Here is a list of all commands in me. To get detailed description on any specific command, do \`help <command>\``,
         )
+        .addField('**Misc Commands**', '`ping` ► View the latency of the bot')
         .addField(
           '**Help Channel Commands:**',
           '`close` ► Close a __ongoing__ help channel opened by you!',
