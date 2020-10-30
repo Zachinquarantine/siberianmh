@@ -45,12 +45,17 @@ export class HelpMessageModule extends Module {
       return await msg.channel.send({ embed })
     } else {
       const cmd = this.client.commandManager.getByTrigger(cmdTrigger)
+
+      if (!cmd) {
+        return msg.channel.send(`:warning: Command \`${cmdTrigger}\` not found`)
+      }
+
       await msg.channel.send(
-        `Usage: \`${cmd?.triggers.join('|')}${
-          cmd?.args.length ? ' ' : ''
-        }${cmd?.args.map((arg) =>
+        `Usage: \`${cmd.triggers.join('|')}${
+          cmd.args.length ? ' ' : ''
+        }${cmd.args.map((arg) =>
           arg.optional ? `[${arg.type.name}]` : `<${arg.type.name}>`,
-        )}\`${cmd?.description ? `\nDescription: *${cmd?.description}*` : ''}`,
+        )}\`${cmd.description ? `\nDescription: *${cmd.description}*` : ''}`,
       )
     }
   }
