@@ -4,7 +4,7 @@ import * as path from 'path'
 async function main() {
   fs.copySync(
     path.resolve(__dirname, '../public'),
-    path.resolve(__dirname, '../build'),
+    path.resolve(__dirname, '../dist'),
     {
       dereference: true,
       filter: (file) =>

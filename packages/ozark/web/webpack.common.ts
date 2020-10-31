@@ -10,7 +10,7 @@ export const common: webpack.Configuration = {
   },
 
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js',
     publicPath: '/',
   },
@@ -39,15 +39,7 @@ export const common: webpack.Configuration = {
       },
       {
         test: /\.(css|scss)$/,
-        loader: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'sass-loader',
-          },
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
     ],
   },
@@ -62,6 +54,7 @@ export const common: webpack.Configuration = {
       template: 'public/index.html',
       favicon: 'public/favicon.ico',
     }),
+    // @ts-expect-error
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
