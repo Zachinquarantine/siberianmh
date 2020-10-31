@@ -1316,10 +1316,10 @@
   resolved "https://registry.yarnpkg.com/@phc/format/-/format-1.0.0.tgz#b5627003b3216dc4362125b13f48a4daa76680e4"
   integrity sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==
 
-"@primer/components@^20.0.0":
-  version "20.2.0"
-  resolved "https://registry.yarnpkg.com/@primer/components/-/components-20.2.0.tgz#1f7be3be5f9dcdd305d23c286ea8815fe4f7e6a6"
-  integrity sha512-ipPPOZ/gwaolk/gS4woMMDQ5c65AiWwCgtesP3jC9jwWTWma1IQw3shw4ouGzbrkm2/kPl5DnCTn+WmpjHKInA==
+"@primer/components@^20.3.0":
+  version "20.3.0"
+  resolved "https://registry.yarnpkg.com/@primer/components/-/components-20.3.0.tgz#6e71f600e6797a6d21be671ca064b76139746045"
+  integrity sha512-r5ibCW5Q4w9VpS8dE6JX+YMGzGtos4Oi2K11Mh1XfZYw8YOdpznJh7Tn8VfnZWwVsoRnUogsJKhiubDxIwvHXw==
   dependencies:
     "@babel/helpers" "7.9.2"
     "@babel/runtime" "7.9.2"

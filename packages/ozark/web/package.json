@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@ozark/types": "^0.0.0",
-    "@primer/components": "^20.0.0",
+    "@primer/components": "^20.3.0",
     "@primer/css": "^15.2.0",
     "axios": "^0.21.0",
     "axios-hooks": "^2.1.0",
