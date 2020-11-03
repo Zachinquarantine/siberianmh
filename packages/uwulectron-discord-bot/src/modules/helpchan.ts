@@ -131,11 +131,28 @@ export class HelpChanModule extends Module {
     this.busyChannels.add(msg.channel.id)
 
     await msg.pin()
-    await this.addCooldown(msg.member, msg.channel)
+    await this.addCooldown(msg.member, msg.channel, msg)
     await this.moveChannel(msg.channel, categories.ongoing)
     await this.ensureAskChannels(msg.guild)
 
     this.busyChannels.delete(msg.channel.id)
+  }
+
+  @listener({ event: 'messageDelete' })
+  async onQuestionRemoved(msg: Message) {
+    if (
+      !msg.guild ||
+      !msg.member ||
+      msg.channel.type !== 'text' ||
+      !msg.channel.parentID ||
+      msg.channel.parentID !== categories.ongoing ||
+      !msg.channel.name.startsWith(this.CHANNEL_PREFIX) ||
+      this.busyChannels.has(msg.channel.id)
+    ) {
+      return
+    }
+
+    console.log(msg)
   }
 
   @listener({ event: 'message' })
@@ -295,7 +312,7 @@ export class HelpChanModule extends Module {
         .setDescription(msgContent),
     })
     await toPin.pin()
-    await this.addCooldown(member, claimedChannel)
+    await this.addCooldown(member, claimedChannel, toPin)
     await this.moveChannel(claimedChannel, categories.ongoing)
     await claimedChannel.send(
       `${member.user} this channel has been claimed for your question. Please review <#${askHelpChannelId}> for how to get help.`,
@@ -329,10 +346,15 @@ export class HelpChanModule extends Module {
     await channel.edit(data)
   }
 
-  private async addCooldown(member: GuildMember, channel: TextChannel) {
+  private async addCooldown(
+    member: GuildMember,
+    channel: TextChannel,
+    msg: Message,
+  ) {
     const helpUser = new HelpUser()
     helpUser.userId = member.user.id
     helpUser.channelId = channel.id
+    helpUser.messageId = msg.id
     await helpUser.save()
   }
 

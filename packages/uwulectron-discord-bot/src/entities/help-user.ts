@@ -17,6 +17,9 @@ export class HelpUser extends BaseEntity {
   @Column('varchar')
   channelId: string
 
+  @Column('varchar', { nullable: true })
+  messageId: string
+
   @CreateDateColumn()
   created_at: Date
 }
