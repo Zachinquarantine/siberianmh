@@ -14,6 +14,7 @@ import {
   UnfurlModule,
   UwuboxModule,
 } from './modules'
+import { createSettings } from './lib/settings'
 import { connectTypeorm } from './lib/connect-typeorm'
 import { token, port } from './lib/constants'
 import { client } from './lib/discord'
@@ -35,11 +36,23 @@ for (const mod of [
   client.registerModule(mod)
 }
 
-connectTypeorm().then(() => {
+connectTypeorm().then(async () => {
+  await createSettings()
   const server = http.createServer(app)
 
   client.login(token)
-  client.on('ready', () => console.log(`Logged in as ${client.user?.tag}`))
+  client.on('ready', () => {
+    client.user?.setPresence({
+      status: 'idle',
+      activity: {
+        name: 'twitter @electronpuppy',
+        type: 'WATCHING',
+        url: 'https://twitter.com/electronpuppy',
+      },
+    })
+
+    console.log(`Logged in as ${client.user?.tag}`)
+  })
 
   server.listen(port, () =>
     console.log(`app running on http://localhost:${port}`),
