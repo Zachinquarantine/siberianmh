@@ -40,7 +40,7 @@ export const connectTypeorm = () => {
         cache: {
           type: 'ioredis',
           options: {
-            host: 'localhost',
+            host: process.env.REDIS_HOST,
             port: 6379,
           },
         },
