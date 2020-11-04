@@ -1,6 +1,7 @@
 import { createConnection } from 'typeorm'
 import { Autorole } from '../entities/autorole'
 import { HelpUser } from '../entities/help-user'
+import { BotSettings } from '../entities/settings'
 import { Uwubox } from '../entities/uwubox'
 
 export const connectTypeorm = () => {
@@ -34,7 +35,7 @@ export const connectTypeorm = () => {
         // It's bad but we don't have here any strong data in db
         synchronize: true,
         logging: true,
-        entities: [Autorole, HelpUser, Uwubox],
+        entities: [Autorole, HelpUser, Uwubox, BotSettings],
         charset: 'utf8mb4_unicode_ci',
       })
 }
