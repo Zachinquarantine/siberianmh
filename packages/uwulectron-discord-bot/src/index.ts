@@ -6,6 +6,7 @@ import * as express from 'express'
 
 import {
   AdminModule,
+  SettingsModule,
   AutoroleModule,
   EtcModule,
   FiddleModule,
@@ -25,6 +26,7 @@ app.use('/', apiRoutes)
 
 for (const mod of [
   AdminModule,
+  SettingsModule,
   AutoroleModule,
   FiddleModule,
   EtcModule,

@@ -37,5 +37,12 @@ export const connectTypeorm = () => {
         logging: true,
         entities: [Autorole, HelpUser, Uwubox, BotSettings],
         charset: 'utf8mb4_unicode_ci',
+        cache: {
+          type: 'ioredis',
+          options: {
+            host: 'localhost',
+            port: 6379,
+          },
+        },
       })
 }

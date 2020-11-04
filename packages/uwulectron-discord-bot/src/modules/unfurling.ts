@@ -26,13 +26,13 @@ export class UnfurlModule extends Module {
   //#region Listeners
   @listener({ event: 'message' })
   public async maybeNeedUnfuring(msg: Message) {
-    if (!(await getBotSettings())?.enable_unfurling) {
-      return
-    }
-
     let parsed: string[] | null = null
 
     while ((parsed = DSRegex.exec(msg.content))) {
+      if (!(await getBotSettings())?.enable_unfurling) {
+        return
+      }
+
       const server = parsed[2]
       const channel = parsed[3]
       const message = parsed[4]
