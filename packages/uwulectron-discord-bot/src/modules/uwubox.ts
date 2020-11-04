@@ -42,24 +42,22 @@ export class UwuboxModule extends Module {
       )
     }
 
-    const user = await Uwubox.findAndCount({
-      where: { userId: msg.member.id },
-      select: ['id'],
-    })
-
     const duplicate = await Uwubox.findOne({ where: { item: content } })
 
     if (duplicate) {
+      if (duplicate.userId === msg.author.id) {
+        return msg.channel.send(
+          // eslint-disable-next-line
+          `You can't add item what's your added yourself.`,
+        )
+      }
+
       duplicate.count++
       await duplicate.save()
 
       return msg.channel.send(
         `Successfully added \`${content}\` to the Uwubox. (${duplicate.count} times)`,
       )
-    }
-
-    if (user[1] > 5) {
-      return msg.channel.send('You added maximum items to the Uwubox.')
     }
 
     const box = Uwubox.create({
