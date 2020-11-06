@@ -45,11 +45,11 @@ connectTypeorm().then(async () => {
   client.login(token)
   client.on('ready', () => {
     client.user?.setPresence({
-      status: 'idle',
+      status: 'dnd',
       activity: {
-        name: 'twitter @electronpuppy',
-        type: 'WATCHING',
-        url: 'https://twitter.com/electronpuppy',
+        name: 'tw @vhashimotoo',
+        type: 'PLAYING',
+        url: 'https://twitter.com/vhashimotoo',
       },
     })
 
