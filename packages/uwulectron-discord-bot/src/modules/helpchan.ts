@@ -22,6 +22,8 @@ import {
   dormantChannelLoop,
   categories,
   askHelpChannelId,
+  askCooldownRoleId,
+  lockedChannelLoop,
 } from '../lib/constants'
 import { isTrustedMember } from '../lib/inhibitors'
 
@@ -111,6 +113,10 @@ export class HelpChanModule extends Module {
     setInterval(() => {
       this.checkDormantPossibilities()
     }, dormantChannelLoop)
+
+    setInterval(() => {
+      this.ensureNoLockedChannels()
+    }, lockedChannelLoop)
   }
 
   @listener({ event: 'message' })
@@ -181,8 +187,7 @@ export class HelpChanModule extends Module {
       return
     }
 
-    // @ts-expect-error
-    if (msg.channel.parentID !== categories.ongoing) {
+    if ((msg.channel as TextChannel).parentID !== categories.ongoing) {
       return await msg.channel.send(
         ':warning: you can only run this in ongoing help channels.',
       )
@@ -245,6 +250,11 @@ export class HelpChanModule extends Module {
         return msg.channel.send(`Successfully created <#${created.id}> channel`)
       }
 
+      case 'update': {
+        await this.updateHelpChannels(msg.guild!)
+        return msg.channel.send('Successfully updated all help channels')
+      }
+
       // Get the help
       case 'help': {
         return msg.channel.send(
@@ -288,8 +298,6 @@ export class HelpChanModule extends Module {
       .reverse()
       .join('\n')
       .slice(0, 2000)
-
-    console.log(msgContent)
 
     const claimedChannel = msg.guild?.channels.cache.find(
       (channel) =>
@@ -351,6 +359,7 @@ export class HelpChanModule extends Module {
     channel: TextChannel,
     msg: Message,
   ) {
+    await member.roles.add(askCooldownRoleId)
     const helpUser = new HelpUser()
     helpUser.userId = member.user.id
     helpUser.channelId = channel.id
@@ -364,6 +373,16 @@ export class HelpChanModule extends Module {
     const pinned = await channel.messages.fetchPinned()
     await Promise.all(pinned.map((msg) => msg.unpin()))
 
+    const helpUser = await HelpUser.findOne({
+      channelId: channel.id,
+    })
+
+    try {
+      const member = await channel.guild.members.fetch({
+        user: helpUser?.userId,
+      })
+      member.first()?.roles.remove(askCooldownRoleId)
+    } catch {}
     await HelpUser.delete({ channelId: channel.id })
 
     await this.moveChannel(channel, categories.dormant)
@@ -378,8 +397,8 @@ export class HelpChanModule extends Module {
     const chan = await guild.channels.create(`help-${channelName}`, {
       type: 'text',
       topic:
-        'You can claim your own help channel in the Help: Available category.',
-      reason: 'maintain help channel goal',
+        'This is Electron help channel. You can claim your own help channel in the Help: Available category.',
+      reason: 'Maintain help channel goal',
       parent: categories.ask,
     })
 
@@ -388,6 +407,24 @@ export class HelpChanModule extends Module {
     await chan.send({ embed: this.AVAILABLE_EMBED })
 
     return chan
+  }
+
+  private async updateHelpChannels(guild: Guild) {
+    const helpChannels = guild.channels.cache
+      .filter((channel) => channel.parentID === categories.ask)
+      .filter((channel) => channel.parentID === categories.dormant)
+      .filter((channel) => channel.parentID === categories.ongoing)
+      .filter((channel) => channel.name.startsWith(this.CHANNEL_PREFIX))
+
+    for (const channel of helpChannels.array()) {
+      await channel.edit(
+        {
+          topic:
+            'This is Electron help channel. You can claim your own help channel in the Help: Available category.',
+        },
+        'Maintain help channel goal',
+      )
+    }
   }
 
   private async ensureAskChannels(guild: Guild): Promise<void | Message> {
@@ -436,6 +473,13 @@ export class HelpChanModule extends Module {
     }
 
     return await this.ensureAskChannels(guild)
+  }
+
+  // TODO: Do something with locked channels
+  private ensureNoLockedChannels() {
+    if (this.busyChannels.size >= 1) {
+      console.log(this.busyChannels)
+    }
   }
 
   private async checkDormantPossibilities() {
