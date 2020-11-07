@@ -379,12 +379,13 @@ export class HelpChanModule extends Module {
 
     try {
       const member = await channel.guild.members.fetch({
-        user: helpUser?.userId,
+        user: helpUser!.userId,
       })
-      member.first()?.roles.remove(askCooldownRoleId)
-    } catch {}
-    await HelpUser.delete({ channelId: channel.id })
 
+      member.roles.remove(askCooldownRoleId)
+    } catch {}
+
+    await HelpUser.delete({ channelId: channel.id })
     await this.moveChannel(channel, categories.dormant)
 
     await channel.send({ embed: this.DORMANT_EMBED })
@@ -410,11 +411,9 @@ export class HelpChanModule extends Module {
   }
 
   private async updateHelpChannels(guild: Guild) {
-    const helpChannels = guild.channels.cache
-      .filter((channel) => channel.parentID === categories.ask)
-      .filter((channel) => channel.parentID === categories.dormant)
-      .filter((channel) => channel.parentID === categories.ongoing)
-      .filter((channel) => channel.name.startsWith(this.CHANNEL_PREFIX))
+    const helpChannels = guild.channels.cache.filter((channel) =>
+      channel.name.startsWith(this.CHANNEL_PREFIX),
+    )
 
     for (const channel of helpChannels.array()) {
       await channel.edit(

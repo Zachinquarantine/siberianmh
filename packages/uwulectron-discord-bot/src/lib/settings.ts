@@ -12,7 +12,7 @@ export const getBotSettings = async () => {
 }
 
 export const createSettings = async () => {
-  let db = await BotSettings.findOne({ where: { name: 'electron ' } })
+  let db = await BotSettings.findOne({ where: { name: 'electron' } })
 
   if (db) {
     return
