@@ -12,6 +12,7 @@ export const devGround = {
   roles: {
     helpCooldown: '774303512443355172',
   },
+  botInteractionsChannelId: '771109368803491850',
   askHelpChannelId: '762719468736217168',
 }
 
@@ -42,6 +43,9 @@ export const askHelpChannelId = __dev__
 export const askCooldownRoleId = __dev__
   ? devGround.roles.helpCooldown
   : electron.roles.helpCooldown
+export const botInteractionsChannelId = __dev__
+  ? devGround.botInteractionsChannelId
+  : electron.channels.adminBotInteractions
 export const trustedRoleId = __dev__ ? '' : electron.roles.maintainer
 
 export const dormantChannelTimeout = 28_800

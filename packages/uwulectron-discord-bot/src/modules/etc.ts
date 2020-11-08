@@ -4,7 +4,8 @@ import {
   listener,
   Module,
 } from 'cookiecord'
-import { Message } from 'discord.js'
+import { Message, MessageEmbed, TextChannel } from 'discord.js'
+import { botInteractionsChannelId } from '../lib/constants'
 
 export class EtcModule extends Module {
   public constructor(client: CookiecordClient) {
@@ -27,6 +28,22 @@ export class EtcModule extends Module {
     await msg.react('✅')
     await msg.react('❌')
     await msg.react('🤷')
+  }
+
+  @listener({ event: 'ready' })
+  public async onConnect() {
+    const channel = (await this.client.channels.fetch(
+      botInteractionsChannelId,
+    )) as TextChannel
+
+    const embed = new MessageEmbed()
+      .setAuthor(
+        this.client.user?.username,
+        this.client.user?.avatarURL({ dynamic: false }) || undefined,
+      )
+      .setDescription('Connected!')
+
+    return channel.send({ embed })
   }
   //#endregion
 }

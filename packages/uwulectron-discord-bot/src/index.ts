@@ -44,15 +44,6 @@ connectTypeorm().then(async () => {
 
   client.login(token)
   client.on('ready', () => {
-    client.user?.setPresence({
-      status: 'dnd',
-      activity: {
-        name: 'tw @vhashimotoo',
-        type: 'PLAYING',
-        url: 'https://twitter.com/vhashimotoo',
-      },
-    })
-
     console.log(`Logged in as ${client.user?.tag}`)
   })
 
