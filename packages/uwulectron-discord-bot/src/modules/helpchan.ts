@@ -255,6 +255,11 @@ export class HelpChanModule extends Module {
         return msg.channel.send('Successfully updated all help channels')
       }
 
+      case 'ensureask': {
+        await this.ensureAskChannels(msg.guild!)
+        return msg.channel.send('Some magic is happened.')
+      }
+
       // Get the help
       case 'help': {
         return msg.channel.send(
