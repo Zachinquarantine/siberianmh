@@ -32,9 +32,9 @@ export const common: webpack.Configuration = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        loader: 'file-loader',
-        options: {
-          outputPath: 'assets',
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[hash][ext][query]',
         },
       },
       {
@@ -54,7 +54,6 @@ export const common: webpack.Configuration = {
       template: 'public/index.html',
       favicon: 'public/favicon.ico',
     }),
-    // @ts-expect-error
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
