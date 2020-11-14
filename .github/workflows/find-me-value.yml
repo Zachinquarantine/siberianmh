@@ -3,12 +3,12 @@ name: NPM Packages - find-me-value
 on:
   push:
     branches: [master]
-    paths:
-      - 'packages/find-me-value/**'
+    # paths:
+    #   - 'packages/find-me-value/**'
   pull_request:
     branches: [master]
-    paths:
-      - 'packages/find-me-value/**'
+    # paths:
+    #   - 'packages/find-me-value/**'
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
 
     steps:
       - uses: actions/checkout@v2

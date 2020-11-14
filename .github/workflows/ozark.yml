@@ -3,17 +3,17 @@ name: Ozark
 on:
   push:
     branches: [master]
-    paths:
-      - 'packages/ozark/**'
-      - 'services/docker/ozark/**'
+    # paths:
+    #   - 'packages/ozark/**'
+    #   - 'services/docker/ozark/**'
   pull_request:
     branches: [master]
-    paths:
-      - 'packages/ozark/**'
-      - 'services/docker/ozark/**'
+    # paths:
+    #   - 'packages/ozark/**'
+    #   - 'services/docker/ozark/**'
 
 jobs:
-  build-web:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,10 +24,11 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: yarn install --ignore-engines
+      - name: Build Ozark Server
+        run: yarn workspace @ozark/server build
       - name: Build Ozark Web
         run: |
-          cd packages/ozark/web
-          yarn build
+          yarn workspace @ozark/web build
 
   docker-build:
     runs-on: ubuntu-latest

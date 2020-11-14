@@ -3,14 +3,14 @@ name: Uwulectron
 on:
   push:
     branches: [master]
-    paths:
-      - 'packages/uwulectron-discord-bot/**'
-      - 'services/docker/uwulectron/**'
+    # paths:
+    #   - 'packages/uwulectron-discord-bot/**'
+    #   - 'services/docker/uwulectron/**'
   pull_request:
     branches: [master]
-    paths:
-      - 'packages/uwulectron-discord-bot/**'
-      - 'services/docker/uwulectron/**'
+    # paths:
+    #   - 'packages/uwulectron-discord-bot/**'
+    #   - 'services/docker/uwulectron/**'
 
 jobs:
   compile:
