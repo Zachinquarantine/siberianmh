@@ -3,7 +3,7 @@ import { RepositoryStore } from '../lib/store'
 
 const store = new RepositoryStore()
 
-export const handleWebhook = async (
+export const handleGitHubWebhook = async (
   req: express.Request,
   res: express.Response,
 ) => {
@@ -12,5 +12,17 @@ export const handleWebhook = async (
     status: 204,
   })
 
-  await store.handleWebhook(req)
+  await store.handleGitHubWebhook(req)
+}
+
+export const handleGitLabWebhook = async (
+  req: express.Request,
+  res: express.Response,
+) => {
+  res.status(204).json({
+    message: 'Accepted',
+    status: 204,
+  })
+
+  await store.handleGitLabWebhook(req)
 }

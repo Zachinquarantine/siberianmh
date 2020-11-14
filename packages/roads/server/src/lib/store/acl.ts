@@ -8,6 +8,7 @@ export class ACLStore {
 
     if (tokens.length < 1) {
       const created = ACL.create({
+        name: 'Root Token',
         token: uuid.v4(),
       })
 

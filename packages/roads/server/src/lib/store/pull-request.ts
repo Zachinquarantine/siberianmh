@@ -1,5 +1,5 @@
 import { PullRequest as DBPullRequest } from '../../entities/pull-request'
-import { GitHubProvider } from '../providers'
+import { GitHubProvider, GitLabProvider } from '../providers'
 import { timer } from '../timer'
 import {
   IAddPullRequest,
@@ -10,9 +10,11 @@ import {
 
 export class PullRequestStore {
   private github: GitHubProvider
+  private gitlab: GitLabProvider
 
   public constructor() {
     this.github = new GitHubProvider()
+    this.gitlab = new GitLabProvider()
   }
 
   public async addPullRequest(
@@ -45,7 +47,60 @@ export class PullRequestStore {
       return this.addGitHubPullRequest(opts)
     }
 
+    if (opts.provider === 'gitlab') {
+      return this.addGitLabPullRequest(opts)
+    }
+
     return false
+  }
+
+  private async addGitLabPullRequest(opts: IAddPullRequest) {
+    // TODO: Throw a errro
+    if (!opts.project_id) {
+      return false
+    }
+
+    const { data: pr } = await this.gitlab.getPull({
+      project_id: opts.project_id,
+      merge_request_iid: opts.pr_number,
+    })
+
+    await this.gitlab.createStatus({
+      project_id: opts.project_id,
+      state: 'pending',
+      sha: pr.sha,
+    })
+
+    if (pr.state !== 'opened') {
+      // TODO: return a error
+      return false
+    }
+
+    const dbPr = DBPullRequest.create({
+      owner: opts.owner,
+      repository: opts.repository,
+      pr_number: opts.pr_number,
+      gl_project_id: opts.project_id,
+      // TODO: Update this value
+      mergeable: true,
+      html_url: pr.web_url,
+      provider: opts.provider,
+      branch: pr.source_branch,
+      merge_method: opts.merge_method,
+    })
+
+    await this.gitlab.createStatus({
+      project_id: opts.project_id,
+      state: 'success',
+      sha: pr.sha,
+      description: 'All checks successfully passed.',
+    })
+
+    await dbPr.save()
+
+    await this.gitlab.setBasedStatus(opts.project_id, opts.pr_number)
+
+    return dbPr
   }
 
   public async closePullRequest(opts: IClosePullRequest) {

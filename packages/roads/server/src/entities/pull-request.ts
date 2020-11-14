@@ -15,6 +15,9 @@ export class PullRequest extends BaseEntity {
   @Column('int')
   pr_number: number
 
+  @Column('int', { nullable: true })
+  gl_project_id: number
+
   @Column('boolean', { nullable: true })
   mergeable: boolean
 

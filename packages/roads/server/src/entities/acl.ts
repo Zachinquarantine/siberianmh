@@ -13,6 +13,9 @@ export class ACL extends BaseEntity {
   id: number
 
   @Column('varchar')
+  name: string
+
+  @Column('varchar')
   token: string
 
   @CreateDateColumn()

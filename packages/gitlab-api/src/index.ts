@@ -14,3 +14,6 @@ export class GitLab extends Base {
     this.mergeRequest = new MergeRequest(opts)
   }
 }
+
+// Export all types what's we provide
+export * from './lib/types'

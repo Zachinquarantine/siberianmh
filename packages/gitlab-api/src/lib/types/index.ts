@@ -1,8 +1,5 @@
+export * from './commits'
 export * from './merge-request'
-
-export interface IOptions {
-  readonly hostname?: string
-  readonly token?: string
-}
+export * from './options'
 
 export type $TSFixMe = any

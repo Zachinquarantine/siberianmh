@@ -1,6 +1,6 @@
 import * as express from 'express'
 
-import { handleWebhook } from './repository'
+import { handleGitHubWebhook, handleGitLabWebhook } from './repository'
 import { bootstrapRoads } from './base'
 import { generateACL, deleteACL } from './acl'
 import { getAllPullRequests } from './pull-request'
@@ -15,21 +15,21 @@ router.get('/', (req, res) => {
   })
 })
 
-//#region Base API
+//#region Usage
+// Base
 router.get('/bootstrap', bootstrapRoads)
-//#endregion
 
-//#region Tokens
+// Tokens
 router.post('/acl', requiresAuth, generateACL)
 router.delete('/acl/:token', requiresAuth, deleteACL)
-//#endregion
 
-//#region Pull Requests
+// Pull Requests
 router.get('/pull-request', requiresAuth, getAllPullRequests)
-//#endregion
 
-//#region Handle Webhooks
-router.post('/gh/handle-event', handleWebhook)
+// Handle Webhooks
+router.post('/gh/handle-event', handleGitHubWebhook)
+router.post('/gl/handle-event', handleGitLabWebhook)
+
 //#endregion
 
 export const apiRoutes = router

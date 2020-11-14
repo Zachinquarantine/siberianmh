@@ -9,7 +9,12 @@ export class RepositoryStore {
     this.pullRequest = new PullRequestStore()
   }
 
-  public async handleWebhook(req: express.Request) {
+  /**
+   * Handles the GitHub webhooks
+   */
+  public async handleGitHubWebhook(req: express.Request) {
+    // TODO:
+    //  - Should we handle unlabel?
     const { body } = req
 
     console.log(body)
@@ -71,6 +76,32 @@ export class RepositoryStore {
         pr_number: body.number,
         provider: 'github',
       })
+    }
+  }
+
+  /**
+   * Hnadles GitLab webhooks
+   */
+  public async handleGitLabWebhook(req: express.Request) {
+    const { body } = req
+
+    console.log(body)
+
+    // Pull Request Opened
+    if (body.object_attributes.action === 'open') {
+      this.pullRequest.addPullRequest({
+        owner: body.user.username,
+        repository: body.project.name,
+        project_id: body.project.id,
+        merge_method: 'merge',
+        pr_number: body.object_attributes.iid,
+        provider: 'gitlab',
+      })
+    }
+
+    // Pull Request Updated
+    if (body.object_attributes.action === 'update') {
+      console.log('Update pull request')
     }
   }
 }
