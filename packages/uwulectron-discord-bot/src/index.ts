@@ -13,6 +13,7 @@ import {
   HelpMessageModule,
   UnfurlModule,
   UwuboxModule,
+  ReminderModule,
 } from './modules'
 import { createSettings } from './lib/settings'
 import { connectTypeorm } from './lib/connect-typeorm'
@@ -30,6 +31,7 @@ for (const mod of [
   EtcModule,
   HelpChanModule,
   HelpMessageModule,
+  ReminderModule,
   UnfurlModule,
   UwuboxModule,
 ]) {

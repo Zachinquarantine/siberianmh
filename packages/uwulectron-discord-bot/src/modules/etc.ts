@@ -32,6 +32,10 @@ export class EtcModule extends Module {
 
   @listener({ event: 'ready' })
   public async onConnect() {
+    if (process.env.NODE_ENV === 'development') {
+      return
+    }
+
     const channel = (await this.client.channels.fetch(
       botInteractionsChannelId,
     )) as TextChannel
