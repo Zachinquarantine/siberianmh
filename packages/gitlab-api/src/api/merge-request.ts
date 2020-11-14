@@ -3,12 +3,25 @@ import {
   IGetMergeRequestOptions,
   IGitLabMergeRequest,
   IUpdateMergeRequestOptions,
+  IAcceptMergeRequestOptions,
 } from '../lib/types/merge-request'
 
 export class MergeRequest extends Base {
   public async getMergeRequest(opts: IGetMergeRequestOptions) {
     return this.request<any, IGitLabMergeRequest>({
       url: `projects/${opts.project_id}/merge_requests/${opts.merge_request_iid}`,
+    })
+  }
+
+  public async acceptMergeRequest(opts: IAcceptMergeRequestOptions) {
+    const data = {
+      ...opts,
+    }
+
+    return this.request<IAcceptMergeRequestOptions>({
+      url: `projects/${opts.project_id}/merge_requests/${opts.merge_request_iid}/merge`,
+      method: 'PUT',
+      data,
     })
   }
 

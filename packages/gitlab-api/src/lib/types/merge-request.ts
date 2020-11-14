@@ -5,6 +5,18 @@ export interface IGetMergeRequestOptions {
   readonly merge_request_iid: number
 }
 
+export interface IAcceptMergeRequestOptions {
+  readonly project_id: number
+  readonly merge_request_iid: number
+
+  readonly merge_commit_message?: string
+  readonly squash_commit_message?: string
+  readonly squash?: boolean
+  readonly should_remove_source_branch?: boolean
+  readonly merge_when_pipeline_succeeds?: boolean
+  readonly sha?: string
+}
+
 export interface IUpdateMergeRequestOptions {
   readonly project_id: number
   readonly merge_request_iid: number
