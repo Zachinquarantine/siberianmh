@@ -10,7 +10,7 @@
   "dependencies": {
     "@graphql-tools/merge": "^6.2.5",
     "@graphql-tools/schema": "^6.2.4",
-    "apollo-server-express": "^2.18.2",
+    "apollo-server-express": "^2.19.0",
     "argon2": "^0.27.0",
     "body-parser": "^1.19.0",
     "connect-redis": "^5.0.0",
