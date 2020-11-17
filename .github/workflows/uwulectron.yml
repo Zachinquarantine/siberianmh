@@ -48,3 +48,4 @@ jobs:
         if: github['ref'] == 'refs/heads/master'
         run: |
           docker push ghcr.io/siberianmh/uwulectron:latest
+          docker push ghcr.io/siberianmh/uwulectron:${GITHUB_SHA}
