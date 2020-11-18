@@ -24,7 +24,7 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: yarn install --ignore-engines
-      - name: Compile server
+      - name: Compile Uwulectron
         run: |
           cd packages/uwulectron-discord-bot
           yarn build
@@ -40,7 +40,6 @@ jobs:
           node-version: 14
       - name: Build Docker Image
         run: |
-          echo ${GITHUB_SHA}
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
           docker pull ghcr.io/siberianmh/uwulectron:latest || true
           docker build --pull -f "services/docker/uwulectron/Dockerfile" --build-arg COMMIT_SHA=${GITHUB_SHA} -t ghcr.io/siberianmh/uwulectron:latest -t ghcr.io/siberianmh/uwulectron:${GITHUB_SHA} --cache-from ghcr.io/siberianmh/uwulectron:latest .

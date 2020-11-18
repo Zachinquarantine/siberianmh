@@ -17,7 +17,6 @@ import {
 } from 'discord.js'
 import { HelpUser } from '../entities/help-user'
 import {
-  ELECTRON_BLUE,
   dormantChannelTimeout,
   dormantChannelLoop,
   categories,
@@ -25,6 +24,7 @@ import {
   askCooldownRoleId,
   lockedChannelLoop,
   GREEN_BRIGHT,
+  RED,
 } from '../lib/constants'
 import { isTrustedMember } from '../lib/inhibitors'
 
@@ -56,13 +56,15 @@ export class HelpChanModule extends Module {
     )
 
   private DORMANT_EMBED = new MessageEmbed()
-    .setColor(ELECTRON_BLUE)
+    .setColor(RED)
+    .setTitle('❌ Dormant help channel')
     .setDescription(
-      'This help channel has been marked as **dormant**, and has been moved into the **Help: Dormant** category at the ' +
-        'bottom of the channel list. It is no longer possible to send messages in this channel until it becomes available again.\n\n' +
-        'if You question does not answered yet, you can claim a new help channel from the **Help: Available** category' +
-        ' by simply asking your question again. Consider rephrasing the question to maximize your chance of getting ' +
-        ' a good answer.',
+      'This help channel has been marked as **dormant** due by closing. ' +
+        'It is no longer possible to send messages to this channel until ' +
+        'it becomes available again.\n\n' +
+        'If your question does not answer yet, you can ask them in another help' +
+        'channel from the **❓ Help: Available** category by simply asking again.\n\n' +
+        'Consider rephrasing your question to maximize the chance of getting a good answer.',
     )
 
   private HELP_CHANNEL_STATUS_EMBED = (
