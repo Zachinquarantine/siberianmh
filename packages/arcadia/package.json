@@ -8,7 +8,7 @@
     "gql:gen-types": "graphql-codegen --config codegen.yml"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.19.1",
+    "@graphql-codegen/cli": "^1.19.2",
     "@graphql-codegen/typescript": "^1.17.11",
     "@graphql-codegen/typescript-resolvers": "^1.17.11"
   }
