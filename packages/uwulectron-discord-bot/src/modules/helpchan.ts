@@ -24,6 +24,7 @@ import {
   askHelpChannelId,
   askCooldownRoleId,
   lockedChannelLoop,
+  GREEN_BRIGHT,
 } from '../lib/constants'
 import { isTrustedMember } from '../lib/inhibitors'
 
@@ -35,15 +36,23 @@ export class HelpChanModule extends Module {
   private CHANNEL_PREFIX = 'help-'
 
   private AVAILABLE_EMBED = new MessageEmbed()
-    .setColor(ELECTRON_BLUE)
+    .setColor(GREEN_BRIGHT)
+    .setTitle('✅ Available help channel')
     .setDescription(
-      'This help channel is now **available**, which means that ' +
-        'you can claim it by typing your question into it. ' +
-        'Once claimed, the channel will move into the **Help: Ongoing** category, and ' +
-        `will be yours until it has been inactive for ${
-          dormantChannelTimeout / 60 / 60
-        } hours or is closed ` +
-        'manually with `!close`. When that happens, it will be set to **dormant** and moved into the **Help: Dormant** category.\n\n',
+      '**Send your question here to claim the channel**\n' +
+        'This channel will be dedicated to answering your question only. Well try to answer and help you solve the issue.\n\n' +
+        '**Keep in mind:**\n' +
+        // eslint-disable-next-line
+        "• It's always ok to just ask your question. You don't need permission.\n" +
+        '• Explain what you expect to happen and what actually happens.\n' +
+        '• Include a code sample and error message, if you got any.\n\n' +
+        // eslint-disable-next-line
+        "Try to write the best question you can by providing a detailed description and telling us what you've tried already",
+    )
+    .setFooter(
+      `Closes when you send !close or after ${
+        dormantChannelTimeout / 60 / 60
+      } minutes of inactivity`,
     )
 
   private DORMANT_EMBED = new MessageEmbed()

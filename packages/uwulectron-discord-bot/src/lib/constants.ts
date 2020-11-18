@@ -1,4 +1,5 @@
 export const ELECTRON_BLUE = '#358397'
+export const GREEN_BRIGHT = '#32CD32'
 
 const __dev__ = process.env.NODE_ENV === 'development'
 
