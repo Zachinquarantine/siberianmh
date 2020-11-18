@@ -43,7 +43,7 @@ jobs:
           echo ${GITHUB_SHA}
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
           docker pull ghcr.io/siberianmh/uwulectron:latest || true
-          docker build --pull -f "services/docker/uwulectron/Dockerfile" --build-arg COMMIT_SHA=${GITHUB_SHA} -t ghcr.io/siberianmh/uwulectron:latest --cache-from ghcr.io/siberianmh/uwulectron:latest .
+          docker build --pull -f "services/docker/uwulectron/Dockerfile" --build-arg COMMIT_SHA=${GITHUB_SHA} -t ghcr.io/siberianmh/uwulectron:latest -t ghcr.io/siberianmh/uwulectron:${GITHUB_SHA} --cache-from ghcr.io/siberianmh/uwulectron:latest .
       - name: Publish Latest Docker Image
         if: github['ref'] == 'refs/heads/master'
         run: |
