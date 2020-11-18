@@ -52,7 +52,7 @@ export class HelpChanModule extends Module {
     .setFooter(
       `Closes when you send !close or after ${
         dormantChannelTimeout / 60 / 60
-      } minutes of inactivity`,
+      } hours of inactivity`,
     )
 
   private DORMANT_EMBED = new MessageEmbed()
