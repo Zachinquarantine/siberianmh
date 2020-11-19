@@ -22,7 +22,6 @@ import {
   categories,
   askHelpChannelId,
   askCooldownRoleId,
-  lockedChannelLoop,
   GREEN_BRIGHT,
   RED,
 } from '../lib/constants'
@@ -62,7 +61,7 @@ export class HelpChanModule extends Module {
       'This help channel has been marked as **dormant** due by closing. ' +
         'It is no longer possible to send messages to this channel until ' +
         'it becomes available again.\n\n' +
-        'If your question does not answer yet, you can ask them in another help' +
+        'If your question does not answer yet, you can ask them in another help ' +
         'channel from the **❓ Help: Available** category by simply asking again.\n\n' +
         'Consider rephrasing your question to maximize the chance of getting a good answer.',
     )
@@ -124,10 +123,6 @@ export class HelpChanModule extends Module {
     setInterval(() => {
       this.checkDormantPossibilities()
     }, dormantChannelLoop)
-
-    setInterval(() => {
-      this.ensureNoLockedChannels()
-    }, lockedChannelLoop)
   }
 
   @listener({ event: 'message' })
@@ -488,13 +483,6 @@ export class HelpChanModule extends Module {
     }
 
     return await this.ensureAskChannels(guild)
-  }
-
-  // TODO: Do something with locked channels
-  private ensureNoLockedChannels() {
-    if (this.busyChannels.size >= 1) {
-      console.log(this.busyChannels)
-    }
   }
 
   private async checkDormantPossibilities() {

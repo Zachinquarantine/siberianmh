@@ -15,6 +15,7 @@ export class UwuboxModule extends Module {
   @command({
     aliases: ['gamebox', 'cakebox'],
     inhibitors: [CommonInhibitors.guildsOnly],
+    single: true,
   })
   async uwubox(msg: Message, content: string) {
     if (
@@ -27,15 +28,13 @@ export class UwuboxModule extends Module {
       return
     }
 
-    console.log(content)
-    console.log(content.length)
     if (!content) {
       return msg.channel.send(
         'You need to choose the item what you want to add, empty is not the item.',
       )
     }
 
-    if (content.length > 35) {
+    if (content.length > 50) {
       return msg.channel.send(
         // eslint-disable-next-line
         "This item is so big so you can't store this in my box, please add something smaller.",

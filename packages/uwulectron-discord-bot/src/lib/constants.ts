@@ -52,7 +52,6 @@ export const trustedRoleId = __dev__ ? '' : electron.roles.maintainer
 
 export const dormantChannelTimeout = 28_800
 export const dormantChannelLoop = 10000
-export const lockedChannelLoop = 60000
 export const token = process.env.DISCORD_TOKEN
 export const sha = process.env.COMMIT_SHA || 'master'
 export const port = process.env.PORT || 1337

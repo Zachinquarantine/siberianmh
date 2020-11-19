@@ -49,5 +49,15 @@ export class EtcModule extends Module {
 
     return channel.send({ embed })
   }
+
+  @listener({ event: 'ready' })
+  public async setPresence() {
+    this.client.user?.setPresence({
+      activity: {
+        type: 'WATCHING',
+        name: 'How to Sell Drugs Online (Fast)',
+      },
+    })
+  }
   //#endregion
 }
