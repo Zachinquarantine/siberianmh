@@ -4,6 +4,7 @@
     "packages/*",
     "packages/arcadia/*",
     "packages/ozark/*",
+    "packages/electron-discord/*",
     "packages/roads/*",
     "tools/*"
   ],

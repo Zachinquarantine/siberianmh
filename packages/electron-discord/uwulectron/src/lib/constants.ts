@@ -38,6 +38,13 @@ const electron = {
   },
 }
 
+export const urls = {
+  github_bot_repo:
+    'https://github.com/siberianmh/siberianmh/tree/master/packages/electron-discord/uwulectron',
+  github_the_board_repository:
+    'https://github.com/siberianmh/siberianmh/tree/master/packages/electron-discord/the-board',
+}
+
 export const categories = __dev__ ? devGround.categories : electron.categories
 export const askHelpChannelId = __dev__
   ? devGround.askHelpChannelId

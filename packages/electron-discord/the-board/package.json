@@ -1,0 +1,16 @@
+{
+  "name": "@siberianmh/the-board",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon ./src/index.ts"
+  },
+  "dependencies": {
+    "cookiecord": "^0.4.17"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.6",
+    "ts-node": "^9.0.0"
+  }
+}

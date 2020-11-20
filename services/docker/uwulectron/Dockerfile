@@ -8,11 +8,11 @@ WORKDIR /usr/src/app
 ENV COMMIT_SHA ${COMMIT_SHA}
 
 COPY package.json yarn.lock tsconfig.json ./
-COPY ./packages/uwulectron-discord-bot/package.json ./packages/uwulectron-discord-bot/
+COPY ./packages/electron-discord/uwulectron/package.json ./packages/electron-discord/uwulectron/
 
 RUN yarn
 
-COPY ./packages/uwulectron-discord-bot/ ./packages/uwulectron-discord-bot/
+COPY ./packages/electron-discord/uwulectron/ ./packages/electron-discord/uwulectron/
 
 RUN yarn workspace @siberianmh/uwulectron build
 

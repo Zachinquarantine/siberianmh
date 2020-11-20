@@ -14,6 +14,8 @@ import {
   UnfurlModule,
   UwuboxModule,
   ReminderModule,
+  SourceModule,
+  InformationModule,
 } from './modules'
 import { createSettings } from './lib/settings'
 import { connectTypeorm } from './lib/connect-typeorm'
@@ -26,7 +28,9 @@ app.use('/', apiRoutes)
 
 for (const mod of [
   AdminModule,
+  SourceModule,
   SettingsModule,
+  InformationModule,
   AutoroleModule,
   EtcModule,
   HelpChanModule,

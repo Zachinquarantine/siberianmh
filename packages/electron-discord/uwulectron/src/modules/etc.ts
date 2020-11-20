@@ -55,7 +55,7 @@ export class EtcModule extends Module {
     this.client.user?.setPresence({
       activity: {
         type: 'WATCHING',
-        name: 'How to Sell Drugs Online (Fast)',
+        name: 'The Queen’s Gambit',
       },
     })
   }
