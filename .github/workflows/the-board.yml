@@ -31,7 +31,13 @@ jobs:
         with:
           node-version: 14
       - name: Build Docker Image
+        if: github['ref'] == 'refs/heads/master'
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
           docker pull ghcr.io/siberianmh/the-board:latest || true
           docker build --pull -f "services/docker/the-board/Dockerfile" --build-arg COMMIT_SHA=${GITHUB_SHA} -t ghcr.io/siberianmh/the-board:latest -t ghcr.io/siberianmh/the-board:${GITHUB_SHA} --cache-from ghcr.io/siberianmh/the-board:latest .
+      - name: Publish Latest Docker Image
+        if: github['ref'] == 'refs/heads/master'
+        run: |
+          docker push ghcr.io/siberianmh/the-board:latest
+          docker push ghcr.io/siberianmh/the-board:${GITHUB_SHA}

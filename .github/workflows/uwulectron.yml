@@ -37,6 +37,7 @@ jobs:
         with:
           node-version: 14
       - name: Build Docker Image
+        if: github['ref'] == 'refs/heads/master'
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
           docker pull ghcr.io/siberianmh/uwulectron:latest || true
