@@ -16,4 +16,4 @@ COPY ./packages/electron-discord/uwulectron/ ./packages/electron-discord/uwulect
 
 RUN yarn workspace @siberianmh/uwulectron build
 
-CMD [ "node", "packages/uwulectron-discord-bot/dist/index.js" ]
+CMD [ "node", "packages/electron-discord/uwulectron/dist/index.js" ]

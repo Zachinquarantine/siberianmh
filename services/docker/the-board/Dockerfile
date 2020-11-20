@@ -8,12 +8,12 @@ WORKDIR /usr/src/app
 ENV COMMIT_SHA ${COMMIT_SHA}
 
 COPY package.json yarn.lock tsconfig.json ./
-COPY ./packages/the-board-discord-bot/package.json ./packages/the-board-discord-bot/
+COPY ./packages/electron-discord/the-board/package.json ./packages/electron-discord/the-board/
 
 RUN yarn
 
-COPY ./packages/the-board-discord-bot/ ./packages/the-board-discord-bot/
+COPY ./packages/electron-discord/the-board/ ./packages/electron-discord/the-board/
 
 RUN yarn workspace @siberianmh/the-board build
 
-CMD [ "node", "packages/the-board-discord-bot/dist/index.js" ]
+CMD [ "node", "packages/electron-discord/the-board/dist/index.js" ]
