@@ -13,7 +13,7 @@
     "@primer/components": "^20.3.0",
     "@primer/css": "^15.2.0",
     "axios": "^0.21.0",
-    "axios-hooks": "^2.1.0",
+    "axios-hooks": "^2.2.0",
     "fs-extra": "^9.0.1",
     "fuse.js": "^6.4.3",
     "mobx": "^6.0.4",
