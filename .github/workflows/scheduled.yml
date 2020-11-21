@@ -31,3 +31,29 @@ jobs:
           git add .
           git commit -am "build: regenerate .github/dependabot.yml"
           git push -u origin master
+
+  gen-arcadia-graphql-schema:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 14.x
+      - name: Generate Arcadia GraphQL Schemas
+        run: |
+          git config user.email "55543306+pacificocean-bot@users.noreply.github.com"
+          git config user.name "Pacific Ocean Bot"
+
+          yarn install
+          yarn workspace @siberianmh/arcadia gql:gen-types
+
+          if [ "$(git status --porcelain)" = "" ]; then
+            echo "no new content found; goodbye!"
+            exit
+          fi
+
+          git add .
+          git commit -am "chore(arcadia): update graphql schema"
+          git push -u origin master
