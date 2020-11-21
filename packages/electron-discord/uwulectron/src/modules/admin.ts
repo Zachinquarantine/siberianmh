@@ -107,7 +107,7 @@ export class SettingsModule extends Module {
     const db = await getBotSettings()
 
     if (!db) {
-      return msg.reply(
+      return msg.channel.send(
         '🛑 UNABLE TO FIND SETTINGS FOR BOT, PLEASE PING `Hashimoto` FOR FUTURE INVESTIGATION.🛑',
       )
     }

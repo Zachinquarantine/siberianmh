@@ -29,7 +29,7 @@ export class MailModule extends Module {
         msg.author.displayAvatarURL({ dynamic: false }) || undefined,
       )
       .setDescription(
-        `${msg.content}\n\nFor respond to this message use \`!reply ${msg.author.id} [message]\``,
+        `${msg.cleanContent}\n\nFor respond to this message use \`!reply ${msg.author.id} [message]\``,
       )
       .setFooter(
         `User id: ${msg.author.id}`,
@@ -63,14 +63,11 @@ export class MailModule extends Module {
 
     const user = await this.client.users.fetch(userId)
     try {
-      return await user.send(message)
+      await user.send(message)
+      return await msg.react('✅')
     } catch (e) {
-      const embed = new MessageEmbed()
-        .setTitle('Something goes wrong')
-        .setDescription(e)
-
-      return msg.channel.send({ embed })
+      return await msg.react('❌')
     }
+    //#endregion
   }
-  //#endregion
 }

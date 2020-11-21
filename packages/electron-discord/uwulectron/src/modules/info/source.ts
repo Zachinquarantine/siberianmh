@@ -8,7 +8,11 @@ export class SourceModule extends Module {
   }
 
   //#region Commands
-  @command()
+
+  /**
+   * Display information and a GitHub link to the source code.
+   */
+  @command({ aliases: ['src'] })
   public async source(msg: Message) {
     const embed = new MessageEmbed()
       // eslint-disable-next-line

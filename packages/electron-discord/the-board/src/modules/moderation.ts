@@ -20,7 +20,7 @@ export class ModerationModule extends Module {
     const splitArgs = args.split(' ').filter((x) => x.trim().length !== 0)
     if (splitArgs.length === 0) {
       return await msg.channel.send(
-        ':warning: syntax !kick <@userID> [reason?]',
+        ':warning: syntax !kick <@userID> [?reason]',
       )
     }
 
@@ -60,27 +60,54 @@ export class ModerationModule extends Module {
     return msg.channel.send({ embed })
   }
 
-  // @command({ single: true, inhibitors: [isTrustedMember] })
-  // public async ban(msg: Message, args: string) {
-  //   if (member.hasPermission('MANAGE_MESSAGES')) {
-  //     return msg.channel.send('Well, this is not possible, sorry.')
-  //   }
+  // TODO: Add ability to give ban by days
+  @command({
+    single: true,
+    inhibitors: [isTrustedMember],
+    description: 'syntax !ban <@userID> [?reason]',
+  })
+  public async ban(msg: Message, args: string) {
+    const splitArgs = args.split(' ').filter((x) => x.trim().length !== 0)
+    if (splitArgs.length === 0) {
+      return await msg.channel.send(':warning: syntax !ban <@userID> [?reason]')
+    }
 
-  //   if (!__dev__) {
-  //     await member.ban({
-  //       days: days,
-  //       reason: reason,
-  //     })
-  //   }
+    const userId = splitArgs.shift()
 
-  //   const embed = new MessageEmbed()
-  //     .setAuthor(
-  //       `${member.user.tag} has been banned`,
-  //       member.user.avatarURL({ dynamic: false }) || undefined,
-  //     )
-  //     .setDescription(`**Reason:** ${reason}, **Days:** ${days}`)
+    if (!userId) {
+      return await msg.channel.send(':warning: invalid syntax')
+    }
 
-  //   return msg.channel.send({ embed })
-  // }
+    const reason = splitArgs.join(' ') || 'Unspecified'
+    const member = msg.mentions.members?.first()
+
+    if (!member) {
+      return msg.channel.send(
+        'Unable to find specified user, please verify syntax',
+      )
+    }
+
+    if (member.hasPermission('MANAGE_MESSAGES')) {
+      return msg.channel.send(
+        // eslint-disable-next-line
+        "Well you can't ban Admins, but it is be a good option",
+      )
+    }
+
+    if (!__dev__) {
+      member.ban({
+        reason: reason,
+      })
+    }
+
+    const embed = new MessageEmbed()
+      .setAuthor(
+        `${member.user.tag} has been banned`,
+        member.user.avatarURL({ dynamic: false }) || undefined,
+      )
+      .setDescription(`**Reason:**: ${reason}, Days: null`)
+
+    return msg.channel.send({ embed })
+  }
   //#endregion
 }

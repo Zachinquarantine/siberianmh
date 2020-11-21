@@ -249,7 +249,9 @@ export class HelpChanModule extends Module {
         const [channelName] = args
 
         if (args.length > 1) {
-          return msg.reply(`⚠ Expected 1 argument, but got ${args.length}`)
+          return msg.channel.send(
+            `⚠ Expected 1 argument, but got ${args.length}`,
+          )
         }
 
         const created = await this.createHelpChannel(msg.guild!, channelName)

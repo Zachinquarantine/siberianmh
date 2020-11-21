@@ -38,6 +38,11 @@ const electron = {
   },
 }
 
+export const guild = {
+  id: '745037351163527189',
+  invite: 'https://discord.gg/electron',
+}
+
 export const urls = {
   github_bot_repo:
     'https://github.com/siberianmh/siberianmh/tree/master/packages/electron-discord/uwulectron',

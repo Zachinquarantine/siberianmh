@@ -20,7 +20,7 @@ export class DoReleaseModule extends Module {
     const valid = semver.valid(version)
 
     if (!valid) {
-      return msg.reply(`Version ${version} is not valid semver version.`)
+      return msg.channel.send(`Version ${version} is not valid semver version.`)
     }
 
     await octokit.request(
