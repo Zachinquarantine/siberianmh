@@ -15,6 +15,7 @@ import {
   UwuboxModule,
   ReminderModule,
   SourceModule,
+  ModLogModule,
   InformationModule,
 } from './modules'
 import { createSettings } from './lib/settings'
@@ -30,6 +31,7 @@ for (const mod of [
   AdminModule,
   SourceModule,
   SettingsModule,
+  ModLogModule,
   InformationModule,
   AutoroleModule,
   EtcModule,
