@@ -19,8 +19,6 @@ export class MailModule extends Module {
       return
     }
 
-    console.log(msg)
-
     const channel = (await this.client.channels.fetch(
       theBoardChannel,
     )) as TextChannel
