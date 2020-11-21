@@ -1473,6 +1473,13 @@
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
   integrity sha512-DetpxZw1fzPD5xUBrIAoplLChO2VB8DlL5Gg+I1IR9b2wPqYIca2WSUxL5g1vLeR4MsQq1NeWriXAVffV+U1Fw==
 
+"@siberianmh/gitlab-api@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@siberianmh/gitlab-api/-/gitlab-api-0.0.2.tgz#ac1d4433d9b1382cd4a81ba1abda9a934ba14c3c"
+  integrity sha512-CBCpGdYabnsUuZnHgbkFuUtRrnxxnVlC6mU4tCN6KNuKTpYbee2d3uA3C1VUOXOdUMBFI5jqabDd2UZEV3viFQ==
+  dependencies:
+    axios "^0.20.0"
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -3250,6 +3257,13 @@ axios-hooks@^2.2.0:
   dependencies:
     "@babel/runtime" "7.12.5"
     lru-cache "6.0.0"
+
+axios@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
+  integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 axios@^0.21.0:
   version "0.21.0"
