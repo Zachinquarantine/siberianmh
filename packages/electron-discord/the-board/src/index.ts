@@ -4,7 +4,7 @@ if (process.env.NODE_ENV === 'development') {
 import CookiecordClient from 'cookiecord'
 import { Intents } from 'discord.js'
 
-import { MailModule, ModerationModule } from './modules'
+import { MailModule, EtcModule, ModerationModule } from './modules'
 import { token } from './lib/constants'
 
 export const client = new CookiecordClient(
@@ -17,19 +17,11 @@ export const client = new CookiecordClient(
   },
 )
 
-for (const mod of [MailModule, ModerationModule]) {
+for (const mod of [MailModule, EtcModule, ModerationModule]) {
   client.registerModule(mod)
 }
 
 client.login(token)
 client.on('ready', () => {
-  client.user?.setPresence({
-    status: 'dnd',
-    activity: {
-      name: 'how to sell drugs online (fast)',
-      type: 'WATCHING',
-    },
-  })
-
   console.log(`Logged in as ${client.user?.tag}`)
 })
