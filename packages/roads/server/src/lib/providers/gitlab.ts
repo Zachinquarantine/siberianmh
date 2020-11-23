@@ -1,5 +1,6 @@
-import { GitLab, IGetMergeRequestOptions } from '@siberianmh/gitlab-api'
+import { GitLab } from '@siberianmh/gitlab-api'
 import { labels as cqLabels } from '../constants'
+import { $TSFixMe } from '../types'
 
 interface ICreateStatusOptions {
   readonly project_id: number
@@ -18,7 +19,7 @@ export class GitLabProvider {
     })
   }
 
-  public async getPull(opts: IGetMergeRequestOptions) {
+  public async getPull(opts: $TSFixMe) {
     return await this.gitty.mergeRequest.getMergeRequest({
       project_id: opts.project_id,
       merge_request_iid: opts.merge_request_iid,
