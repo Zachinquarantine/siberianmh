@@ -1,15 +1,14 @@
 import {
   default as CookiecordClient,
-  Module,
   command,
   // optional,
 } from 'cookiecord'
+import { ExtendedModule } from '../lib/extended-module'
 import { Message, MessageEmbed } from 'discord.js'
-import { __dev__ } from '../lib/constants'
+import { __dev__ } from '@edis/constants'
 import { isTrustedMember } from '../lib/inhibitors'
-// import { __dev__ } from '../lib/constants'
 
-export class ModerationModule extends Module {
+export class BansModerationModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }

@@ -8,7 +8,7 @@ import {
 
 @Entity('autorole')
 export class Autorole extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string
 
   @Column('varchar', { nullable: false })
@@ -21,7 +21,7 @@ export class Autorole extends BaseEntity {
   emoji: string
 
   @Column('boolean', { default: true })
-  autoRemove: boolean
+  auto_remove: boolean
 
   @CreateDateColumn()
   created_at: Date

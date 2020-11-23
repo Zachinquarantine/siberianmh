@@ -1,8 +1,9 @@
-import { command, default as CookiecordClient, Module } from 'cookiecord'
+import { command, default as CookiecordClient } from 'cookiecord'
 import { Message, MessageEmbed } from 'discord.js'
-import { urls } from '../../lib/constants'
+import { urls } from '@edis/constants'
+import { ExtendedModule } from '../../lib/extended-module'
 
-export class SourceModule extends Module {
+export class SourceModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }
@@ -20,10 +21,6 @@ export class SourceModule extends Module {
       .addField(
         'Uwulectron Repository',
         `[Go to GitHub](${urls.github_bot_repo})`,
-      )
-      .addField(
-        'The Board Repository',
-        `[Go to GitHub](${urls.github_the_board_repository})`,
       )
       .setThumbnail('https://avatars0.githubusercontent.com/u/30377152')
 

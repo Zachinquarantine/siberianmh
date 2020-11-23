@@ -1,0 +1,15 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "strict": true,
+    "noUnusedLocals": true,
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "sourceMap": true
+  },
+  "include": ["src/**/*.ts"]
+}

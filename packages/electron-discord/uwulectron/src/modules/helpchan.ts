@@ -2,7 +2,6 @@ import {
   command,
   default as CookiecordClient,
   listener,
-  Module,
   optional,
 } from 'cookiecord'
 import {
@@ -24,10 +23,11 @@ import {
   askCooldownRoleId,
   GREEN_BRIGHT,
   RED,
-} from '../lib/constants'
+} from '@edis/constants'
 import { isTrustedMember } from '../lib/inhibitors'
+import { ExtendedModule } from '../lib/extended-module'
 
-export class HelpChanModule extends Module {
+export class HelpChanModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }

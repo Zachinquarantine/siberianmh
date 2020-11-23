@@ -1,13 +1,9 @@
-import {
-  default as CookiecordClient,
-  Module,
-  listener,
-  command,
-} from 'cookiecord'
+import { default as CookiecordClient, listener, command } from 'cookiecord'
+import { ExtendedModule } from '../lib/extended-module'
 import { Message, MessageEmbed, TextChannel } from 'discord.js'
-import { theBoardChannel } from '../lib/constants'
+import { theBoardChannel } from '@edis/constants'
 
-export class MailModule extends Module {
+export class MailModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }

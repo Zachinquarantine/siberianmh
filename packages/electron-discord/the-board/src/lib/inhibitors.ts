@@ -1,5 +1,5 @@
 import { Inhibitor } from 'cookiecord'
-import { trustedRoleId } from '../lib/constants'
+import { trustedRoleId } from '@edis/constants'
 
 export const isTrustedMember: Inhibitor = async (msg) => {
   if (!msg.guild || !msg.member || msg.channel.type !== 'text') {

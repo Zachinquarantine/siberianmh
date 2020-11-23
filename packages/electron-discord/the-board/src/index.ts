@@ -3,9 +3,23 @@ if (process.env.NODE_ENV === 'development') {
 }
 import CookiecordClient from 'cookiecord'
 import { Intents } from 'discord.js'
+import * as Sentry from '@sentry/node'
+import { token, __dev__ } from '@edis/constants'
 
-import { MailModule, EtcModule, ModerationModule } from './modules'
-import { token } from './lib/constants'
+import {
+  MailModule,
+  EtcModule,
+  ModLogModule,
+  BansModerationModule,
+} from './modules'
+
+if (__dev__) {
+  Sentry.init({
+    dsn:
+      'https://a22da8923d5f4ea7875fa8518335410b@o102026.ingest.sentry.io/5474186',
+    tracesSampleRate: 1.0,
+  })
+}
 
 export const client = new CookiecordClient(
   {
@@ -17,7 +31,7 @@ export const client = new CookiecordClient(
   },
 )
 
-for (const mod of [MailModule, EtcModule, ModerationModule]) {
+for (const mod of [MailModule, EtcModule, BansModerationModule, ModLogModule]) {
   client.registerModule(mod)
 }
 

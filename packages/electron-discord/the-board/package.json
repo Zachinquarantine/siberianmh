@@ -7,9 +7,12 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@edis/constants": "^0.0.0",
+    "axios": "^0.21.0",
     "cookiecord": "^0.4.17"
   },
   "devDependencies": {
+    "@sentry/node": "^5.27.6",
     "cross-env": "^7.0.2",
     "nodemon": "^2.0.6",
     "ts-node": "^9.0.0"

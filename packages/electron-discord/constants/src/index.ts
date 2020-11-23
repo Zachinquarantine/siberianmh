@@ -2,7 +2,7 @@ export const ELECTRON_BLUE = '#358397'
 export const GREEN_BRIGHT = '#32CD32'
 export const RED = '#FF0000'
 
-const __dev__ = process.env.NODE_ENV === 'development'
+export const __dev__ = process.env.NODE_ENV === 'development'
 
 // DevGround is just test playground
 export const devGround = {
@@ -35,6 +35,7 @@ const electron = {
     helpCooldown: '772835574197256199',
   },
   channels: {
+    theBoard: '779407693974732811',
     adminBotInteractions: '771069886696914994',
     botInteractions: '746446369845280929',
     modLog: '764542608256270406',
@@ -59,18 +60,24 @@ export const colors = {
 }
 
 export const icons = {
+  crownGreen: 'https://cdn.discordapp.com/emojis/469964154719961088.png',
+  crownRed: 'https://cdn.discordapp.com/emojis/469964154879344640.png',
+
   hashGreen: 'https://cdn.discordapp.com/emojis/469950144918585344.png',
   hashRed: 'https://cdn.discordapp.com/emojis/469950145413251072.png',
+
+  messageDelete: 'https://cdn.discordapp.com/emojis/472472641320648704.png',
 }
 
 export const urls = {
   github_bot_repo:
-    'https://github.com/siberianmh/siberianmh/tree/master/packages/electron-discord/uwulectron',
-  github_the_board_repository:
-    'https://github.com/siberianmh/siberianmh/tree/master/packages/electron-discord/the-board',
+    'https://github.com/siberianmh/siberianmh/tree/master/packages/electron-discord',
 }
 //#endregion
 
+export const theBoardChannel = __dev__
+  ? devGround.botInteractionsChannelId
+  : electron.channels.theBoard
 export const categories = __dev__ ? devGround.categories : electron.categories
 export const askHelpChannelId = __dev__
   ? devGround.askHelpChannelId
@@ -87,4 +94,3 @@ export const dormantChannelTimeout = 28_800
 export const dormantChannelLoop = 10000
 export const token = process.env.DISCORD_TOKEN
 export const sha = process.env.COMMIT_SHA || 'master'
-export const port = process.env.PORT || 1337

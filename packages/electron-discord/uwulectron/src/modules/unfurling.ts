@@ -1,11 +1,12 @@
-import { default as CookiecordClient, listener, Module } from 'cookiecord'
+import { default as CookiecordClient, listener } from 'cookiecord'
 import { Message, MessageEmbed, TextChannel } from 'discord.js'
-import { ELECTRON_BLUE } from '../lib/constants'
+import { ELECTRON_BLUE } from '@edis/constants'
 import { getBotSettings } from '../lib/settings'
+import { ExtendedModule } from '../lib/extended-module'
 
 const DSRegex = /https:\/\/discord(app)?.com\/channels\/([\d]{18})\/([\d]{18})\/([\d]{18})/gm
 
-export class UnfurlModule extends Module {
+export class UnfurlModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }

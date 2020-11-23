@@ -1,13 +1,9 @@
-import {
-  command,
-  default as CookiecordClient,
-  listener,
-  Module,
-} from 'cookiecord'
+import { command, default as CookiecordClient, listener } from 'cookiecord'
 import { Message, MessageEmbed, TextChannel } from 'discord.js'
-import { botInteractionsChannelId } from '../lib/constants'
+import { botInteractionsChannelId } from '@edis/constants'
+import { ExtendedModule } from '../lib/extended-module'
 
-export class EtcModule extends Module {
+export class EtcModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }
@@ -55,7 +51,7 @@ export class EtcModule extends Module {
     this.client.user?.setPresence({
       activity: {
         type: 'WATCHING',
-        name: 'The Queen’s Gambit',
+        name: 'Mindhunter',
       },
     })
   }

@@ -1,18 +1,14 @@
 // https://github.com/typescript-community/community-bot/blob/master/src/modules/reminders.ts
 
-import {
-  default as CookiecordClient,
-  Module,
-  command,
-  listener,
-} from 'cookiecord'
+import { default as CookiecordClient, command, listener } from 'cookiecord'
 import parse from 'parse-duration'
 import * as prettyMs from 'pretty-ms'
 import { Reminder } from '../entities/reminder'
 import { setTimeout } from 'timers'
 import { Message } from 'discord.js'
+import { ExtendedModule } from '../lib/extended-module'
 
-export class ReminderModule extends Module {
+export class ReminderModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }

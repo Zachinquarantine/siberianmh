@@ -1,13 +1,13 @@
 import {
   command,
   default as CookiecordClient,
-  Module,
   CommonInhibitors,
   optional,
 } from 'cookiecord'
 import { Message, MessageEmbed } from 'discord.js'
+import { ExtendedModule } from '../../lib/extended-module'
 
-export class HelpMessageModule extends Module {
+export class HelpMessageModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }
@@ -34,7 +34,7 @@ export class HelpMessageModule extends Module {
         )
         .addField(
           '**Misc Commands**',
-          '`ping` ► View the latency of the bot\n`source ► Drop links to source codes of our bots.`\n`uwubox <item>` ► Add something into Uwubox.',
+          '`ping` ► View the latency of the bot\n`source ► Drop links to source codes of our bots.`\n',
         )
         .addField(
           '**Help Channel Commands:**',

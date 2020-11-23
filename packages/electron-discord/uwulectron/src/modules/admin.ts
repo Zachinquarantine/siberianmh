@@ -1,10 +1,11 @@
-import { command, default as CookiecordClient, Module } from 'cookiecord'
+import { command, default as CookiecordClient } from 'cookiecord'
 import { Message, MessageEmbed } from 'discord.js'
 import { getBotSettings } from '../lib/settings'
-import { ELECTRON_BLUE, sha } from '../lib/constants'
+import { ELECTRON_BLUE, sha } from '@edis/constants'
 import { isTrustedMember } from '../lib/inhibitors'
+import { ExtendedModule } from '../lib/extended-module'
 
-export class AdminModule extends Module {
+export class AdminModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }
@@ -81,7 +82,7 @@ export class AdminModule extends Module {
   }
 }
 
-export class SettingsModule extends Module {
+export class SettingsModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }

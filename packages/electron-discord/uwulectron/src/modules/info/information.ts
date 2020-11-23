@@ -1,14 +1,10 @@
-import {
-  command,
-  default as CookiecordClient,
-  Module,
-  optional,
-} from 'cookiecord'
+import { command, default as CookiecordClient, optional } from 'cookiecord'
 import { DateTime } from 'luxon'
-import * as constants from '../../lib/constants'
+import * as constants from '@edis/constants'
 import { Message, MessageEmbed, User } from 'discord.js'
+import { ExtendedModule } from '../../lib/extended-module'
 
-export class InformationModule extends Module {
+export class InformationModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)
   }
