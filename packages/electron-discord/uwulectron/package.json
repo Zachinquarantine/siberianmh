@@ -14,7 +14,7 @@
     "@edis/constants": "^0.0.0",
     "axios": "^0.21.0",
     "cookiecord": "^0.4.17",
-    "discord.js": "^12.5.0",
+    "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "ioredis": "^4.19.2",
     "luxon": "^1.25.0",
