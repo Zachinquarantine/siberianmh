@@ -8,6 +8,9 @@ export const resolvers: IResolvers = {
     viewer: (_, __, { req }) => {
       return store.getViewer(req)
     },
+    user: (_, { login }) => {
+      return store.getPublicUser(login)
+    },
   },
   Mutation: {
     register: async (_, args, { req }) => {

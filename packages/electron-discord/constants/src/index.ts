@@ -90,7 +90,7 @@ export const botInteractionsChannelId = __dev__
   : electron.channels.adminBotInteractions
 export const trustedRoleId = __dev__ ? '' : electron.roles.maintainer
 
-export const dormantChannelTimeout = 50_400
+export const dormantChannelTimeout = 36_000
 export const dormantChannelLoop = 10000
 export const token = process.env.DISCORD_TOKEN
 export const sha = process.env.COMMIT_SHA || 'master'

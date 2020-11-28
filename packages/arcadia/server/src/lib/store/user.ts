@@ -13,10 +13,24 @@ export class UserStore {
   public async getViewer(req: express.Request): Promise<IUser> {
     const userId = req.session!.userId
 
+    if (!userId) {
+      throw new ServerError('Unauthorized')
+    }
+
     const user = await User.findOne({ where: { id: userId } })
 
     if (!user) {
-      throw new ServerError('Unexpected things happened, did you authorized?')
+      throw new ServerError('Unauthorized')
+    }
+
+    return user
+  }
+
+  public async getPublicUser(login: string): Promise<IUser> {
+    const user = await User.findOne({ where: { username: login } })
+
+    if (!user) {
+      throw new ServerError('User not found')
     }
 
     return user
@@ -41,6 +55,7 @@ export class UserStore {
     const user = User.create({
       username,
       password: hash,
+      verified: false,
       email,
     })
 

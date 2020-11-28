@@ -8,8 +8,6 @@ const providers = {
 
 const makeRequest = async (data) => {
   const host = process.env.HOST
-    ? process.env.HOST
-    : 'https://ozark.example.com/api/ci/handle-status'
 
   const headers = process.env.SECRET
     ? { 'X-Ozark-Secret': process.env.SECRET }

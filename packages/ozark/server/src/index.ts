@@ -57,7 +57,7 @@ createTypeormConnection().then(() => {
   })
 
   notificationsQueue.process(async (job) => {
-    ciStore.reportBackManager(job as any)
+    ciStore.reportBackManager(job)
   })
 
   app.listen(port, () => {

@@ -24,6 +24,9 @@ export class User extends BaseEntity {
   @Column('varchar', { nullable: false })
   password: string
 
+  @Column('boolean', { default: false })
+  verified: boolean
+
   @Column('boolean', { default: false, nullable: false })
   site_admin: boolean
 
