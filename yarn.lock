@@ -3735,10 +3735,10 @@ bufferutil@^4.0.1:
   dependencies:
     node-gyp-build "~3.7.0"
 
-bull@^3.19.1:
-  version "3.19.1"
-  resolved "https://registry.yarnpkg.com/bull/-/bull-3.19.1.tgz#3e25f9dfda61ad879d5501e3773433c311dd5bf7"
-  integrity sha512-G6idqECecbvkaXoJGCjpbnZ7CT/N43TKBWLOc/wDiqPKbEXqreV3bJpj4ta8kZwFrm8mxgszRLGi7ko4qavnXA==
+bull@^3.20.0:
+  version "3.20.0"
+  resolved "https://registry.yarnpkg.com/bull/-/bull-3.20.0.tgz#ca394d623f13ade6cddb7481f630988bce2d4d09"
+  integrity sha512-xXUfA2gLZLfIkWhxcZkAk6mHt+eG3o4arqz7HwCPVYuVjIp/pYTuhFd2iPXIQLxop7pJY4VIQ59fELdD/Y6f8w==
   dependencies:
     cron-parser "^2.13.0"
     debuglog "^1.0.0"
