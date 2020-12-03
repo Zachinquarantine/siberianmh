@@ -27,6 +27,27 @@ import {
 import { isTrustedMember } from '../../lib/inhibitors'
 import { ExtendedModule } from '../../lib/extended-module'
 
+/**
+ * Manage the help channel system of the guild.
+ *
+ * The system is based on a 3 category system:
+ *
+ * **Available Category:**
+ *
+ *  -  Contains channels which are ready to be taken by someone who needs help.
+ *
+ * **In Use Category:**
+ *
+ *  - Contains all channels which are taken by someone who needing help
+ *  - When a channel becomes dormant, and embed with `DORMANT_EMBED` will be sent.
+ *
+ * **Dormant Category:**
+ *
+ *  - Contains channels which aren't in use
+ *  - Channels are used to refill the Available category.
+ *
+ * Help channels are should be named after the chemical elements.
+ */
 export class HelpChanModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
     super(client)

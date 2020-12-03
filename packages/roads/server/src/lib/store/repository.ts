@@ -1,12 +1,15 @@
 import * as express from 'express'
 import { PullRequestStore } from './pull-request'
+import { MergeQueueStore } from './merge-queue'
 import { labels } from '../constants'
 
 export class RepositoryStore {
   private pullRequest: PullRequestStore
+  private mergeQueue: MergeQueueStore
 
   public constructor() {
     this.pullRequest = new PullRequestStore()
+    this.mergeQueue = new MergeQueueStore()
   }
 
   /**
@@ -62,7 +65,7 @@ export class RepositoryStore {
       // Labeled by CQ+2
       if (body.label.name === labels.cqPlusTwo) {
         // TODO: Maybe should merge only the updated pull request
-        await this.pullRequest.mergeSecondQueue()
+        await this.mergeQueue.addPullRequest()
       }
     }
 
@@ -80,7 +83,7 @@ export class RepositoryStore {
   }
 
   /**
-   * Hnadles GitLab webhooks
+   * Handles GitLab webhooks
    */
   public async handleGitLabWebhook(req: express.Request) {
     const { body } = req
