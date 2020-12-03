@@ -1,7 +1,6 @@
 import { default as CookiecordClient, listener } from 'cookiecord'
 import { Message, MessageEmbed, TextChannel } from 'discord.js'
 import { ELECTRON_BLUE } from '@edis/constants'
-import { getBotSettings } from '../lib/settings'
 import { ExtendedModule } from '../lib/extended-module'
 
 const DSRegex = /https:\/\/discord(app)?.com\/channels\/([\d]{18})\/([\d]{18})\/([\d]{18})/gm
@@ -30,10 +29,6 @@ export class UnfurlModule extends ExtendedModule {
     let parsed: string[] | null = null
 
     while ((parsed = DSRegex.exec(msg.content))) {
-      if (!(await getBotSettings())?.enable_unfurling) {
-        return
-      }
-
       const server = parsed[2]
       const channel = parsed[3]
       const message = parsed[4]

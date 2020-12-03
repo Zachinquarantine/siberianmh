@@ -1,7 +1,6 @@
 import { createConnection } from 'typeorm'
 import { HelpUser } from '../entities/help-user'
 import { Reminder } from '../entities/reminder'
-import { BotSettings } from '../entities/settings'
 
 export const connectTypeorm = () => {
   return process.env.NODE_ENV === 'development'
@@ -34,7 +33,7 @@ export const connectTypeorm = () => {
         // It's bad but we don't have here any strong data in db
         synchronize: true,
         logging: true,
-        entities: [Reminder, HelpUser, BotSettings],
+        entities: [Reminder, HelpUser],
         charset: 'utf8mb4_unicode_ci',
         cache: {
           type: 'ioredis',

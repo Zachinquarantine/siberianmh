@@ -1,6 +1,5 @@
 import { command, default as CookiecordClient } from 'cookiecord'
 import { Message, MessageEmbed } from 'discord.js'
-import { getBotSettings } from '../lib/settings'
 import { ELECTRON_BLUE, sha } from '@edis/constants'
 import { isTrustedMember } from '../lib/inhibitors'
 import { ExtendedModule } from '../lib/extended-module'
@@ -62,10 +61,6 @@ export class AdminModule extends ExtendedModule {
         'poll: <message> ► Launch the poll for sended message',
       )
       .addField(
-        '**Settings Commands**',
-        '`!settings show` ► Show the list of settings and if they status.',
-      )
-      .addField(
         '**Help Channel Commands:**',
         '`!claim @<username> <limit>` ► Take the user message and post into available help channel\n' +
           '`!helpchan create <name>` ► Create a new help channel\n' +
@@ -79,53 +74,5 @@ export class AdminModule extends ExtendedModule {
       .setTimestamp()
 
     return msg.channel.send({ embed: messageEmbed })
-  }
-}
-
-export class SettingsModule extends ExtendedModule {
-  public constructor(client: CookiecordClient) {
-    super(client)
-  }
-
-  //#region Commands
-  @command({ inhibitors: [isTrustedMember] })
-  public async settings(msg: Message, subcommand: string) {
-    switch (subcommand) {
-      // Get the all settings
-      case 'show': {
-        return this.getSettings(msg)
-      }
-      default: {
-        return msg.channel.send(
-          'inst @thesiberianmh @vhashimotoo tw: @siberianmh @vhashimotoo',
-        )
-      }
-    }
-  }
-  //#endregion
-
-  private async getSettings(msg: Message) {
-    const db = await getBotSettings()
-
-    if (!db) {
-      return msg.channel.send(
-        '🛑 UNABLE TO FIND SETTINGS FOR BOT, PLEASE PING `Hashimoto` FOR FUTURE INVESTIGATION.🛑',
-      )
-    }
-
-    const embed = new MessageEmbed()
-      .setAuthor(
-        msg.guild?.name,
-        msg.guild?.iconURL({ dynamic: true }) || undefined,
-      )
-      .setTitle('Settings for Bot')
-      .addField(
-        '**Unfurling Discord Links** (unfurl)',
-        `Enabled: **${db.enable_unfurling}**`,
-      )
-      .setColor(ELECTRON_BLUE)
-      .setTimestamp()
-
-    return msg.channel.send({ embed })
   }
 }

@@ -14,7 +14,7 @@ import {
   MessageEmbed,
   TextChannel,
 } from 'discord.js'
-import { HelpUser } from '../entities/help-user'
+import { HelpUser } from '../../entities/help-user'
 import {
   dormantChannelTimeout,
   dormantChannelLoop,
@@ -24,8 +24,8 @@ import {
   GREEN_BRIGHT,
   RED,
 } from '@edis/constants'
-import { isTrustedMember } from '../lib/inhibitors'
-import { ExtendedModule } from '../lib/extended-module'
+import { isTrustedMember } from '../../lib/inhibitors'
+import { ExtendedModule } from '../../lib/extended-module'
 
 export class HelpChanModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
