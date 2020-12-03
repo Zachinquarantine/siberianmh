@@ -140,16 +140,10 @@ export class HelpChanModule extends ExtendedModule {
       return
     }
 
-    this.busyChannels.add(msg.channel.id)
-
-    await msg.pin()
-    await this.addCooldown(msg.member, msg.channel, msg)
-    await this.moveChannel(msg.channel, categories.ongoing)
-    await this.ensureAskChannels(msg.guild)
-
-    this.busyChannels.delete(msg.channel.id)
+    this.claimChannel(msg)
   }
 
+  // TODO: Return channel to the cycle when message removed
   @listener({ event: 'messageDelete' })
   async onQuestionRemoved(msg: Message) {
     if (
@@ -332,7 +326,7 @@ export class HelpChanModule extends ExtendedModule {
         .setAuthor(member.displayName, member.user.displayAvatarURL())
         .setDescription(msgContent),
     })
-    await toPin.pin()
+    await this.claimChannel(toPin)
     await this.addCooldown(member, claimedChannel, toPin)
     await this.moveChannel(claimedChannel, categories.ongoing)
     await claimedChannel.send(
@@ -340,7 +334,8 @@ export class HelpChanModule extends ExtendedModule {
     )
 
     this.busyChannels.delete(claimedChannel.id)
-    await msg.channel.send(`👌 successfully claimed ${claimedChannel}`)
+    await msg.channel.send(`successfully claimed ${claimedChannel}`)
+    this.ensureAskChannels(msg.guild!)
   }
 
   @command({
@@ -437,6 +432,17 @@ export class HelpChanModule extends ExtendedModule {
         'Maintain help channel goal',
       )
     }
+  }
+
+  private async claimChannel(msg: Message) {
+    this.busyChannels.add(msg.channel.id)
+
+    await msg.pin()
+    await this.addCooldown(msg.member!, msg.channel as TextChannel, msg)
+    await this.moveChannel(msg.channel as TextChannel, categories.ongoing)
+    await this.ensureAskChannels(msg.guild!)
+
+    this.busyChannels.delete(msg.channel.id)
   }
 
   private async ensureAskChannels(guild: Guild): Promise<void | Message> {
