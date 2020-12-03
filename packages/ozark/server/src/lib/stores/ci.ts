@@ -374,22 +374,18 @@ ${checkForFail.map((check) => `- ${check.html_url}`).join('\n')}
     )
 
     const reposWithPush = allRepos
-      // @ts-expect-error
-      .filter((r) => r.permissions.push)
-      // @ts-expect-error
+      .filter((r) => r.permissions!.push)
       .map((r) => ({
         id: `${r.id}`,
         repoName: r.name,
-        repoOwner: r.owner.login,
+        repoOwner: r.owner!.login,
       }))
 
     const configured = await createQueryBuilder(Repository, 'repo')
       .where('repo.owner IN (:...reposOwners)', {
-        // @ts-expect-error
         reposOwners: reposWithPush.map((r) => r.repoOwner),
       })
       .where('repo.name IN (:...reposNames)', {
-        // @ts-expect-error
         reposNames: reposWithPush.map((r) => r.repoName),
       })
       .getMany()

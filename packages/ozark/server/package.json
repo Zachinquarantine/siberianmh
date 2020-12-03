@@ -8,7 +8,7 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@octokit/rest": "^18.0.9",
+    "@octokit/rest": "^18.0.11",
     "body-parser": "^1.19.0",
     "bull": "^3.20.0",
     "connect-redis": "^5.0.0",

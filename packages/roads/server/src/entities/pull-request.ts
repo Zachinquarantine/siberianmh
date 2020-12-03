@@ -19,7 +19,7 @@ export class PullRequest extends BaseEntity {
   gl_project_id: number
 
   @Column('boolean', { nullable: true })
-  mergeable: boolean
+  mergeable: boolean | null
 
   @Column('varchar')
   html_url: string
