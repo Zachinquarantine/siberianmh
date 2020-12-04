@@ -27,7 +27,7 @@
     "axios": "^0.21.0",
     "byline": "^5.0.0",
     "cli-table3": "^0.6.0",
-    "dugite": "^1.92.0",
+    "dugite": "^1.93.0",
     "fs-extra": "^9.0.1",
     "js-yaml": "^3.14.0",
     "progress": "^2.0.3",
