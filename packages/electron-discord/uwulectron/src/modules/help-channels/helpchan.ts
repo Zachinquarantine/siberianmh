@@ -34,7 +34,7 @@ import { ExtendedModule } from '../../lib/extended-module'
  *
  * **Available Category:**
  *
- *  -  Contains channels which are ready to be taken by someone who needs help.
+ *  - Contains channels which are ready to be taken by someone who needs help.
  *
  * **In Use Category:**
  *
@@ -179,7 +179,7 @@ export class HelpChanModule extends ExtendedModule {
       return
     }
 
-    console.log(msg)
+    console.log('Message is deleted in help channel')
   }
 
   @listener({ event: 'message' })
@@ -231,11 +231,7 @@ export class HelpChanModule extends ExtendedModule {
   @command({
     inhibitors: [isTrustedMember],
   })
-  async helpchan(
-    msg: Message,
-    subcommand: string,
-    @optional ...args: string[]
-  ) {
+  async helpchan(msg: Message, subcommand: string, @optional args: string) {
     switch (subcommand) {
       // List the status of help channels
       case 'status': {
@@ -280,7 +276,7 @@ export class HelpChanModule extends ExtendedModule {
 
       case 'ensureask': {
         await this.ensureAskChannels(msg.guild!)
-        return msg.channel.send('Some magic is happened.')
+        return msg.channel.send('Help Channels successfully rolled.')
       }
 
       // Get the help
@@ -304,9 +300,16 @@ export class HelpChanModule extends ExtendedModule {
     member: GuildMember,
     @optional limit: number = 10,
   ) {
+    if (member.user.bot) {
+      return await msg.channel.send(
+        `:warning:: I cannot open help channel for ${member.displayName} because he is a turtle.`,
+      )
+    }
+
     const helpUser = await HelpUser.findOne({
       where: { userId: member.id },
     })
+
     if (helpUser) {
       return await msg.channel.send(
         `${member.displayName} already has an open help channel: <#${helpUser.channelId}>`,
@@ -322,7 +325,7 @@ export class HelpChanModule extends ExtendedModule {
     const msgContent = questionMessages
       .array()
       .slice(0, limit)
-      .map((msg) => msg.content)
+      .map((msg) => msg.cleanContent)
       .reverse()
       .join('\n')
       .slice(0, 2000)
@@ -347,15 +350,15 @@ export class HelpChanModule extends ExtendedModule {
         .setAuthor(member.displayName, member.user.displayAvatarURL())
         .setDescription(msgContent),
     })
-    await this.claimChannel(toPin)
+
     await this.addCooldown(member, claimedChannel, toPin)
     await this.moveChannel(claimedChannel, categories.ongoing)
     await claimedChannel.send(
       `${member.user} this channel has been claimed for your question. Please review <#${askHelpChannelId}> for how to get help.`,
     )
 
+    await msg.channel.send(`:ok:: Successfully claimed ${claimedChannel}`)
     this.busyChannels.delete(claimedChannel.id)
-    await msg.channel.send(`successfully claimed ${claimedChannel}`)
     this.ensureAskChannels(msg.guild!)
   }
 
@@ -365,7 +368,7 @@ export class HelpChanModule extends ExtendedModule {
   async removelock(msg: Message) {
     if (this.busyChannels.has(msg.channel.id)) {
       this.busyChannels.delete(msg.channel.id)
-      return await msg.channel.send(':ok_hand:')
+      return await msg.channel.send('')
     }
     return await msg.channel.send('Channel is not locked')
   }

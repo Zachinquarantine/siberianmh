@@ -58,10 +58,10 @@ export class ReminderModule extends ExtendedModule {
     await reminder.save()
 
     if (splitArgs.length === 0) {
-      await msg.channel.send(`:ok_hand: set a reminder for ${prettyMs(dur)}.`)
+      await msg.channel.send(`:ok: set a reminder for ${prettyMs(dur)}.`)
     } else {
       await msg.channel.send(
-        `:ok_hand: set a reminder for ${prettyMs(
+        `:ok: set a reminder for ${prettyMs(
           dur,
         )} to remind you about "${message}".`,
       )

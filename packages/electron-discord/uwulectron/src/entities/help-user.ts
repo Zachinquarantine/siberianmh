@@ -11,7 +11,7 @@ export class HelpUser extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column('varchar')
+  @Column('varchar', { unique: true })
   userId: string
 
   @Column('varchar')
