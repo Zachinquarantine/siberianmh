@@ -2,19 +2,24 @@ import * as findUp from 'find-up'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import { clone } from '../clone'
+import { readLock, writeLock } from '../lock-file'
 import { parseYML } from '../parser'
 
 export const install = async () => {
   const subreposFile = (await findUp('subrepos.yml'))!
   const content = parseYML(subreposFile)
 
-  return content.map((repo) => {
+  await readLock()
+
+  await writeLock()
+
+  for (const repo of content) {
     if (fs.existsSync(path.join(process.cwd(), repo.directory))) {
       return
     }
 
-    return clone(repo, process.cwd())
-  })
+    await clone(repo, process.cwd())
+  }
 }
 
 // TODO: Modify to a new version
