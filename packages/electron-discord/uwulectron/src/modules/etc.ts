@@ -50,8 +50,8 @@ export class EtcModule extends ExtendedModule {
   public async setPresence() {
     this.client.user?.setPresence({
       activity: {
-        type: 'WATCHING',
-        name: 'Mindhunter',
+        type: 'PLAYING',
+        name: 'Life is Strange',
       },
     })
   }

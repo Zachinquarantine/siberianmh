@@ -10,16 +10,21 @@ import {
 
 export class PullRequestStore {
   private github: GitHubProvider
-  private gitlab: GitLabProvider
+
+  private gitlabStore: GitLabStore
+  private githubStore: GitHubStore
 
   public constructor() {
     this.github = new GitHubProvider()
-    this.gitlab = new GitLabProvider()
+
+    this.gitlabStore = new GitLabStore()
+    this.githubStore = new GitHubStore()
   }
 
   public async addPullRequest(
     opts: IAddPullRequest,
   ): Promise<false | DBPullRequest> {
+    // TODO: Start throwing a error.
     if (!opts.provider) {
       opts.provider = 'github'
     }
@@ -44,66 +49,22 @@ export class PullRequestStore {
     }
 
     if (opts.provider === 'github') {
-      return this.addGitHubPullRequest(opts)
+      return this.githubStore.addPullRequest(opts)
     }
 
     if (opts.provider === 'gitlab') {
-      return this.addGitLabPullRequest(opts)
+      return this.gitlabStore.addPullRequest(opts)
     }
 
     return false
   }
 
-  private async addGitLabPullRequest(opts: IAddPullRequest) {
-    // TODO: Throw a errro
-    if (!opts.project_id) {
-      return false
-    }
-
-    const { data: pr } = await this.gitlab.getPull({
-      project_id: opts.project_id,
-      merge_request_iid: opts.pr_number,
-    })
-
-    await this.gitlab.createStatus({
-      project_id: opts.project_id,
-      state: 'pending',
-      sha: pr.sha,
-    })
-
-    if (pr.state !== 'opened') {
-      // TODO: return a error
-      return false
-    }
-
-    const dbPr = DBPullRequest.create({
-      owner: opts.owner,
-      repository: opts.repository,
-      pr_number: opts.pr_number,
-      gl_project_id: opts.project_id,
-      // TODO: Update this value
-      mergeable: true,
-      html_url: pr.web_url,
-      provider: opts.provider,
-      branch: pr.source_branch,
-      merge_method: opts.merge_method,
-    })
-
-    await this.gitlab.createStatus({
-      project_id: opts.project_id,
-      state: 'success',
-      sha: pr.sha,
-      description: 'All checks successfully passed.',
-    })
-
-    await dbPr.save()
-
-    await this.gitlab.setBasedStatus(opts.project_id, opts.pr_number)
-
-    return dbPr
-  }
-
   public async closePullRequest(opts: IClosePullRequest) {
+    if (!opts.provider) {
+      // TODO: Return a error
+      return
+    }
+
     const dbPullRequest = await DBPullRequest.findOne({
       where: {
         owner: opts.owner,
@@ -119,13 +80,119 @@ export class PullRequestStore {
     }
 
     if (opts.provider === 'github') {
-      return this.closeGHPullRequest(opts)
+      return this.githubStore.closePullRequest(opts)
+    }
+
+    if (opts.provider === 'gitlab') {
+      return this.gitlabStore.closePullRequest(opts)
     }
 
     return
   }
 
-  public async addGitHubPullRequest(opts: IAddPullRequest) {
+  public async syncronizePullRequest(opts: ISyncronizePullRequestOptions) {
+    if (opts.provider === 'github') {
+      this.githubStore.syncPullRequest(opts)
+    } else if (opts.provider === 'gitlab') {
+      // TODO: Add support for GitLab
+      return
+    }
+
+    return
+  }
+
+  // TODO: Reimplement this functions to a new usage
+  public async mergeSecondQueue() {
+    const prs = await DBPullRequest.find({
+      where: { state: 'open' },
+    })
+
+    for (const pr of prs) {
+      const firstLabel = await this.github.getBasedStatus(
+        pr.owner,
+        pr.repository,
+        pr.pr_number,
+      )
+      const secondLabel = await this.github.getSecondLabel(
+        pr.owner,
+        pr.repository,
+        pr.pr_number,
+      )
+
+      if (firstLabel && secondLabel) {
+        await this.github.removeFirstLabel(
+          pr.owner,
+          pr.repository,
+          pr.pr_number,
+        )
+
+        await this.github
+          .mergePullRequest(
+            pr.owner,
+            pr.repository,
+            pr.pr_number,
+            pr.branch,
+            pr.merge_method,
+          )
+          .then(() => {
+            DBPullRequest.update(
+              {
+                owner: pr.owner,
+                repository: pr.repository,
+                pr_number: pr.pr_number,
+              },
+              { state: 'closed' },
+            )
+          })
+      }
+    }
+  }
+
+  // TODO: Reimplement this functions to a new usage
+  public async checkPullRequests() {
+    const prs = await DBPullRequest.find({ where: { state: 'open' } })
+
+    for (const pr of prs) {
+      const { data: ghPr } = await this.github.getPull({
+        owner: pr.owner,
+        repo: pr.repository,
+        pull_request: pr.pr_number,
+      })
+
+      const secondLabel = await this.github.getSecondLabel(
+        pr.owner,
+        pr.repository,
+        pr.pr_number,
+      )
+      if (!secondLabel) {
+        await this.github.setBasedStatus(pr.owner, pr.repository, pr.pr_number)
+      }
+
+      await DBPullRequest.update(
+        {
+          id: pr.id,
+        },
+        { mergeable: ghPr.mergeable },
+      )
+    }
+  }
+
+  //#region API Requests
+  public getAllPullRequests = async () => {
+    const prs = await DBPullRequest.find()
+    return prs
+  }
+  //#endregion
+}
+
+class GitHubStore {
+  private github: GitHubProvider
+
+  public constructor() {
+    this.github = new GitHubProvider()
+  }
+
+  public async addPullRequest(opts: IAddPullRequest) {
     const { data: pr } = await this.github.getPull({
       owner: opts.owner,
       repo: opts.repository,
@@ -190,7 +257,7 @@ export class PullRequestStore {
     return dbPr
   }
 
-  public async closeGHPullRequest(opts: IClosePullRequest) {
+  public async closePullRequest(opts: IClosePullRequest) {
     try {
       await this.github.removeFirstLabel(
         opts.owner,
@@ -221,18 +288,7 @@ export class PullRequestStore {
     return
   }
 
-  public async syncronizePullRequest(opts: ISyncronizePullRequestOptions) {
-    if (opts.provider === 'github') {
-      this.syncGHPullRequest(opts)
-    } else if (opts.provider === 'gitlab') {
-      // TODO: Add support for GitLab
-      return
-    }
-
-    return
-  }
-
-  private syncGHPullRequest = async (opts: ISyncronizePullRequestOptions) => {
+  public syncPullRequest = async (opts: ISyncronizePullRequestOptions) => {
     const { data: pr } = await this.github.getPull({
       owner: opts.owner,
       repo: opts.repository,
@@ -333,85 +389,67 @@ export class PullRequestStore {
 
     return isMergeable === Mergeability.MERGEABLE
   }
+}
 
-  public async mergeSecondQueue() {
-    const prs = await DBPullRequest.find({
-      where: { state: 'open' },
+class GitLabStore {
+  private gitlab: GitLabProvider
+
+  public constructor() {
+    this.gitlab = new GitLabProvider()
+  }
+
+  public async addPullRequest(opts: IAddPullRequest) {
+    // TODO: Throw a error
+    if (!opts.project_id) {
+      return false
+    }
+
+    const { data: pr } = await this.gitlab.getPull({
+      project_id: opts.project_id,
+      merge_request_iid: opts.pr_number,
     })
 
-    for (const pr of prs) {
-      const firstLabel = await this.github.getBasedStatus(
-        pr.owner,
-        pr.repository,
-        pr.pr_number,
-      )
-      const secondLabel = await this.github.getSecondLabel(
-        pr.owner,
-        pr.repository,
-        pr.pr_number,
-      )
+    await this.gitlab.createStatus({
+      project_id: opts.project_id,
+      state: 'pending',
+      sha: pr.sha,
+    })
 
-      if (firstLabel && secondLabel) {
-        await this.github.removeFirstLabel(
-          pr.owner,
-          pr.repository,
-          pr.pr_number,
-        )
-
-        await this.github
-          .mergePullRequest(
-            pr.owner,
-            pr.repository,
-            pr.pr_number,
-            pr.branch,
-            pr.merge_method,
-          )
-          .then(() => {
-            DBPullRequest.update(
-              {
-                owner: pr.owner,
-                repository: pr.repository,
-                pr_number: pr.pr_number,
-              },
-              { state: 'closed' },
-            )
-          })
-      }
+    if (pr.state !== 'opened') {
+      // TODO: return a error
+      return false
     }
+
+    const dbPr = DBPullRequest.create({
+      owner: opts.owner,
+      repository: opts.repository,
+      pr_number: opts.pr_number,
+      gl_project_id: opts.project_id,
+      // TODO: Update this value
+      mergeable: true,
+      html_url: pr.web_url,
+      provider: opts.provider,
+      branch: pr.source_branch,
+      merge_method: opts.merge_method,
+    })
+
+    await this.gitlab.createStatus({
+      project_id: opts.project_id,
+      state: 'success',
+      sha: pr.sha,
+      description: 'All checks successfully passed.',
+    })
+
+    await dbPr.save()
+
+    await this.gitlab.setBasedStatus(opts.project_id, opts.pr_number)
+
+    return dbPr
   }
 
-  public async checkPullRequests() {
-    const prs = await DBPullRequest.find({ where: { state: 'open' } })
-
-    for (const pr of prs) {
-      const { data: ghPr } = await this.github.getPull({
-        owner: pr.owner,
-        repo: pr.repository,
-        pull_request: pr.pr_number,
-      })
-
-      const secondLabel = await this.github.getSecondLabel(
-        pr.owner,
-        pr.repository,
-        pr.pr_number,
-      )
-      if (!secondLabel) {
-        await this.github.setBasedStatus(pr.owner, pr.repository, pr.pr_number)
-      }
-
-      await DBPullRequest.update(
-        {
-          id: pr.id,
-        },
-        { mergeable: ghPr.mergeable },
-      )
-    }
+  // TODO: Implement this method
+  public closePullRequest(opts: IClosePullRequest) {
+    console.log(opts)
+    throw new Error('Method not implemented.')
   }
-
-  //#region API Requests
-  public getAllPullRequests = async () => {
-    const prs = await DBPullRequest.find()
-    return prs
-  }
-  //#endregion
 }

@@ -23,6 +23,9 @@ export class MergeQueue extends BaseEntity {
   })
   pull_request: PullRequest
 
+  @Column('date', { nullable: false })
+  merge_time: Date
+
   @CreateDateColumn()
   created_at: Date
 }

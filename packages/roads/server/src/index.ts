@@ -8,11 +8,11 @@ import { CronJob } from 'cron'
 
 import { connectTypeorm } from './lib/connect-typeorm'
 import { apiRoutes } from './api'
-import { PullRequestStore } from './lib/store'
+import { MergeQueueStore } from './lib/store'
 
 const app = express()
 const port = process.env.PORT || 5000
-const prStore = new PullRequestStore()
+const mrQueue = new MergeQueueStore()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -21,7 +21,7 @@ app.use('/api', apiRoutes)
 
 connectTypeorm().then(async () => {
   new CronJob('*/5 * * * *', () => {
-    prStore.checkPullRequests()
+    mrQueue.mergePullRequests()
   })
 
   app.listen(port, () => {
