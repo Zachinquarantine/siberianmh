@@ -9,7 +9,7 @@ export class GitHubProvider {
 
   public constructor() {
     this.octokit = new Octokit({
-      auth: process.env.GH_TOKEN,
+      auth: process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN,
     })
   }
 

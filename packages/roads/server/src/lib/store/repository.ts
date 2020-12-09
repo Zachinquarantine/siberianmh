@@ -20,7 +20,7 @@ export class RepositoryStore {
     //  - Should we handle unlabel?
     const { body } = req
 
-    console.log(body)
+    // console.log(body)
 
     // Pull Request Opened
     if (body.action === 'opened' && body.pull_request) {
@@ -64,10 +64,28 @@ export class RepositoryStore {
 
       // Labeled by CQ+2
       if (body.label.name === labels.cqPlusTwo) {
+        const { repository } = body
+
+        // Before of all need to verify that we still is fine
+        try {
+          await this.pullRequest.syncronizePullRequest({
+            owner: repository.owner.login,
+            repository: repository.name,
+            pr_number: body.number,
+            provider: 'github',
+          })
+        } catch (e) {
+          console.log(e)
+        }
+
         // TODO: Maybe should merge only the updated pull request
         await this.mergeQueue.addPullRequest()
       }
     }
+
+    // TODO: Pull Request Unlabeled
+
+    // TODO: Pull Request Reopened
 
     // Pull Request Closed
     if (body.action === 'closed' && body.pull_request) {

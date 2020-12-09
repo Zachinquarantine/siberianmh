@@ -1,3 +1,4 @@
+import { MergeQueue } from '../../entities/merge-queue'
 import { PullRequest as DBPullRequest } from '../../entities/pull-request'
 import { GitHubProvider, GitLabProvider } from '../providers'
 import { timer } from '../timer'
@@ -61,8 +62,7 @@ export class PullRequestStore {
 
   public async closePullRequest(opts: IClosePullRequest) {
     if (!opts.provider) {
-      // TODO: Return a error
-      return
+      throw new Error(`${opts.provider} is not supported`)
     }
 
     const dbPullRequest = await DBPullRequest.findOne({
@@ -75,8 +75,7 @@ export class PullRequestStore {
     })
 
     if (!dbPullRequest) {
-      // TODO: maybe need to do something
-      return
+      throw new Error('Pull Request is not found')
     }
 
     if (opts.provider === 'github') {
@@ -98,7 +97,7 @@ export class PullRequestStore {
       return
     }
 
-    return
+    throw new Error(`${opts.provider} is not supported`)
   }
 
   // TODO: Reimplement this functions to a new usage
@@ -278,6 +277,23 @@ class GitHubStore {
       // Also ignore, everything can be
     }
 
+    const dbPR = await DBPullRequest.findOne({
+      where: {
+        owner: opts.owner,
+        repository: opts.repository,
+        pr_number: opts.pr_number,
+        provider: opts.provider,
+      },
+    })
+
+    if (!dbPR) {
+      throw new Error('Unable to find a Pull Request in DB')
+    }
+
+    await MergeQueue.delete({
+      pull_request: dbPR,
+    })
+
     await DBPullRequest.delete({
       owner: opts.owner,
       repository: opts.repository,
@@ -304,13 +320,11 @@ class GitHubStore {
     })
 
     if (pr.state !== 'open') {
-      // TODO: return a error
-      return false
+      throw new Error('Pull Request is closed')
     }
 
     if (!dbPr) {
-      // TODO: return a error
-      return false
+      throw new Error('Pull Request is not found')
     }
 
     await this.github.createStatus({

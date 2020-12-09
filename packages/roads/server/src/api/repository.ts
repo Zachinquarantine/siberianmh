@@ -7,9 +7,9 @@ export const handleGitHubWebhook = async (
   req: express.Request,
   res: express.Response,
 ) => {
-  res.status(204).json({
+  res.status(201).json({
     message: 'Accepted',
-    status: 204,
+    status: 201,
   })
 
   await store.handleGitHubWebhook(req)
@@ -19,9 +19,9 @@ export const handleGitLabWebhook = async (
   req: express.Request,
   res: express.Response,
 ) => {
-  res.status(204).json({
+  res.status(201).json({
     message: 'Accepted',
-    status: 204,
+    status: 201,
   })
 
   await store.handleGitLabWebhook(req)

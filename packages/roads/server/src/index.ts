@@ -6,6 +6,7 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import { CronJob } from 'cron'
 
+import './lib/validate-config'
 import { connectTypeorm } from './lib/connect-typeorm'
 import { apiRoutes } from './api'
 import { MergeQueueStore } from './lib/store'
@@ -16,6 +17,7 @@ const mrQueue = new MergeQueueStore()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.disable('x-powered-by')
 
 app.use('/api', apiRoutes)
 
@@ -29,12 +31,8 @@ connectTypeorm().then(async () => {
   })
 
   if (process.env.NODE_ENV === 'development') {
-    const SmeeClient = await import('smee-client')
-    const smee = new SmeeClient({
-      source: `https://smee.io/${process.env.SMEE_CHANNEL}`,
-      target: `http://localhost:${port}/api/gh/handle-event`,
-      logger: console,
-    })
-    smee.start()
+    // const ngrokClient = await import('ngrok')
+    // const url = await ngrokClient.connect()
+    // console.log(`ngrok url: ${url}`)
   }
 })
