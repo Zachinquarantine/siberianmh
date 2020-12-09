@@ -22,7 +22,7 @@
     "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.29",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@ozark/types": "^0.0.0",
