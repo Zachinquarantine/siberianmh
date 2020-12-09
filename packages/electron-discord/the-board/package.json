@@ -11,7 +11,7 @@
   "dependencies": {
     "@edis/constants": "^0.0.0",
     "axios": "^0.21.0",
-    "cookiecord": "^0.4.17"
+    "cookiecord": "^0.4.18"
   },
   "devDependencies": {
     "@sentry/node": "^5.28.0",

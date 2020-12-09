@@ -13,7 +13,7 @@
   "dependencies": {
     "@edis/constants": "^0.0.0",
     "axios": "^0.21.0",
-    "cookiecord": "^0.4.17",
+    "cookiecord": "^0.4.18",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "ioredis": "^4.19.2",
