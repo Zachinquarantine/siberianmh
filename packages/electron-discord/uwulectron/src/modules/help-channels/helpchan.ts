@@ -231,7 +231,11 @@ export class HelpChanModule extends ExtendedModule {
   @command({
     inhibitors: [isTrustedMember],
   })
-  async helpchan(msg: Message, subcommand: string, @optional args: string[]) {
+  async helpchan(
+    msg: Message,
+    subcommand: string,
+    @optional ...args: string[]
+  ) {
     switch (subcommand) {
       // List the status of help channels
       case 'status': {

@@ -17,7 +17,7 @@ jobs:
           node-version: 14.x
       - name: Generate Dependabot Config
         run: |
-          git config user.email "55543306+pacificocean-bot@users.noreply.github.com"
+          git config user.email "pacificoceanbot@siberianmh.com"
           git config user.name "Pacific Ocean Bot"
 
           yarn install
@@ -43,7 +43,7 @@ jobs:
           node-version: 14.x
       - name: Generate Arcadia GraphQL Schemas
         run: |
-          git config user.email "55543306+pacificocean-bot@users.noreply.github.com"
+          git config user.email "pacificoceanbot@siberianmh.com"
           git config user.name "Pacific Ocean Bot"
 
           yarn install
