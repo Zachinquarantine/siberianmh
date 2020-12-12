@@ -42,3 +42,7 @@ export interface IGetClientStatementResponse {
   readonly cashbackAmount: number
   readonly balance: number
 }
+
+export interface IMonobankOptions {
+  readonly token?: string
+}

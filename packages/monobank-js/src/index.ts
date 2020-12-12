@@ -1,45 +1,16 @@
-import axios, { AxiosResponse } from 'axios'
+import { Base } from './lib/base'
 import {
   IGetCurrencyResponse,
   IGetClientInfo,
   ICreateWebhookRequest,
   IGetClientStatementRequest,
   IGetClientStatementResponse,
+  IMonobankOptions,
 } from './types'
 
-interface IMonobankOptions {
-  readonly token?: string
-}
-
-export class Monobank {
-  private token?: string
-
+export class Monobank extends Base {
   public constructor(opts?: IMonobankOptions) {
-    this.token = opts?.token
-  }
-
-  private async request<R = any>(
-    path: string,
-    method: 'GET' | 'POST' = 'GET',
-    data?: any,
-  ): Promise<AxiosResponse<R>> {
-    const url = `https://api.monobank.ua${path}`
-
-    const authHeader = this.token
-      ? { Authorization: `X-Token ${this.token}` }
-      : null
-
-    const result = await axios(url, {
-      method: method,
-      data: data,
-      headers: {
-        'Content-Type': 'application/json',
-        ...authHeader,
-      },
-      responseType: 'json',
-    })
-
-    return result
+    super(opts)
   }
 
   public async getCurrency() {
