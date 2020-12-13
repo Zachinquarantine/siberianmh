@@ -1,4 +1,5 @@
 import { Base } from './lib/base'
+import { CorpAPI } from './lib/corp-api'
 import {
   IGetCurrencyResponse,
   IGetClientInfo,
@@ -9,8 +10,12 @@ import {
 } from './types'
 
 export class Monobank extends Base {
+  public corp: CorpAPI
+
   public constructor(opts?: IMonobankOptions) {
     super(opts)
+
+    this.corp = new CorpAPI()
   }
 
   public async getCurrency() {
