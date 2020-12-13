@@ -1,6 +1,6 @@
-export interface IInitializeRequestParams {
+export interface ICorpAPIBase {
   /**
-   * ID Service Key
+   * ID key of the service
    */
   readonly keyId: string
 
@@ -8,7 +8,9 @@ export interface IInitializeRequestParams {
    * Current time in seconds (UTC)
    */
   readonly time: string
+}
 
+export interface IInitializeAccessParams extends ICorpAPIBase {
   /**
    * List of the rights that service wants to receive
    * from the client (1 letter per 1 permission).
@@ -43,4 +45,42 @@ export interface ITokenRequest {
    * of the client uses a smaptphone/tablet
    */
   readonly acceptUrl: string
+}
+
+export interface ICheckAccessParams extends ICorpAPIBase {
+  /**
+   * Request id
+   */
+  readonly requestId: string
+
+  /**
+   * Sign (X-time | X-RequestId | URL)
+   */
+  readonly sign: string
+}
+
+export interface IGetClientInfoParams extends ICorpAPIBase {
+  /**
+   * Request id
+   */
+  readonly requestId: string
+
+  /**
+   * Sign (X-time | X-RequestId | URL)
+   */
+  readonly sign: string
+}
+
+export interface IGetClientInfoResponse {
+  name: string
+  accounts: Array<IClientAccounts>
+}
+
+export interface IClientAccounts {
+  readonly id: string
+  readonly balance: number
+  /** Credit limit */
+  readonly creditLimit: string
+  readonly currencyCode: number
+  readonly cashbackType: 'None' | 'UAH' | 'Miles'
 }

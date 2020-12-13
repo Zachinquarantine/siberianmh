@@ -19,22 +19,30 @@ export class Monobank extends Base {
   }
 
   public async getCurrency() {
-    return await this.request<Array<IGetCurrencyResponse>>('/bank/currency')
+    return await this.request<Array<IGetCurrencyResponse>>({
+      url: '/bank/currency',
+    })
   }
 
   public async getClientInfo() {
-    return await this.request<IGetClientInfo>('/personal/client-info')
+    return await this.request<IGetClientInfo>({
+      url: '/personal/client-info',
+    })
   }
 
   public async createWebook(opts: ICreateWebhookRequest) {
-    return await this.request<number>('/personal/webhook', 'POST', opts)
+    return await this.request<number>({
+      url: '/personal/webhook',
+      method: 'POST',
+      data: opts,
+    })
   }
 
   public async getClientStatement(opts: IGetClientStatementRequest) {
-    return await this.request<IGetClientStatementResponse>(
-      `/personal/statement/${opts.account}/${opts.from}${
+    return await this.request<IGetClientStatementResponse>({
+      url: `/personal/statement/${opts.account}/${opts.from}${
         opts.to ? `/${opts.to}` : ''
       }`,
-    )
+    })
   }
 }
