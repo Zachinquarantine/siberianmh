@@ -2,8 +2,6 @@
 node_modules
 coverage
 dist
-.npmrc
-.yarnrc
 e2e-realtesting
 .eslintcache
 
