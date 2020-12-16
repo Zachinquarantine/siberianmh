@@ -1,0 +1,31 @@
+{
+  "name": "dont-use-here-link",
+  "version": "1.2.1",
+  "description": "The simple library for preventing using of `here` as link in markdown files",
+  "main": "./build/src/index.js",
+  "bin": "./build/src/cli.js",
+  "types": "./build/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "yarn build",
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siberianmh/siberianmh",
+    "directory": "packages/dont-use-here-link"
+  },
+  "homepage": "https://github.com/siberianmh/siberianmh",
+  "keywords": [
+    "markdown",
+    "here",
+    "prevent",
+    "usage",
+    "link"
+  ],
+  "dependencies": {
+    "glob": "^7.1.6",
+    "meow": "^8.0.0"
+  }
+}
