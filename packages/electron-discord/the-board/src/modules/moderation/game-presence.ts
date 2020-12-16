@@ -24,10 +24,18 @@ export class GamePresenceModule extends ExtendedModule {
 
     const embed = new MessageEmbed()
       .setAuthor(
-        `${presence.user?.username} is playing ${presence.activities[0].name}`,
+        `${presence.user?.username} is playing in bad games`,
         presence.user?.avatarURL({ dynamic: false }) || undefined,
       )
-      .setDescription('Please review this user if you think the user is bad.')
+      .setDescription(
+        `Games:
+          ${presence.activities
+            .map(
+              (activity) =>
+                `- ${activity.name} (${activity.state} ${activity.details}) (${activity.type})`,
+            )
+            .join('\n')}`,
+      )
       .setTimestamp()
 
     const channel = (await this.client.channels.fetch(
