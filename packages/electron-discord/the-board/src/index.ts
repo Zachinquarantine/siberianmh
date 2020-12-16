@@ -11,6 +11,7 @@ import {
   EtcModule,
   ModLogModule,
   BansModerationModule,
+  GamePresenceModule,
 } from './modules'
 
 if (__dev__) {
@@ -26,12 +27,18 @@ export const client = new CookiecordClient(
     prefix: ['!', 'tb!'],
   },
   {
-    ws: { intents: Intents.NON_PRIVILEGED },
+    ws: { intents: Intents.ALL },
     partials: ['REACTION', 'MESSAGE', 'USER', 'CHANNEL'],
   },
 )
 
-for (const mod of [MailModule, EtcModule, BansModerationModule, ModLogModule]) {
+for (const mod of [
+  MailModule,
+  EtcModule,
+  BansModerationModule,
+  ModLogModule,
+  GamePresenceModule,
+]) {
   client.registerModule(mod)
 }
 
