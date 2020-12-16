@@ -21,7 +21,7 @@ module.exports = {
     '@typescript-eslint/ban-types': 'error',
     '@typescript-eslint/no-empty-interface': 'error',
     '@typescript-eslint/no-unused-expressions': ['warn'],
-    '@typescript-eslint/no-unused-vars': ['warn'],
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '_' }],
 
     // Builtin
     curly: 'error',

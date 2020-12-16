@@ -8,7 +8,7 @@ import {
   Heading,
   SideNav,
 } from '@primer/components'
-import { GearIcon, MarkGithubIcon, CheckIcon } from '@primer/octicons-react'
+import { GitHubIcon, GearIcon, CheckIcon } from '../icons'
 import { RouteComponentProps } from 'react-router-dom'
 import { api } from '../../lib/api'
 import { ProjectSettingsDialog } from './settings-dialog'
@@ -73,7 +73,7 @@ export class ProjectPage extends React.Component<
 
   private getIconForJob = (job: IJobby) => {
     if (job.provider === 'github') {
-      return <StyledOcticon icon={MarkGithubIcon} mr={2} />
+      return <StyledOcticon icon={GitHubIcon} mr={2} />
     }
 
     return null
@@ -84,7 +84,7 @@ export class ProjectPage extends React.Component<
 
     const selected = jobs.filter((job) => this.state.selectedJob === job.name)
     const filtered = jobsStatuses.filter(
-      (job) => selected[0]?.name === this.state.selectedJob,
+      (_job) => selected[0]?.name === this.state.selectedJob,
     )
 
     const statuses = filtered.length ? filtered : jobsStatuses

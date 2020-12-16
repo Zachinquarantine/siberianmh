@@ -12,7 +12,7 @@ import {
   TextInput,
   Tooltip,
 } from '@primer/components'
-import { InfoIcon, CheckIcon } from '@primer/octicons-react'
+import { CheckIcon, InfoIcon } from '../icons'
 import { api } from '../../lib/api'
 import type { IRepository } from '@ozark/types'
 

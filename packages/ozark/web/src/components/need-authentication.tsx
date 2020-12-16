@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { Box, Button, StyledOcticon } from '@primer/components'
-import { MarkGithubIcon } from '@primer/octicons-react'
+import { GitHubIcon } from './icons'
 import BGImg from '../assets/non-log-bg.jpg'
 
 const Wrapper = styled.div`
@@ -53,7 +53,7 @@ export const NeedAuthentication = () => {
       <Content>
         <Box>
           <Button onClick={handleGHAuth}>
-            <StyledOcticon icon={MarkGithubIcon} /> Login via GitHub
+            <StyledOcticon icon={GitHubIcon} /> Login via GitHub
           </Button>
         </Box>
       </Content>
