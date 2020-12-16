@@ -1,0 +1,18 @@
+# obvs
+node_modules/
+
+# ignore code coverage reports
+coverage
+
+# no need to bring in the TS source
+/src
+
+# don't ship tests
+__tests__
+
+# except we should include the typescript definitions
+!*.d.ts
+
+# output is transpiled JS - no need for these
+tslint.json
+tsconfig.json
