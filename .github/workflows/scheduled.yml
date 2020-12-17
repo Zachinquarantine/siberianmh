@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v2.1.3
+        uses: actions/setup-node@v2.1.4
         with:
           node-version: 14.x
       - name: Generate Dependabot Config
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v2.1.3
+        uses: actions/setup-node@v2.1.4
         with:
           node-version: 14.x
       - name: Generate Arcadia GraphQL Schemas
