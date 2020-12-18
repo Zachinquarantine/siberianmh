@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'error',
     '@typescript-eslint/no-unused-expressions': ['warn'],
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '_' }],
+    '@typescript-eslint/quotes': ['error', 'single', { avoidEscape: true }],
 
     // Builtin
     curly: 'error',
@@ -39,6 +40,14 @@ module.exports = {
     eqeqeq: ['error', 'smart'],
     strict: ['error', 'global'],
     'no-buffer-constructor': 'error',
-    quotes: ['error', 'single'],
+    quotes: 'off',
   },
+  overrides: [
+    {
+      files: '*.d.ts',
+      rules: {
+        '@typescript-eslint/naming-convention': ['off'],
+      },
+    },
+  ],
 }

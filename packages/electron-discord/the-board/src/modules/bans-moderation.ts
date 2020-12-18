@@ -40,7 +40,6 @@ export class BansModerationModule extends ExtendedModule {
 
     if (member.hasPermission('MANAGE_MESSAGES')) {
       return msg.channel.send(
-        // eslint-disable-next-line
         "Well you can't kick Admins, but it is be a good option",
       )
     }
@@ -88,7 +87,6 @@ export class BansModerationModule extends ExtendedModule {
 
     if (member.hasPermission('MANAGE_MESSAGES')) {
       return msg.channel.send(
-        // eslint-disable-next-line
         "Well you can't ban Admins, but it is be a good option",
       )
     }

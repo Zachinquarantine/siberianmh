@@ -16,10 +16,9 @@ export class SourceModule extends ExtendedModule {
   @command({ aliases: ['src'] })
   public async source(msg: Message) {
     const embed = new MessageEmbed()
-      // eslint-disable-next-line
       .setTitle("Bot's GitHub Repository")
       .addField(
-        'Uwulectron Repository',
+        'Electron Discord Repository',
         `[Go to GitHub](${urls.github_bot_repo})`,
       )
       .setThumbnail('https://avatars0.githubusercontent.com/u/30377152')
