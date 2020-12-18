@@ -1,6 +1,6 @@
 import { command, default as CookiecordClient } from 'cookiecord'
 import { Message, MessageEmbed } from 'discord.js'
-import { ELECTRON_BLUE, sha } from '@edis/constants'
+import { ELECTRON_BLUE, sha } from '@edis/common'
 import { isTrustedMember } from '../lib/inhibitors'
 import { ExtendedModule } from '../lib/extended-module'
 

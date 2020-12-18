@@ -1,4 +1,4 @@
-import { guild } from '@edis/constants'
+import { guild } from '@edis/common'
 import { default as CookiecordClient, listener } from 'cookiecord'
 import { MessageEmbed, Presence, TextChannel } from 'discord.js'
 import { ExtendedModule } from '../../lib/extended-module'

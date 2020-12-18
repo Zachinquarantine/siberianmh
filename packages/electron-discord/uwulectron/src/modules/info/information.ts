@@ -1,6 +1,6 @@
 import { command, default as CookiecordClient, optional } from 'cookiecord'
 import { DateTime } from 'luxon'
-import * as constants from '@edis/constants'
+import * as constants from '@edis/common'
 import { Message, MessageEmbed, User } from 'discord.js'
 import { ExtendedModule } from '../../lib/extended-module'
 

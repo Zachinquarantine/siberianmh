@@ -10,7 +10,7 @@ import {
   TextChannel,
   VoiceChannel,
 } from 'discord.js'
-import * as constants from '@edis/constants'
+import * as constants from '@edis/common'
 import { formatUser } from '../../lib/messages'
 
 /**

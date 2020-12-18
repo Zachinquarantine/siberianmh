@@ -1,7 +1,7 @@
 import { listener, default as CookiecordClient } from 'cookiecord'
 import { ExtendedModule } from '../lib/extended-module'
 import { MessageEmbed, TextChannel } from 'discord.js'
-import { botInteractionsChannelId } from '@edis/constants'
+import { botInteractionsChannelId } from '@edis/common'
 
 export class EtcModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {

@@ -16,7 +16,7 @@ RUN yarn --frozen-lockfile
 COPY ./packages/electron-discord/the-board/ ./packages/electron-discord/the-board/
 COPY ./packages/electron-discord/constants/ ./packages/electron-discord/constants/
 
-RUN yarn workspace @edis/constants build
+RUN yarn workspace @edis/common build
 RUN yarn workspace @siberianmh/the-board build
 
 CMD [ "node", "packages/electron-discord/the-board/dist/index.js" ]

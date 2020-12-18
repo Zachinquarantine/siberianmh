@@ -16,7 +16,7 @@ RUN yarn
 COPY ./packages/electron-discord/constants/ ./packages/electron-discord/constants/
 COPY ./packages/electron-discord/uwulectron/ ./packages/electron-discord/uwulectron/
 
-RUN yarn workspace @edis/constants build
+RUN yarn workspace @edis/common build
 RUN yarn workspace @siberianmh/uwulectron build
 
 CMD [ "node", "packages/electron-discord/uwulectron/dist/index.js" ]

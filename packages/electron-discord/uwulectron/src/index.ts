@@ -14,7 +14,7 @@ import {
   InformationModule,
 } from './modules'
 import { connectTypeorm } from './lib/connect-typeorm'
-import { token } from '@edis/constants'
+import { token } from '@edis/common'
 import { client } from './lib/discord'
 
 for (const mod of [

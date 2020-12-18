@@ -4,7 +4,7 @@ if (process.env.NODE_ENV === 'development') {
 import CookiecordClient from 'cookiecord'
 import { Intents } from 'discord.js'
 import * as Sentry from '@sentry/node'
-import { token, __dev__ } from '@edis/constants'
+import { token, __dev__ } from '@edis/common'
 
 import {
   MailModule,
@@ -14,7 +14,7 @@ import {
   GamePresenceModule,
 } from './modules'
 
-if (__dev__) {
+if (!__dev__) {
   Sentry.init({
     dsn:
       'https://a22da8923d5f4ea7875fa8518335410b@o102026.ingest.sentry.io/5474186',

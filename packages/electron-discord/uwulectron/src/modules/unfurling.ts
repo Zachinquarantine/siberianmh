@@ -1,6 +1,6 @@
 import { default as CookiecordClient, listener } from 'cookiecord'
 import { Message, MessageEmbed, TextChannel } from 'discord.js'
-import { ELECTRON_BLUE } from '@edis/constants'
+import { ELECTRON_BLUE } from '@edis/common'
 import { ExtendedModule } from '../lib/extended-module'
 
 const DSRegex = /https:\/\/discord(app)?.com\/channels\/([\d]{18})\/([\d]{18})\/([\d]{18})/gm

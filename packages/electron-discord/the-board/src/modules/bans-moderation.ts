@@ -5,7 +5,7 @@ import {
 } from 'cookiecord'
 import { ExtendedModule } from '../lib/extended-module'
 import { Message, MessageEmbed } from 'discord.js'
-import { __dev__ } from '@edis/constants'
+import { __dev__ } from '@edis/common'
 import { isTrustedMember } from '../lib/inhibitors'
 
 export class BansModerationModule extends ExtendedModule {

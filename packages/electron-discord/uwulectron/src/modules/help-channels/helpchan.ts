@@ -23,7 +23,7 @@ import {
   askCooldownRoleId,
   GREEN_BRIGHT,
   RED,
-} from '@edis/constants'
+} from '@edis/common'
 import { isTrustedMember } from '../../lib/inhibitors'
 import { ExtendedModule } from '../../lib/extended-module'
 
