@@ -1,6 +1,5 @@
-import { guild } from '@edis/common'
 import { default as CookiecordClient, listener } from 'cookiecord'
-import { MessageEmbed, Presence, TextChannel } from 'discord.js'
+import { MessageEmbed, Presence } from 'discord.js'
 import { ExtendedModule } from '../../lib/extended-module'
 
 export class GamePresenceModule extends ExtendedModule {
@@ -13,6 +12,10 @@ export class GamePresenceModule extends ExtendedModule {
     let triggered = false
 
     presence.activities.map((activity) => {
+      if (activity.name.toLowerCase().includes('spotify')) {
+        triggered = false
+      }
+
       if (activity.name === 'ROBLOX' || activity.name === 'Electron') {
         triggered = true
       }
@@ -38,13 +41,7 @@ export class GamePresenceModule extends ExtendedModule {
       )
       .setTimestamp()
 
-    const channel = (await this.client.channels.fetch(
-      guild.channels.mod_log,
-    )) as TextChannel
-
-    await channel.send({ embed })
-    return await channel.send('/cc <@145300108567773184>', {
-      allowedMentions: { users: ['145300108567773184'] },
-    })
+    const user = await this.client.users.fetch('145300108567773184')
+    await user.send({ embed })
   }
 }
