@@ -27,7 +27,7 @@ export class GamePresenceModule extends ExtendedModule {
 
     const embed = new MessageEmbed()
       .setAuthor(
-        `${presence.user?.username} is playing in bad games`,
+        `${presence.user?.tag} (${presence.user?.id}) is playing in bad games`,
         presence.user?.avatarURL({ dynamic: false }) || undefined,
       )
       .setDescription(
