@@ -24,7 +24,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "byline": "^5.0.0",
     "find-up": "^5.0.0",
     "cli-table3": "^0.6.0",
