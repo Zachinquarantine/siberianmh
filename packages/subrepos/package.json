@@ -24,7 +24,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "byline": "^5.0.0",
     "find-up": "^5.0.0",
     "cli-table3": "^0.6.0",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/byline": "^4.2.32",
-    "@types/fs-extra": "^9.0.5",
+    "@types/fs-extra": "^9.0.6",
     "@types/js-yaml": "^3.12.5",
     "@types/progress": "^2.0.3",
     "@types/yargs": "^15.0.12"
