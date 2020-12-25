@@ -67,6 +67,8 @@ export const icons = {
   hashRed: 'https://cdn.discordapp.com/emojis/469950145413251072.png',
 
   messageDelete: 'https://cdn.discordapp.com/emojis/472472641320648704.png',
+
+  userBan: 'https://cdn.discordapp.com/emojis/469952898026045441.png',
 }
 
 export const urls = {

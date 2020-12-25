@@ -4,6 +4,7 @@ import {
   CategoryChannel,
   Guild,
   GuildChannel,
+  GuildMember,
   Message,
   MessageEmbed,
   Role,
@@ -34,8 +35,14 @@ export class ModLogModule extends ExtendedModule {
       colour,
       title,
       text,
-    }: { iconURL?: string; colour: number; title?: string; text?: string },
-    thumbnail?: string,
+      thumbnail,
+    }: {
+      iconURL?: string
+      colour: number
+      title?: string
+      text?: string
+      thumbnail?: string | null
+    },
     channel_id: string = constants.guild.channels.mod_log,
     content?: string,
     footer?: string,
@@ -270,6 +277,21 @@ export class ModLogModule extends ExtendedModule {
       colour: constants.colors.softRed,
       title: 'Message deleted',
       text: response,
+    })
+  }
+
+  @listener({ event: 'guildBanAdd' })
+  public async onMemberBan(guild: Guild, member: GuildMember) {
+    if (guild.id !== constants.guild.id) {
+      return
+    }
+
+    await this.sendLogMessage({
+      iconURL: constants.icons.userBan,
+      colour: constants.colors.softRed,
+      title: 'User banned',
+      text: formatUser(member),
+      thumbnail: member.user.avatarURL({ format: 'png' }) || undefined,
     })
   }
 }
