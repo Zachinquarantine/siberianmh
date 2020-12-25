@@ -16,7 +16,7 @@ export class GamePresenceModule extends ExtendedModule {
         triggered = false
       }
 
-      if (activity.name === 'ROBLOX' || activity.name === 'Electron') {
+      if (activity.name === 'Electron') {
         triggered = true
       }
     })
