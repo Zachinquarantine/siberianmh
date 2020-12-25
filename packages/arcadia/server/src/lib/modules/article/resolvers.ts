@@ -34,4 +34,15 @@ export const resolvers: IResolvers = {
       return resp
     },
   },
+  Mutation: {
+    createArticle: async (_, args, { req }) => {
+      const resp = await store.createArticle(args, req)
+
+      if (!resp) {
+        throw new ServerError('Unable to create article')
+      }
+
+      return resp
+    },
+  },
 }

@@ -26,6 +26,9 @@ export class Article extends BaseEntity {
   @Column('text')
   body_html: string
 
+  @Column('varchar')
+  html_url: string
+
   @ManyToOne(() => User, (user) => user.id, {
     primary: true,
     onUpdate: 'CASCADE',
