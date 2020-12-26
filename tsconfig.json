@@ -3,7 +3,11 @@
     "target": "es2019",
     "module": "commonjs",
     // We really don't want this
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@siberianmh/*": ["*", "bazel-bin/*", "bazel-genfiles/*"]
+    }
   },
   "exclude": ["node_modules", "**/builld/**/*", "**/dist/**/*"]
 }

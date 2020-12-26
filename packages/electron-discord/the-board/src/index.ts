@@ -4,7 +4,10 @@ if (process.env.NODE_ENV === 'development') {
 import CookiecordClient from 'cookiecord'
 import { Intents } from 'discord.js'
 import * as Sentry from '@sentry/node'
-import { token, __dev__ } from '@edis/common'
+import {
+  token,
+  __dev__,
+} from '@siberianmh/packages/electron-discord/common/src'
 
 import {
   MailModule,

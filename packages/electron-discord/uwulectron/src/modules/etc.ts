@@ -1,6 +1,6 @@
 import { command, default as CookiecordClient, listener } from 'cookiecord'
 import { Message, MessageEmbed, TextChannel } from 'discord.js'
-import { botInteractionsChannelId } from '@edis/common'
+import { botInteractionsChannelId } from '@siberianmh/packages/electron-discord/common/src'
 import { ExtendedModule } from '../lib/extended-module'
 
 export class EtcModule extends ExtendedModule {

@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=development ibazel run //packages/arcadia/server:serve",
-    "build": "bazel build //packages/arcadia/server"
+    "build": "tsc -p tsconfig.json",
+    "build:new": "bazel build //packages/arcadia/server"
   },
   "dependencies": {
     "@graphql-tools/merge": "^6.2.6",
