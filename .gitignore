@@ -1,5 +1,6 @@
-# JS
+# Node JS
 node_modules
+
 coverage
 dist
 .npmrc

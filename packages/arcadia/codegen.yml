@@ -1,9 +1,11 @@
 overwrite: true
 schema: 'server/src/lib/modules/*/schema.graphql'
 documents: null
+
 hooks:
   afterOneFileWrite:
     - prettier --write
+
 generates:
   server/src/lib/generated/graphql.ts:
     plugins:
