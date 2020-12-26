@@ -11,7 +11,7 @@ import {
   TextChannel,
   VoiceChannel,
 } from 'discord.js'
-import * as constants from '@edis/common'
+import * as constants from 'siberianmh/packages/electron-discord/common/src'
 import { formatUser } from '../../lib/messages'
 
 /**

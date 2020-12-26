@@ -1,8 +1,9 @@
 import { createConnection } from 'typeorm'
+import { $AnyDueWeirdBazel } from 'siberianmh/packages/electron-discord/common/src'
 import { HelpUser } from '../entities/help-user'
 import { Reminder } from '../entities/reminder'
 
-export const connectTypeorm = () => {
+export const connectTypeorm = (): Promise<$AnyDueWeirdBazel> => {
   return process.env.NODE_ENV === 'development'
     ? createConnection({
         type: 'mysql',

@@ -14,7 +14,7 @@ import {
   InformationModule,
 } from './modules'
 import { connectTypeorm } from './lib/connect-typeorm'
-import { token } from '@edis/common'
+import { token } from 'siberianmh/packages/electron-discord/common/src'
 import { client } from './lib/discord'
 
 for (const mod of [
@@ -32,7 +32,7 @@ for (const mod of [
 }
 
 connectTypeorm().then(async () => {
-  client.login(token)
+  await client.login(token)
   client.on('ready', () => {
     console.log(`Logged in as ${client.user?.tag}`)
   })

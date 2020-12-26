@@ -1,6 +1,6 @@
 import { command, default as CookiecordClient, optional } from 'cookiecord'
 import { DateTime } from 'luxon'
-import * as constants from '@siberianmh/packages/electron-discord/common/src'
+import * as constants from 'siberianmh/packages/electron-discord/common/src'
 import { Message, MessageEmbed, User } from 'discord.js'
 import { ExtendedModule } from '../../lib/extended-module'
 

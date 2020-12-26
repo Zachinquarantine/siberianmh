@@ -1,6 +1,6 @@
 import { command, default as CookiecordClient } from 'cookiecord'
 import { Message, MessageEmbed } from 'discord.js'
-import { urls } from '@edis/common'
+import { urls } from 'siberianmh/packages/electron-discord/common/src'
 import { ExtendedModule } from '../../lib/extended-module'
 
 export class SourceModule extends ExtendedModule {

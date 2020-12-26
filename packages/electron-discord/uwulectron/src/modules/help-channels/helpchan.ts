@@ -24,7 +24,7 @@ import {
   GREEN_BRIGHT,
   RED,
   isTrustedMember,
-} from '@edis/common'
+} from 'siberianmh/packages/electron-discord/common/src'
 import { ExtendedModule } from '../../lib/extended-module'
 
 /**
@@ -159,7 +159,7 @@ export class HelpChanModule extends ExtendedModule {
       return
     }
 
-    this.claimChannel(msg)
+    await this.claimChannel(msg)
   }
 
   // TODO: Return channel to the cycle when message removed
@@ -361,7 +361,7 @@ export class HelpChanModule extends ExtendedModule {
 
     await msg.channel.send(`:ok:: Successfully claimed ${claimedChannel}`)
     this.busyChannels.delete(claimedChannel.id)
-    this.ensureAskChannels(msg.guild!)
+    await this.ensureAskChannels(msg.guild!)
   }
 
   @command({
@@ -416,7 +416,7 @@ export class HelpChanModule extends ExtendedModule {
         user: helpUser!.userId,
       })
 
-      member.roles.remove(askCooldownRoleId)
+      await member.roles.remove(askCooldownRoleId)
     } catch {}
 
     await HelpUser.delete({ channelId: channel.id })

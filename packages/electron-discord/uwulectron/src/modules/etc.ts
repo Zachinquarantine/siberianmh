@@ -1,6 +1,6 @@
 import { command, default as CookiecordClient, listener } from 'cookiecord'
 import { Message, MessageEmbed, TextChannel } from 'discord.js'
-import { botInteractionsChannelId } from '@siberianmh/packages/electron-discord/common/src'
+import { botInteractionsChannelId } from 'siberianmh/packages/electron-discord/common/src'
 import { ExtendedModule } from '../lib/extended-module'
 
 export class EtcModule extends ExtendedModule {
@@ -48,7 +48,7 @@ export class EtcModule extends ExtendedModule {
 
   @listener({ event: 'ready' })
   public async setPresence() {
-    this.client.user?.setPresence({
+    await this.client.user?.setPresence({
       activity: {
         type: 'PLAYING',
         name: 'Life is Strange',

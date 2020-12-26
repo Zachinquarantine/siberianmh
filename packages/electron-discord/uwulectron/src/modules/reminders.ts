@@ -4,7 +4,6 @@ import { default as CookiecordClient, command, listener } from 'cookiecord'
 import parse from 'parse-duration'
 import * as prettyMs from 'pretty-ms'
 import { Reminder } from '../entities/reminder'
-import { setTimeout } from 'timers'
 import { Message } from 'discord.js'
 import { ExtendedModule } from '../lib/extended-module'
 
@@ -82,9 +81,9 @@ export class ReminderModule extends ExtendedModule {
     const user = await this.client.users.fetch(rem.userID)
     try {
       if (rem.message.length === 0) {
-        user.send(':clock1: hey! you asked me to remind you.')
+        await user.send(':clock1: hey! you asked me to remind you.')
       } else {
-        user.send(
+        await user.send(
           `:clock1: hey! you asked me to remind you about"${rem.message}"`,
         )
       }
