@@ -7,4 +7,4 @@ const router = express.Router()
 router.get('/', hello)
 //#endregion
 
-export const apiRoutes = router
+export const apiRoutes = router as any

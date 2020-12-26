@@ -1,6 +1,8 @@
 import { createConnection } from 'typeorm'
+import * as path from 'path'
 
 export const connectTypeorm = () => {
+  const entitiesDir = path.resolve(__dirname, '../entites/**/*.js')
   return process.env.NODE_ENV === 'development'
     ? createConnection({
         type: 'mysql',
@@ -11,7 +13,7 @@ export const connectTypeorm = () => {
         database: 'siberianmh_arcadia_dev',
         synchronize: true,
         logging: true,
-        entities: ['src/entities/**/*.ts'],
+        entities: [entitiesDir],
         migrations: ['src/migration/**/*.ts'],
         subscribers: ['src/subscriber/**/*.ts'],
         charset: 'utf8mb4_unicode_ci',

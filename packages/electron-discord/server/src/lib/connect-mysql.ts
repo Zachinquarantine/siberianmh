@@ -1,8 +1,10 @@
 import { createConnection } from 'typeorm'
+import * as path from 'path'
 import { Autorole } from '../entities/autorole'
 import { HelpUser } from '../entities/help-user'
 
 export const connectMySQL = () => {
+  const entitiesDir = path.resolve(__dirname, '../entities/**/*.js')
   return process.env.NODE_ENV === 'development'
     ? createConnection({
         type: 'mysql',
@@ -13,7 +15,7 @@ export const connectMySQL = () => {
         database: 'electron_discord_dev',
         synchronize: true,
         logging: true,
-        entities: ['src/entities/**/*.ts'],
+        entities: [entitiesDir],
         migrations: ['src/migration/**/*.ts'],
         subscribers: ['src/subscriber/**/*.ts'],
         charset: 'utf8mb4_unicode_ci',
