@@ -11,7 +11,7 @@ export class GamePresenceModule extends ExtendedModule {
   public async onPresenceUpdate(_old_presence: Presence, presence: Presence) {
     let triggered = false
 
-    presence.activities.map((activity) => {
+    presence.activities.forEach((activity) => {
       if (activity.name.toLowerCase().includes('spotify')) {
         triggered = false
       }

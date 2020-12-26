@@ -1,7 +1,7 @@
 import { listener, default as CookiecordClient } from 'cookiecord'
 import { ExtendedModule } from '../lib/extended-module'
 import { MessageEmbed, TextChannel } from 'discord.js'
-import { botInteractionsChannelId } from '@edis/common'
+import { botInteractionsChannelId } from 'siberianmh/packages/electron-discord/common/src'
 
 export class EtcModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
@@ -31,7 +31,7 @@ export class EtcModule extends ExtendedModule {
 
   @listener({ event: 'ready' })
   public async setPresence() {
-    this.client.user?.setPresence({
+    await this.client.user?.setPresence({
       activity: {
         type: 'PLAYING',
         name: 'DM to contact admins!',

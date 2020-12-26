@@ -5,7 +5,10 @@ import {
 } from 'cookiecord'
 import { ExtendedModule } from '../lib/extended-module'
 import { Message, MessageEmbed } from 'discord.js'
-import { __dev__, isTrustedMember } from '@edis/common'
+import {
+  __dev__,
+  isTrustedMember,
+} from 'siberianmh/packages/electron-discord/common/src'
 
 export class BansModerationModule extends ExtendedModule {
   public constructor(client: CookiecordClient) {
@@ -44,7 +47,7 @@ export class BansModerationModule extends ExtendedModule {
     }
 
     if (!__dev__) {
-      member.kick(reason)
+      await member.kick(reason)
     }
 
     const embed = new MessageEmbed()
@@ -91,7 +94,7 @@ export class BansModerationModule extends ExtendedModule {
     }
 
     if (!__dev__) {
-      member.ban({
+      await member.ban({
         reason: reason,
       })
     }
