@@ -3,15 +3,8 @@ name: Uwulectron
 on:
   push:
     branches: [master]
-    # paths:
-    #   - 'packages/uwulectron-discord-bot/**'
-    #   - 'services/docker/uwulectron/**'
   pull_request:
     branches: [master]
-    # paths:
-    #   - 'packages/uwulectron-discord-bot/**'
-    #   - 'services/docker/uwulectron/**'
-
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -50,3 +43,20 @@ jobs:
         run: |
           docker push ghcr.io/siberianmh/uwulectron:latest
           docker push ghcr.io/siberianmh/uwulectron:${GITHUB_SHA}
+
+  #region Bazel
+  bazel-compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: siberianmh/siberianmh-but-private
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14
+      - name: Compile server
+        run: |
+          bazel build //packages/electron-discord/uwulectron
+  #endregion

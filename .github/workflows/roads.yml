@@ -6,14 +6,8 @@ name: Roads
 on:
   push:
     branches: [master]
-    # paths:
-    #   - 'packages/roads/**'
-    #   - 'services/docker/roads/**'
   pull_request:
     branches: [master]
-    # paths:
-    #   - 'packages/roads/**'
-    #   - 'services/docker/roads/**'
 
 jobs:
   build-server:
@@ -56,3 +50,20 @@ jobs:
           docker push ghcr.io/siberianmh/roads:latest
         env:
           CR_PAT: ${{ secrets.CR_PAT }}
+
+  #region Bazel
+  bazel-builds-server:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: siberianmh/siberianmh-but-private
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14
+      - name: Compile server
+        run: |
+          bazel build //packages/roads/server
+  #endregion
