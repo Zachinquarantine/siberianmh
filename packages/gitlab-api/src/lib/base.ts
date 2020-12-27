@@ -1,6 +1,5 @@
 import axios, { AxiosResponse, Method as AxiosMethod } from 'axios'
 import { IOptions } from './types'
-import { version } from '../../package.json'
 
 export interface IRequestOptions<T = any> {
   readonly url: string
@@ -22,7 +21,7 @@ export class Base {
   private generateHeaders() {
     let headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      'User-Agent': `@siberianmh/gitlab-api/${version}`,
+      'User-Agent': '@siberianmh/gitlab-api',
     }
 
     if (this.token) {

@@ -24,7 +24,6 @@ export const resolvers: IResolvers = {
       return resp
     },
     getArticle: async (_, { articleId, articleName }) => {
-      // @ts-expect-error
       const resp = await store.getArticle(articleId, articleName)
 
       if (!resp) {

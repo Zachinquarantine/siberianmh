@@ -18,7 +18,10 @@ export class ArticleStore {
     return articles
   }
 
-  public async getArticle(articleId: number, articleTitle: string) {
+  public async getArticle(
+    articleId: number | null | undefined,
+    articleTitle: string | null | undefined,
+  ) {
     let article = null
 
     if (articleId) {

@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios'
 import { Base } from '../lib/base'
 import {
   IGetMergeRequestOptions,
@@ -7,13 +8,17 @@ import {
 } from '../lib/types/merge-request'
 
 export class MergeRequest extends Base {
-  public async getMergeRequest(opts: IGetMergeRequestOptions) {
+  public async getMergeRequest(
+    opts: IGetMergeRequestOptions,
+  ): Promise<AxiosResponse<IGitLabMergeRequest>> {
     return this.request<any, IGitLabMergeRequest>({
       url: `projects/${opts.project_id}/merge_requests/${opts.merge_request_iid}`,
     })
   }
 
-  public async acceptMergeRequest(opts: IAcceptMergeRequestOptions) {
+  public async acceptMergeRequest(
+    opts: IAcceptMergeRequestOptions,
+  ): Promise<AxiosResponse<any>> {
     const data = {
       ...opts,
     }
@@ -25,7 +30,9 @@ export class MergeRequest extends Base {
     })
   }
 
-  public async updateMergeRequest(opts: IUpdateMergeRequestOptions) {
+  public async updateMergeRequest(
+    opts: IUpdateMergeRequestOptions,
+  ): Promise<AxiosResponse<IGitLabMergeRequest>> {
     const data = {
       add_labels: opts.add_labels,
     }

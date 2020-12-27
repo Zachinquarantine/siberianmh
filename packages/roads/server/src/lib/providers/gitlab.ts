@@ -1,5 +1,5 @@
-// @ts-ignore | Someday we migrate this to Bazel too
-import { GitLab } from '@siberianmh/gitlab-api'
+import { AxiosResponse } from 'axios'
+import { GitLab, IGitLabMergeRequest } from 'siberianmh/packages/gitlab-api/src'
 import { labels as cqLabels } from '../constants'
 import { $TSFixMe } from '../types'
 
@@ -20,14 +20,18 @@ export class GitLabProvider {
     })
   }
 
-  public async getPull(opts: $TSFixMe) {
+  public async getPull(
+    opts: $TSFixMe,
+  ): Promise<AxiosResponse<IGitLabMergeRequest>> {
     return await this.gitty.mergeRequest.getMergeRequest({
       project_id: opts.project_id,
       merge_request_iid: opts.merge_request_iid,
     })
   }
 
-  public async createStatus(opts: ICreateStatusOptions) {
+  public async createStatus(
+    opts: ICreateStatusOptions,
+  ): Promise<AxiosResponse<any>> {
     return await this.gitty.commits.createCommitStatus({
       project_id: opts.project_id,
       sha: opts.sha,
