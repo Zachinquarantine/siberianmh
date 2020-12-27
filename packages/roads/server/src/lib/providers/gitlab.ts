@@ -1,3 +1,4 @@
+// @ts-ignore | Someday we migrate this to Bazel too
 import { GitLab } from '@siberianmh/gitlab-api'
 import { labels as cqLabels } from '../constants'
 import { $TSFixMe } from '../types'

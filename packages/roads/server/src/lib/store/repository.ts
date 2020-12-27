@@ -110,7 +110,7 @@ export class RepositoryStore {
 
     // Pull Request Opened
     if (body.object_attributes.action === 'open') {
-      this.pullRequest.addPullRequest({
+      await this.pullRequest.addPullRequest({
         owner: body.user.username,
         repository: body.project.name,
         project_id: body.project.id,

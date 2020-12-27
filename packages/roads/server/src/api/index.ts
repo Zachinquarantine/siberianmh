@@ -5,6 +5,7 @@ import { bootstrapRoads } from './base'
 import { generateACL, deleteACL } from './acl'
 import { getAllPullRequests } from './pull-request'
 import { requiresAuth } from '../lib/requires-auth'
+import { $AnyDueWeirdBazel } from '../lib/types'
 
 const router = express.Router()
 
@@ -32,4 +33,4 @@ router.post('/gl/handle-event', handleGitLabWebhook)
 
 //#endregion
 
-export const apiRoutes = router
+export const apiRoutes = router as $AnyDueWeirdBazel

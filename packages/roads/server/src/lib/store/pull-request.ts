@@ -91,7 +91,7 @@ export class PullRequestStore {
 
   public async syncronizePullRequest(opts: ISyncronizePullRequestOptions) {
     if (opts.provider === 'github') {
-      this.githubStore.syncPullRequest(opts)
+      await this.githubStore.syncPullRequest(opts)
     } else if (opts.provider === 'gitlab') {
       // TODO: Add support for GitLab
       return

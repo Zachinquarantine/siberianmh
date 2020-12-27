@@ -1,6 +1,11 @@
 import { Octokit } from '@octokit/rest'
 import { labels } from '../constants'
-import { ICreateStatusOptions, IGetPullRequest, MergeMethods } from '../types'
+import {
+  ICreateStatusOptions,
+  IGetPullRequest,
+  MergeMethods,
+  $TSFixMe,
+} from '../types'
 
 export class GitHubProvider {
   public octokit: Octokit
@@ -13,7 +18,7 @@ export class GitHubProvider {
     })
   }
 
-  public async getPull(opts: IGetPullRequest) {
+  public async getPull(opts: IGetPullRequest): Promise<$TSFixMe> {
     return this.octokit.pulls.get({
       owner: opts.owner,
       repo: opts.repo,
@@ -48,7 +53,11 @@ export class GitHubProvider {
     return false
   }
 
-  public async setBasedStatus(owner: string, repo: string, pr_number: number) {
+  public async setBasedStatus(
+    owner: string,
+    repo: string,
+    pr_number: number,
+  ): Promise<$TSFixMe> {
     if (await this.getBasedStatus(owner, repo, pr_number)) {
       return null
     }
@@ -81,7 +90,7 @@ export class GitHubProvider {
     owner: string,
     repo: string,
     pr_number: number,
-  ) {
+  ): Promise<$TSFixMe> {
     return await this.octokit.issues.removeLabel({
       owner,
       repo,
@@ -94,7 +103,7 @@ export class GitHubProvider {
     owner: string,
     repo: string,
     pr_number: number,
-  ) {
+  ): Promise<$TSFixMe> {
     return await this.octokit.issues.removeLabel({
       owner,
       repo,
