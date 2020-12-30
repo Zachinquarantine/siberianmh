@@ -296,12 +296,16 @@ export class HelpChanModule extends ExtendedModule {
     }
   }
 
-  @command({ inhibitors: [isTrustedMember] })
+  @command({ inhibitors: [isTrustedMember], aliases: ['take'] })
   public async claim(
     msg: Message,
-    member: GuildMember,
+    @optional member: GuildMember,
     @optional limit: number = 10,
   ) {
+    if (msg.reference && msg.reference.messageID) {
+      return this.claimViaReply(msg)
+    }
+
     if (member.user.bot) {
       return await msg.channel.send(
         `:warning:: I cannot open help channel for ${member.displayName} because he is a turtle.`,
@@ -364,10 +368,65 @@ export class HelpChanModule extends ExtendedModule {
     await this.ensureAskChannels(msg.guild!)
   }
 
+  private async claimViaReply(origMessage: Message) {
+    const msg = await origMessage.channel.messages.fetch(
+      origMessage.reference.messageID,
+    )
+
+    if (msg.author.bot) {
+      return await msg.channel.send(
+        `:warning:: I cannot open help channel for ${msg.member.displayName} because he is a turtle.`,
+      )
+    }
+
+    const helpUser = await HelpUser.findOne({
+      where: { userId: msg.author.id },
+    })
+
+    if (helpUser) {
+      return await msg.channel.send(
+        `${msg.member.displayName} already has an open help channel: <#${helpUser.channelId}>`,
+      )
+    }
+
+    const claimedChannel = msg.guild?.channels.cache.find(
+      (channel) =>
+        channel.type === 'text' &&
+        channel.parentID === categories.ask &&
+        channel.name.startsWith(this.CHANNEL_PREFIX) &&
+        !this.busyChannels.has(channel.id),
+    ) as TextChannel | undefined
+
+    if (!claimedChannel) {
+      return await msg.channel.send(
+        ':warning: failed to claim a help channel, no available channel.',
+      )
+    }
+
+    const msgContent = msg.cleanContent
+
+    this.busyChannels.add(claimedChannel.id)
+    const toPin = await claimedChannel.send({
+      embed: new MessageEmbed()
+        .setAuthor(msg.member.displayName, msg.member.user.displayAvatarURL())
+        .setDescription(msgContent),
+    })
+
+    await this.addCooldown(msg.member, claimedChannel, toPin)
+    await this.moveChannel(claimedChannel, categories.ongoing)
+    await claimedChannel.send(
+      `${msg.member.user} this channel has been claimed for your question. Please review <#${askHelpChannelId}> for how to get help.`,
+    )
+
+    await msg.channel.send(`:ok:: Successfully claimed ${claimedChannel}`)
+    this.busyChannels.delete(claimedChannel.id)
+    await this.ensureAskChannels(msg.guild!)
+  }
+
   @command({
     inhibitors: [isTrustedMember],
   })
-  async removelock(msg: Message) {
+  public async removelock(msg: Message) {
     if (this.busyChannels.has(msg.channel.id)) {
       this.busyChannels.delete(msg.channel.id)
       return await msg.channel.send('')

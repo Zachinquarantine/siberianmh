@@ -8,5 +8,8 @@ export const client = new CookiecordClient(
   {
     ws: { intents: Intents.NON_PRIVILEGED },
     partials: ['REACTION', 'MESSAGE', 'USER', 'CHANNEL'],
+    http: {
+      version: 8,
+    },
   },
 )
