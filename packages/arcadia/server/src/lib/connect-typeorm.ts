@@ -1,9 +1,7 @@
-import { createConnection } from 'typeorm'
+import { createConnection, Connection } from 'typeorm'
 import * as path from 'path'
 
-import { $AnyDueWeirdBazel } from './types'
-
-export const connectTypeorm = (): Promise<$AnyDueWeirdBazel> => {
+export const connectTypeorm = (): Promise<Connection> => {
   const entitiesDir = path.resolve(__dirname, '../entites/**/*.js')
   return process.env.NODE_ENV === 'development'
     ? createConnection({

@@ -1,11 +1,11 @@
+import { GraphQLSchema } from 'graphql'
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { $AnyDueWeirdBazel } from './types'
 import * as path from 'path'
 import * as fs from 'fs'
 import * as glob from 'glob'
 
-export const genSchema = (): $AnyDueWeirdBazel => {
+export const genSchema = (): GraphQLSchema => {
   const pathToModules = path.join(__dirname, './modules')
   const graphqlTypes = glob
     .sync(`${pathToModules}/**/*.graphql`)

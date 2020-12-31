@@ -1,9 +1,8 @@
-import { createConnection } from 'typeorm'
+import { createConnection, Connection } from 'typeorm'
 import { ACL } from '../entities/acl'
 import { PullRequest } from '../entities/pull-request'
-import { $AnyDueWeirdBazel } from './types'
 
-export const connectTypeorm = (): Promise<$AnyDueWeirdBazel> => {
+export const connectTypeorm = (): Promise<Connection> => {
   return process.env.NODE_ENV === 'development'
     ? createConnection({
         type: 'mysql',

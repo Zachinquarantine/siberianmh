@@ -1,10 +1,9 @@
-import { createConnection } from 'typeorm'
+import { createConnection, Connection } from 'typeorm'
 import * as path from 'path'
-import { $AnyDueWeirdBazel } from 'siberianmh/packages/electron-discord/common/src'
 import { Autorole } from '../entities/autorole'
 import { HelpUser } from '../entities/help-user'
 
-export const connectMySQL = (): Promise<$AnyDueWeirdBazel> => {
+export const connectMySQL = (): Promise<Connection> => {
   const entitiesDir = path.resolve(__dirname, '../entities/**/*.js')
   return process.env.NODE_ENV === 'development'
     ? createConnection({
