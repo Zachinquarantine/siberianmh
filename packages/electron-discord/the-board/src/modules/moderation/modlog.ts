@@ -188,7 +188,7 @@ export class ModLogModule extends ExtendedModule {
       iconURL: constants.icons.crownRed,
       colour: constants.colors.softRed,
       title: 'Role removed',
-      text: `${role.name} (\`${role.id}\`)`,
+      text: `${role.name} (\`$${role.id}\`)`,
     })
   }
 

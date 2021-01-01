@@ -3,6 +3,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "sourceMap": true,
+    "skipLibCheck": true,
     "strict": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
