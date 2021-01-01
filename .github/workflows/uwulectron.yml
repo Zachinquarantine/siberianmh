@@ -15,10 +15,9 @@ jobs:
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14
-      - name: Install dependencies
-        run: yarn install --ignore-engines
-      - name: Compile Uwulectron
-        run: yarn workspace @siberianmh/uwulectron build
+      - name: Compile server
+        run: |
+          bazel build //packages/electron-discord/uwulectron
 
   docker-build:
     runs-on: ubuntu-latest
@@ -43,21 +42,3 @@ jobs:
         run: |
           docker push ghcr.io/siberianmh/uwulectron:latest
           docker push ghcr.io/siberianmh/uwulectron:${GITHUB_SHA}
-
-  #region Bazel
-  bazel-compile:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          repository: siberianmh/siberianmh-but-private
-          token: ${{ secrets.CR_PAT }}
-      - name: Use Node.js 14
-        uses: actions/setup-node@v2.1.4
-        with:
-          node-version: 14
-      - name: Compile server
-        run: |
-          bazel build //packages/electron-discord/uwulectron
-  #endregion
