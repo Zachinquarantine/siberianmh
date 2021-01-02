@@ -19,8 +19,8 @@
     "subrepositories"
   ],
   "scripts": {
-    "build": "yarn tsc",
-    "watch": "yarn tsc --watch",
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc --watch",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
