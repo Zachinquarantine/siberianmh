@@ -10,7 +10,7 @@ on:
     branches: [master]
 
 jobs:
-  builds-server:
+  build-server:
     runs-on: ubuntu-latest
 
     steps:

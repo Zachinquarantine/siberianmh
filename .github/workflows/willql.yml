@@ -25,6 +25,3 @@ jobs:
       - name: Bazel Compile
         run: |
           bazel build //packages/willql
-      - name: TSC Compile
-        run: |
-          yarn workspace willql build

@@ -1,6 +1,9 @@
 import { command, default as CookiecordClient, listener } from 'cookiecord'
 import { Message, MessageEmbed, TextChannel } from 'discord.js'
-import { botInteractionsChannelId } from 'siberianmh/packages/electron-discord/common/src'
+import {
+  botInteractionsChannelId,
+  colors,
+} from 'siberianmh/packages/electron-discord/common/src'
 import { ExtendedModule } from '../lib/extended-module'
 
 export class EtcModule extends ExtendedModule {
@@ -12,6 +15,15 @@ export class EtcModule extends ExtendedModule {
   @command()
   async ping(msg: Message) {
     await msg.channel.send('pong')
+  }
+
+  @command({ aliases: ['dwnload', 'dowload'] })
+  public async download(msg: Message) {
+    const embed = new MessageEmbed()
+      .setColor(colors.softRed)
+      .setDescription('[Click Me!](https://electronjs.org/releases)')
+
+    return await msg.channel.send({ embed })
   }
   //#endregion
 
@@ -51,7 +63,7 @@ export class EtcModule extends ExtendedModule {
     await this.client.user?.setPresence({
       activity: {
         type: 'PLAYING',
-        name: 'Life is Strange',
+        name: 'Mafia II',
       },
     })
   }
