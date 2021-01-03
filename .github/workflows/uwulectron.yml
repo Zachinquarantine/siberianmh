@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14
-      - name: Compile server
+      - name: Compile
         run: |
           bazel build //packages/electron-discord/uwulectron
 
@@ -41,3 +41,25 @@ jobs:
         if: github['ref'] == 'refs/heads/master'
         run: |
           bazel run //packages/electron-discord/uwulectron:push-uwulectron
+
+  deploy-to-k8s:
+    runs-on: ubuntu-latest
+
+    needs:
+      - docker-build
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@main
+        with:
+          cluster_name: siberianmh-core
+          location: europe-north1-a
+          credentials: ${{ secrets.GCP_CREDENTIALS }}
+      - name: Rollout
+        run: |
+          kubectl rollout restart uwulectron-deploy
