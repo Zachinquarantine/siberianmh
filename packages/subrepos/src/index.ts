@@ -8,7 +8,9 @@ export const run = () => {
     .scriptName('subrepos')
     .usage('$0 <cmd> [args]')
     .command('install', 'Install the subrepositories', () => install())
-    .command('outdated', 'Show the outdated subrepositories', listOutdated)
+    .command('outdated', 'Show the outdated subrepositories', () =>
+      listOutdated(),
+    )
     .command('*', 'Install the subrepositories.', () => install())
     .showHelpOnFail(true)
     .demandCommand(1, '')

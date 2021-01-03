@@ -26,12 +26,12 @@
   "dependencies": {
     "axios": "^0.21.1",
     "byline": "^5.0.0",
-    "find-up": "^5.0.0",
     "cli-table3": "^0.6.0",
-    "dugite": "^1.93.0",
+    "find-up": "^5.0.0",
     "fs-extra": "^9.0.1",
     "js-yaml": "^3.14.1",
     "progress": "^2.0.3",
+    "simple-git": "^2.31.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {

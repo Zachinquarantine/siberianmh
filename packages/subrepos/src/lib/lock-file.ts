@@ -35,7 +35,7 @@ export async function readLock() {
   if (await fs.pathExists('./subrepos-lock.yml')) {
     Object.assign(
       oldLock,
-      yaml.safeLoad(await fs.readFile('./subrepos-lock.yml', 'utf-81')),
+      yaml.safeLoad(await fs.readFile('./subrepos-lock.yml', 'utf-8')),
     )
   }
 }
