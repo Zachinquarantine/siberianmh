@@ -62,4 +62,4 @@ jobs:
           credentials: ${{ secrets.GCP_CREDENTIALS }}
       - name: Rollout
         run: |
-          kubectl rollout restart uwulectron-deploy
+          kubectl rollout restart deploy/uwulectron-deploy

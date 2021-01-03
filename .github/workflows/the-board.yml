@@ -36,10 +36,30 @@ jobs:
         if: github['ref'] == 'refs/heads/master'
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u pacificocean-bot --password-stdin
-          docker pull ghcr.io/siberianmh/the-board:latest || true
-          docker build --pull -f "services/docker/the-board/Dockerfile" --build-arg COMMIT_SHA=${GITHUB_SHA} -t ghcr.io/siberianmh/the-board:latest -t ghcr.io/siberianmh/the-board:${GITHUB_SHA} --cache-from ghcr.io/siberianmh/the-board:latest .
+          bazel build //packages/electron-discord/the-board:docker-the-board
       - name: Publish Latest Docker Image
         if: github['ref'] == 'refs/heads/master'
         run: |
-          docker push ghcr.io/siberianmh/the-board:latest
-          docker push ghcr.io/siberianmh/the-board:${GITHUB_SHA}
+          bazel run //packages/electron-discord/the-board:push-the-board
+
+  deploy-to-k8s:
+    runs-on: ubuntu-latest
+
+    needs:
+      - docker-build
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@main
+        with:
+          cluster_name: siberianmh-core
+          location: europe-north1-a
+          credentials: ${{ secrets.GCP_CREDENTIALS }}
+      - name: Rollout
+        run: |
+          kubectl rollout restart deploy/the-board-deploy
