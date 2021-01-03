@@ -1,5 +1,7 @@
 load("//:tools/ts_library.bzl", "ts_library")
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -31,4 +33,21 @@ nodejs_binary(
         "//packages/electron-discord/common:edis-common",
     ],
     entry_point = ":src/index.ts",
+)
+
+nodejs_image(
+    name = "docker-uwulectron",
+    data = [
+        ":uwulectron",
+    ],
+    entry_point = ":src/index.ts",
+)
+
+container_push(
+    name = "push-uwulectron",
+    format = "Docker",
+    image = ":docker-uwulectron",
+    registry = "ghcr.io",
+    repository = "siberianmh/uwulectron",
+    tag = "latest",
 )
