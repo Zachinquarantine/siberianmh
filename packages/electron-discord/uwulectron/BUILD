@@ -10,6 +10,7 @@ ts_library(
     srcs = glob(["src/**/*.ts"]),
     deps = [
         "//packages/electron-discord/common:edis-common",
+        "@npm//@sentry/node",
         "@npm//@types/luxon",
         "@npm//@types/node",
         "@npm//axios",

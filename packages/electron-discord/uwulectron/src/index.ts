@@ -14,8 +14,17 @@ import {
   InformationModule,
 } from './modules'
 import { connectTypeorm } from './lib/connect-typeorm'
-import { token } from 'siberianmh/packages/electron-discord/common/src'
+import * as Sentry from '@sentry/node'
+import { token, __dev__ } from 'siberianmh/packages/electron-discord/common/src'
 import { client } from './lib/discord'
+
+if (!__dev__) {
+  Sentry.init({
+    dsn:
+      'https://a22da8923d5f4ea7875fa8518335410b@o102026.ingest.sentry.io/5474186',
+    tracesSampleRate: 1.0,
+  })
+}
 
 for (const mod of [
   AdminModule,

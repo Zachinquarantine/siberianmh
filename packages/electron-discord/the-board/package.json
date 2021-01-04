@@ -1,6 +1,7 @@
 {
   "name": "@siberianmh/the-board",
   "version": "0.0.0",
+  "main": "dist/index.js",
   "private": true,
   "scripts": {
     "prebuild": "yarn workspace @edis/common build",
