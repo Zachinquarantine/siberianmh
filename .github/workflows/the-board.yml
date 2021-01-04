@@ -54,12 +54,15 @@ jobs:
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14
+        if: github['ref'] == 'refs/heads/master'
       - id: get-credentials
         uses: google-github-actions/get-gke-credentials@main
         with:
           cluster_name: siberianmh-core
           location: europe-north1-a
           credentials: ${{ secrets.GCP_CREDENTIALS }}
+        if: github['ref'] == 'refs/heads/master'
       - name: Rollout
+        if: github['ref'] == 'refs/heads/master'
         run: |
           kubectl rollout restart deploy/the-board-deploy
