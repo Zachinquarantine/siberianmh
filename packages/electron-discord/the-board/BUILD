@@ -31,7 +31,7 @@ nodejs_image(
     data = [
         ":the-board",
     ],
-    entry_point = ":src/index.js",
+    entry_point = ":src/index.ts",
 )
 
 container_push(
