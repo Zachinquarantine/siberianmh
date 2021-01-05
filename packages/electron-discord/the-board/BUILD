@@ -39,6 +39,6 @@ container_push(
     format = "Docker",
     image = ":docker-the-board",
     registry = "ghcr.io",
-    repository = "siberianmh/uwulectron",
+    repository = "siberianmh/the-board",
     tag = "latest",
 )
