@@ -63,7 +63,7 @@ export class EtcModule extends ExtendedModule {
     await this.client.user?.setPresence({
       activity: {
         type: 'PLAYING',
-        name: 'Mafia II',
+        name: 'Tell Me Why',
       },
     })
   }

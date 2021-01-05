@@ -12,7 +12,7 @@ import {
   VoiceChannel,
 } from 'discord.js'
 import * as constants from 'siberianmh/packages/electron-discord/common/src'
-import { formatUser } from '../../lib/messages'
+import { formatUser } from 'siberianmh/packages/electron-discord/common/src'
 
 /**
  * Logging for server events and staff actions.

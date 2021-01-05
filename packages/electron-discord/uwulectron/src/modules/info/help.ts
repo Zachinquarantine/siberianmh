@@ -34,7 +34,7 @@ export class HelpMessageModule extends ExtendedModule {
         )
         .addField(
           '**Misc Commands**',
-          '`ping` ► View the latency of the bot\n`source ► Drop links to source codes of our bots.`\n',
+          '`ping` ► View the latency of the bot\n`source` ► Drop links to source codes of our bots.\n',
         )
         .addField(
           '**Help Channel Commands:**',

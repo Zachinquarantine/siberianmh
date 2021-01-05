@@ -34,7 +34,7 @@ export class EtcModule extends ExtendedModule {
     await this.client.user?.setPresence({
       activity: {
         type: 'PLAYING',
-        name: 'DM to contact admins!',
+        name: 'DM reports!',
       },
     })
   }
