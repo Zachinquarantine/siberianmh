@@ -9,7 +9,7 @@ ts_library(
     name = "the-board",
     srcs = glob(["src/**/*.ts"]),
     deps = [
-        "//packages/electron-discord/common:edis-common",
+        "//packages/electron-discord/common",
         "@npm//@sentry/node",
         "@npm//@types/node",
         "@npm//axios",

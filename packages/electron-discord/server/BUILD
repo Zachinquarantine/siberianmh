@@ -7,7 +7,7 @@ ts_library(
     name = "server",
     srcs = glob(["src/**/*.ts"]),
     deps = [
-        "//packages/electron-discord/common:edis-common",
+        "//packages/electron-discord/common",
         "@npm//@types/express",
         "@npm//@types/node",
         "@npm//express",

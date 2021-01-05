@@ -9,7 +9,7 @@ ts_library(
     name = "uwulectron",
     srcs = glob(["src/**/*.ts"]),
     deps = [
-        "//packages/electron-discord/common:edis-common",
+        "//packages/electron-discord/common",
         "@npm//@sentry/node",
         "@npm//@types/luxon",
         "@npm//@types/node",
@@ -31,7 +31,6 @@ nodejs_binary(
     name = "serve",
     data = [
         ":uwulectron",
-        "//packages/electron-discord/common:edis-common",
     ],
     entry_point = ":src/index.ts",
 )
