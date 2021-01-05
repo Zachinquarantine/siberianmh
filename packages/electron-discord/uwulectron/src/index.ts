@@ -2,6 +2,7 @@ if (process.env.NODE_ENV === 'development') {
   require('dotenv').config()
 }
 
+import * as Sentry from '@sentry/node'
 import {
   AdminModule,
   AutoroleModule,
@@ -14,7 +15,6 @@ import {
   InformationModule,
 } from './modules'
 import { connectTypeorm } from './lib/connect-typeorm'
-import * as Sentry from '@sentry/node'
 import { token, __dev__ } from 'siberianmh/packages/electron-discord/common/src'
 import { client } from './lib/discord'
 

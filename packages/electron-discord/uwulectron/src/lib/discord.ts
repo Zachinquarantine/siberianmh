@@ -6,7 +6,7 @@ export const client = new CookiecordClient(
     prefix: ['!', 'e!', '.'],
   },
   {
-    ws: { intents: Intents.NON_PRIVILEGED },
+    ws: { intents: Intents.ALL },
     partials: ['REACTION', 'MESSAGE', 'USER', 'CHANNEL'],
   },
 )

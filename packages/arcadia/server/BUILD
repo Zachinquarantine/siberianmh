@@ -3,9 +3,17 @@ load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+    name = "graphql",
+    srcs = glob(["src/lib/modules/**/*.graphql"]),
+)
+
 ts_library(
     name = "server",
     srcs = glob(["src/**/*.ts"]),
+    data = [
+        ":graphql",
+    ],
     deps = [
         "@npm//@graphql-tools/merge",
         "@npm//@graphql-tools/schema",
@@ -34,6 +42,7 @@ ts_library(
 nodejs_binary(
     name = "serve",
     data = [
+        ":graphql",
         ":server",
     ],
     entry_point = ":src/index.ts",

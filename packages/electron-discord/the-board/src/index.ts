@@ -12,6 +12,7 @@ import {
   ModLogModule,
   BansModerationModule,
   GamePresenceModule,
+  SlowmodeModule,
 } from './modules'
 
 if (!__dev__) {
@@ -38,6 +39,7 @@ for (const mod of [
   BansModerationModule,
   ModLogModule,
   GamePresenceModule,
+  SlowmodeModule,
 ]) {
   client.registerModule(mod)
 }

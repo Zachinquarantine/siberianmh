@@ -11,10 +11,12 @@ ts_library(
     deps = [
         "//packages/electron-discord/common",
         "@npm//@sentry/node",
+        "@npm//@types/humanize-duration",
         "@npm//@types/node",
         "@npm//axios",
         "@npm//cookiecord",
         "@npm//discord.js",
+        "@npm//humanize-duration",
     ],
 )
 
