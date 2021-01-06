@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon ./src/index.ts",
-    "build": "tsc -p tsconfig.json"
+    "start": "cross-env NODE_ENV=development ibazel run //packages/roads/server:serve",
+    "build": "bazel build //packages/roads/server"
   },
   "dependencies": {
     "@octokit/rest": "^18.0.12",

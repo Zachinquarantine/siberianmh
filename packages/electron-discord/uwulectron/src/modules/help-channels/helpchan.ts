@@ -314,7 +314,7 @@ export class HelpChanModule extends ExtendedModule {
       return this.claimViaReply(msg)
     }
 
-    await this.claimBase(msg, member)
+    return await this.claimBase(msg, member)
   }
 
   @command({
@@ -346,7 +346,7 @@ export class HelpChanModule extends ExtendedModule {
   ) {
     if (msg.author.bot) {
       return await msg.channel.send(
-        `:warning:: I cannot open help channel for ${msg.member.displayName} because he is a turtle.`,
+        `:warning:: I cannot open help channel for ${member.displayName} because he is a turtle.`,
       )
     }
 
@@ -395,15 +395,15 @@ export class HelpChanModule extends ExtendedModule {
     this.busyChannels.add(claimedChannel.id)
     const toPin = await claimedChannel.send({
       embed: new MessageEmbed()
-        .setAuthor(msg.member.displayName, msg.member.user.displayAvatarURL())
+        .setAuthor(member.displayName, member.user.displayAvatarURL())
         .setDescription(msgContent),
     })
 
     await toPin.pin()
-    await this.addCooldown(msg.member, claimedChannel, toPin)
+    await this.addCooldown(member, claimedChannel, toPin)
     await this.moveChannel(claimedChannel, categories.ongoing)
     await claimedChannel.send(
-      `${msg.member.user} this channel has been claimed for your question. Please review <#${askHelpChannelId}> for how to get help`,
+      `${member.user} this channel has been claimed for your question. Please review <#${askHelpChannelId}> for how to get help`,
     )
 
     await msg.channel.send(`:ok:: Successfully claimed ${claimedChannel}`)
