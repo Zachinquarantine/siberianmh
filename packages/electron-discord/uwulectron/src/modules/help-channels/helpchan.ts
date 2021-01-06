@@ -24,8 +24,11 @@ import {
   GREEN_BRIGHT,
   RED,
   isTrustedMember,
+  helpMessageId,
+  guild,
 } from 'siberianmh/packages/electron-discord/common/src'
 import { ExtendedModule } from '../../lib/extended-module'
+import { helpMessage } from './help-message'
 
 /**
  * Manage the help channel system of the guild.
@@ -142,6 +145,8 @@ export class HelpChanModule extends ExtendedModule {
     setInterval(() => {
       this.checkDormantPossibilities()
     }, dormantChannelLoop)
+
+    await this.syncHowToGetHelp()
   }
 
   @listener({ event: 'message' })
@@ -286,6 +291,7 @@ export class HelpChanModule extends ExtendedModule {
 
       case 'ensureask': {
         await this.ensureAskChannels(msg.guild!)
+        await this.syncHowToGetHelp()
         return msg.channel.send('Help Channels successfully rolled.')
       }
 
@@ -409,6 +415,7 @@ export class HelpChanModule extends ExtendedModule {
     await msg.channel.send(`:ok:: Successfully claimed ${claimedChannel}`)
     this.busyChannels.delete(claimedChannel.id)
     await this.ensureAskChannels(msg.guild!)
+    await this.syncHowToGetHelp()
   }
 
   private async addCooldown(
@@ -449,6 +456,7 @@ export class HelpChanModule extends ExtendedModule {
     await channel.send({ embed: this.DORMANT_EMBED })
 
     await this.ensureAskChannels(channel.guild)
+    await this.syncHowToGetHelp()
     this.busyChannels.delete(channel.id)
   }
 
@@ -503,6 +511,7 @@ export class HelpChanModule extends ExtendedModule {
     await this.addCooldown(msg.member!, msg.channel as TextChannel, msg)
     await this.moveChannel(msg.channel as TextChannel, categories.ongoing)
     await this.ensureAskChannels(msg.guild!)
+    await this.syncHowToGetHelp()
 
     this.busyChannels.delete(msg.channel.id)
   }
@@ -552,7 +561,8 @@ export class HelpChanModule extends ExtendedModule {
       }
     }
 
-    return await this.ensureAskChannels(guild)
+    await this.ensureAskChannels(guild)
+    return await this.syncHowToGetHelp()
   }
 
   private async checkDormantPossibilities() {
@@ -573,5 +583,22 @@ export class HelpChanModule extends ExtendedModule {
         await this.markChannelAsDormant(channel as TextChannel)
       }
     }
+  }
+
+  private async syncHowToGetHelp() {
+    const availHelpChannels = await this.client.guilds
+      .fetch(guild.id)
+      .then((guild) =>
+        guild.channels.cache
+          .filter((channel) => channel.parentID === categories.ask)
+          .filter((channel) => channel.name.startsWith(this.CHANNEL_PREFIX)),
+      )
+
+    const helpChannel = (await this.client.channels.fetch(
+      askHelpChannelId,
+    )) as TextChannel
+    const howToMessage = await helpChannel.messages.fetch(helpMessageId)
+
+    await howToMessage.edit(helpMessage(availHelpChannels))
   }
 }
