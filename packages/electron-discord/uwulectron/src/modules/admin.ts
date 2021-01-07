@@ -68,7 +68,7 @@ export class AdminModule extends ExtendedModule {
         '`!claim @<username> <limit>` ► Take the user message and post into available help channel\n' +
           '`!helpchan create <name>` ► Create a new help channel\n' +
           '`!helpchan status` ► Show the status of help channels like available and ongoing with owner.\n' +
-          '`!helpchan ensureask` ► Try to make 2 channels available.',
+          '`!helpchan sync` ► Try to make 2 channels available.',
       )
       .setFooter(
         this.client.user?.username,

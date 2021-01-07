@@ -20,7 +20,7 @@ export class UnfurlModule extends ExtendedModule {
       .setColor(ELECTRON_BLUE)
       .setFooter(
         `quoted by ${origMessage.author.tag}`,
-        msg.author.avatarURL({ dynamic: true }) || undefined,
+        origMessage.author.avatarURL({ dynamic: true }) || undefined,
       )
 
   //#region Listeners
@@ -56,7 +56,7 @@ export class UnfurlModule extends ExtendedModule {
           return
         }
 
-        return msg.channel.send({
+        return await msg.channel.send({
           embed: this.UNFURL_EMBED(fetchedMessaged, msg),
         })
       }

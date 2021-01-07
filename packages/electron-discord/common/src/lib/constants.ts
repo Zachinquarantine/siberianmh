@@ -15,9 +15,6 @@ export const devGround = {
   roles: {
     helpCooldown: '774303512443355172',
   },
-  messages: {
-    howToGetHelp: '796504544996491314',
-  },
   botInteractionsChannelId: '771109368803491850',
   askHelpChannelId: '762719468736217168',
 }
@@ -36,9 +33,6 @@ const electron = {
     maintainer: '745039155498582067',
     member: '745066812424585409',
     helpCooldown: '772835574197256199',
-  },
-  messages: {
-    howToGetHelp: '796503304036417557',
   },
   channels: {
     theBoard: '779407693974732811',
@@ -97,9 +91,6 @@ export const botInteractionsChannelId = __dev__
   ? devGround.botInteractionsChannelId
   : electron.channels.adminBotInteractions
 export const trustedRoleId = __dev__ ? '' : electron.roles.maintainer
-export const helpMessageId = __dev__
-  ? devGround.messages.howToGetHelp
-  : electron.messages.howToGetHelp
 
 export const dormantChannelTimeout = 36_000
 export const dormantChannelLoop = 10000
