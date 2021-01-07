@@ -29,7 +29,7 @@
     "cli-table3": "^0.6.0",
     "find-up": "^5.0.0",
     "fs-extra": "^9.0.1",
-    "js-yaml": "^3.14.1",
+    "js-yaml": "^4.0.0",
     "progress": "^2.0.3",
     "simple-git": "^2.31.0",
     "yargs": "^16.2.0"
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@types/byline": "^4.2.32",
     "@types/fs-extra": "^9.0.6",
-    "@types/js-yaml": "^3.12.5",
+    "@types/js-yaml": "^4.0.0",
     "@types/progress": "^2.0.3",
     "@types/yargs": "^15.0.12"
   }

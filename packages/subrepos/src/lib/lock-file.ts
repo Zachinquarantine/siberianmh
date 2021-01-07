@@ -27,7 +27,7 @@ export function getItem(url: string, commit: string) {
 export async function writeLock() {
   await fs.writeFile(
     './subrepos-lock.yml',
-    yaml.safeDump(sortKeys(newLock), { noRefs: true }),
+    yaml.dump(sortKeys(newLock), { noRefs: true }),
   )
 }
 
@@ -35,7 +35,7 @@ export async function readLock() {
   if (await fs.pathExists('./subrepos-lock.yml')) {
     Object.assign(
       oldLock,
-      yaml.safeLoad(await fs.readFile('./subrepos-lock.yml', 'utf-8')),
+      yaml.load(await fs.readFile('./subrepos-lock.yml', 'utf-8')),
     )
   }
 }

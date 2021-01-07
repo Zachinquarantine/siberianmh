@@ -4,7 +4,7 @@ import * as yaml from 'js-yaml'
 
 export const parseYML = (file: string): Array<ISubrepos> => {
   const content = fs.readFileSync(file, { encoding: 'utf-8' })
-  const parsed = yaml.safeLoad(content)
+  const parsed = yaml.load(content)
 
   if (typeof parsed !== 'object') {
     console.log(

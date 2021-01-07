@@ -23,7 +23,7 @@ async function main() {
     final.updates.push(updateObject)
   }
 
-  const yamled = yaml.safeDump(final)
+  const yamled = yaml.dump(final)
   fs.writeFileSync(path.resolve(initialPath, '.github/dependabot.yml'), yamled)
 }
 
