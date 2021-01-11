@@ -1,9 +1,0 @@
-{
-  "name": "@siberianmh/roads",
-  "private": true,
-  "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {
-    "start:server": "cd server && yarn start"
-  }
-}
