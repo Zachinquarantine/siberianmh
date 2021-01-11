@@ -62,7 +62,7 @@ export class HelpChanModule extends ExtendedModule {
     .setTitle('✅ Available help channel')
     .setDescription(
       '**Send your question here to claim the channel**\n' +
-        'This channel will be dedicated to answering your question only. Well try to answer and help you solve the issue.\n\n' +
+        'This channel will be dedicated to answering your question only. We will try to answer and help you solve the issue.\n\n' +
         '**Keep in mind:**\n' +
         "• It's always ok to just ask your question. You don't need permission.\n" +
         '• Explain what you expect to happen and what actually happens.\n' +
