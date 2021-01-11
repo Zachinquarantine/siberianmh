@@ -15,27 +15,6 @@ updates:
     milestone: 1
     open-pull-requests-limit: 999
   - package-ecosystem: docker
-    directory: /services/docker/arcadia
-    schedule:
-      interval: daily
-      time: '03:00'
-    milestone: 1
-    open-pull-requests-limit: 999
-  - package-ecosystem: docker
-    directory: /services/docker/ozark
-    schedule:
-      interval: daily
-      time: '03:00'
-    milestone: 1
-    open-pull-requests-limit: 999
-  - package-ecosystem: docker
-    directory: /services/docker/roads
-    schedule:
-      interval: daily
-      time: '03:00'
-    milestone: 1
-    open-pull-requests-limit: 999
-  - package-ecosystem: docker
     directory: /services/docker/the-board
     schedule:
       interval: daily

@@ -2,10 +2,7 @@
   "name": "siberianmh",
   "workspaces": [
     "packages/*",
-    "packages/arcadia/*",
-    "packages/ozark/*",
     "packages/electron-discord/*",
-    "packages/roads/*",
     "tools/*"
   ],
   "private": true,
